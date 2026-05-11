@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PonudaPro</title>
+
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #f8fafc, #eef2ff);
+      color: #0f172a;
+    }
+
+    .header {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 24px 20px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .brand { font-size: 28px; font-weight: 900; }
+    .subtitle { color: #64748b; font-size: 14px; margin-top: 5px; }
+
+    .nav { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .nav button {
+      width: auto;
+      margin: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: white;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      box-shadow: none;
+    }
+
+    .nav button.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .page {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .pricing-page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 20px 50px;
+      display: none;
+    }
+
+    .policy-page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      display: none;
+    }
+
+    .card,
+    .price-card,
+    .explain-box,
+    .policy-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.10);
+    }
+
+    .card {
+      border-radius: 22px;
+      padding: 28px;
+    }
+
+    h1 { margin: 0 0 8px; font-size: 30px; }
+
+    h2 {
+      margin: 24px 0 10px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 18px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #374151;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 14px;
+      background: white;
+    }
+
+    textarea { min-height: 84px; resize: vertical; }
+
+    button,
+    .btn {
+      margin-top: 16px;
+      width: 100%;
+      border: none;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .secondary { background: #eef2ff; color: #1d4ed8; border: 1px solid #c7d2fe; }
+    .danger { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; padding: 10px; font-size: 13px; }
+    .ghost { background: #f8fafc; color: #334155; border: 1px solid #cbd5e1; }
+    .muted { color: #64748b; font-size: 13px; line-height: 1.5; }
+
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .three { display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr; gap: 12px; }
+
+    .status-box,
+    .locked-message,
+    .item-box,
+    .upload-card,
+    .info-box,
+    .payment-card,
+    .note {
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid #e5e7eb;
+      background: #f8fafc;
+    }
+
+    .status-box {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1e3a8a;
+      margin-top: 14px;
+    }
+
+    .locked-message {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #9a3412;
+      margin-top: 14px;
+    }
+
+    .locked-content { opacity: 0.45; pointer-events: none; filter: grayscale(0.2); }
+
+    .upload-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .hidden-file { display: none; }
+
+    .upload-preview {
+      height: 72px;
+      margin-top: 10px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      background: white;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .upload-preview img,
+    .offer-logo img,
+    .stamp-box img,
+    .signature-image-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .small-btn { padding: 10px 12px; font-size: 12px; margin-top: 8px; }
+    .item-box { margin-top: 14px; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .checkbox-row input { width: auto; }
+
+    .offer { min-height: 900px; }
+
+    .top-line {
+      height: 8px;
+      background: linear-gradient(90deg, #0f172a, #2563eb);
+      border-radius: 14px 14px 0 0;
+      margin: -28px -28px 24px;
+    }
+
+    .offer-header {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 22px;
+      margin-bottom: 24px;
+    }
+
+    .company-block { display: flex; gap: 16px; align-items: flex-start; }
+
+    .offer-logo {
+      width: 96px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .brand-name { font-size: 26px; font-weight: 900; margin-bottom: 5px; }
+    .offer-meta { text-align: right; line-height: 1.8; font-size: 14px; color: #374151; }
+    .offer-title { font-size: 29px; margin-bottom: 22px; font-weight: 900; }
+
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+    .info-box, .payment-card { background: #f8fafc; line-height: 1.6; font-size: 14px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px; }
+    th { background: #0f172a; color: white; text-align: left; padding: 13px 10px; font-size: 13px; }
+    td { border-bottom: 1px solid #e5e7eb; padding: 12px 10px; }
+    tr:nth-child(even) td { background: #f9fafb; }
+    .right { text-align: right; }
+
+    .summary {
+      margin-top: 18px;
+      margin-left: auto;
+      width: 340px;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .sum-row { display: flex; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+    .sum-total { background: #dbeafe; color: #1e3a8a; font-size: 20px; font-weight: 900; }
+
+    .payment-box { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .note { margin-top: 18px; background: #f9fafb; line-height: 1.6; white-space: pre-wrap; }
+
+    .signature-area { margin-top: 42px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+    .signature-box { text-align: center; color: #6b7280; font-size: 13px; }
+    .stamp-box { height: 100px; width: 140px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .signature-image-box { height: 70px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 8px; }
+    .signature-line { border-top: 1px solid #111827; padding-top: 8px; margin-top: 42px; }
+    .footer-text { margin-top: 30px; padding-top: 14px; border-top: 1px solid #e5e7eb; color: #64748b; font-size: 12px; text-align: center; }
+    .license-line { margin-top: 8px; font-size: 12px; color: #475569; }
+
+    .pricing-hero { text-align: center; margin-bottom: 24px; }
+    .pricing-hero h1 { font-size: 36px; }
+    .pricing-hero p { max-width: 720px; margin: 0 auto; color: #64748b; line-height: 1.6; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; }
+
+    .price-card { border-radius: 22px; padding: 24px; position: relative; }
+    .price-card.featured { border: 2px solid #2563eb; }
+    .tag { position: absolute; top: 16px; right: 16px; background: #dbeafe; color: #1d4ed8; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 900; }
+    .price-name { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+    .price-desc { color: #64748b; font-size: 14px; line-height: 1.5; min-height: 42px; }
+    .price { font-size: 34px; font-weight: 900; margin: 18px 0 4px; }
+    .price-small { color: #64748b; font-size: 13px; }
+    .features { padding: 0; margin: 18px 0; list-style: none; }
+    .features li { padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #334155; }
+    .features li::before { content: '✓'; color: #2563eb; font-weight: 900; margin-right: 8px; }
+
+    .explain-box { margin-top: 24px; border-radius: 22px; padding: 24px; }
+    .explain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .simple-box { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px; padding: 16px; line-height: 1.6; color: #334155; font-size: 14px; }
+
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .login-overlay.show { display: flex; }
+
+    .login-modal {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.28);
+      border-radius: 24px;
+      padding: 28px;
+      transform: translateY(30px) scale(0.96);
+      opacity: 0;
+      animation: loginPop 0.35s ease forwards;
+    }
+
+    @keyframes loginPop { to { transform: translateY(0) scale(1); opacity: 1; } }
+
+    .login-modal h2 { margin: 0 0 8px; font-size: 28px; font-weight: 900; color: #0f172a; border-top: none; padding-top: 0; }
+    .login-modal p { margin: 0 0 16px; color: #64748b; font-size: 14px; line-height: 1.5; }
+    .login-badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #dbeafe; color: #1d4ed8; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
+    .auth-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .mini-note { margin-top: 14px; font-size: 12px; color: #64748b; text-align: center; }
+    .login-error { margin-top: 12px; padding: 12px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; color: #334155; font-size: 13px; line-height: 1.5; }
+    .google-login-btn { background: white; color: #0f172a; border: 1px solid #d1d5db; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08); }
+    .google-login-btn:hover { background: #f8fafc; }
+    .google-icon { width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; color: #4285f4; background: #fff; border: 1px solid #e5e7eb; }
+    .login-divider { display: flex; align-items: center; gap: 12px; margin: 18px 0 4px; color: #94a3b8; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+    .login-divider::before, .login-divider::after { content: ''; height: 1px; background: #e2e8f0; flex: 1; }
+
+    .site-footer {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 18px 20px 34px;
+      color: #64748b;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .site-footer a { color: #2563eb; text-decoration: none; font-weight: 800; margin-left: 12px; cursor: pointer; }
+
+    .policy-card { border-radius: 22px; padding: 32px; line-height: 1.7; color: #334155; }
+    .policy-card h1 { color: #0f172a; margin-bottom: 12px; }
+    .policy-card h2 { color: #0f172a; }
+    .policy-card p { margin: 10px 0; }
+    .policy-card ul { margin: 10px 0 10px 22px; }
+    .policy-back { display: inline-block; margin-bottom: 16px; color: #2563eb; font-weight: 900; cursor: pointer; }
+
+    @media (max-width: 980px) {
+      .page, .pricing-grid, .explain-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      .two, .three, .upload-grid, .offer-header, .info-grid, .payment-box, .signature-area { grid-template-columns: 1fr; }
+      .card { padding: 20px; }
+      .top-line { margin: -20px -20px 20px; }
+      .offer-meta { text-align: left; }
+      .summary { width: 100%; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 8mm; }
+      body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .header, .form-card, .print-button, .pricing-page, .policy-page, .login-overlay, .site-footer { display: none !important; }
+      .page { display: block !important; max-width: 100%; padding: 0; margin: 0; }
+      .card { box-shadow: none; border: none; padding: 0; border-radius: 0; }
+      .top-line { height: 5px; margin: 0 0 14px; border-radius: 0; }
+      .offer-header { padding-bottom: 12px; margin-bottom: 14px; }
+      .offer-logo { width: 78px; height: 58px; }
+      .brand-name { font-size: 22px; }
+      .muted, .offer-meta, .info-box, td, th, .note, .payment-card { font-size: 11px; }
+      .offer-title { font-size: 22px; margin-bottom: 12px; }
+      .info-grid { gap: 10px; margin-bottom: 12px; }
+      .info-box { padding: 10px; line-height: 1.4; }
+      table { margin-top: 8px; font-size: 11px; }
+      th, td { padding: 8px; }
+      .summary { width: 280px; margin-top: 10px; }
+      .sum-row { padding: 8px 12px; font-size: 11px; }
+      .sum-total { font-size: 15px; }
+      .payment-box { margin-top: 10px; gap: 8px; }
+      .payment-card { padding: 9px; }
+      .note { margin-top: 10px; padding: 10px; line-height: 1.4; }
+      .signature-area { margin-top: 16px; gap: 24px; }
+      .stamp-box { width: 100px; height: 58px; }
+      .signature-image-box { height: 40px; }
+      .signature-image-box img { max-height: 38px; max-width: 160px; }
+      .signature-line { margin-top: 6px; padding-top: 5px; }
+      .footer-text { margin-top: 12px; padding-top: 8px; font-size: 10px; }
+    }
+  </style>
+</head>
+<body onload="initApp()">
+  <div id="loginOverlay" class="login-overlay">
+    <div class="login-modal">
+      <div class="login-badge">PonudaPro pristup</div>
+
+      <div id="loginMode">
+        <h2>Prijavi se</h2>
+        <p>Prijavite se svojim nalogom. Ako vam je paket aktiviran, generator će se automatski otključati.</p>
+        <button class="google-login-btn" onclick="loginWithGoogle()"><span class="google-icon">G</span> Nastavi sa Google nalogom</button>
+        <div class="login-divider">ili</div>
+        <label>Email</label>
+        <input id="authEmail" type="email" placeholder="npr. ime@email.com" />
+        <label>Lozinka</label>
+        <input id="authPassword" type="password" placeholder="minimum 8 karaktera" />
+        <div class="auth-actions">
+          <button onclick="loginUser()">Prijavi se</button>
+          <button class="secondary" onclick="showRegisterMode()">Napravi nalog</button>
+        </div>
+      </div>
+
+      <div id="registerMode" style="display:none;">
+        <h2>Napravi nalog</h2>
+        <p>Unesite email i lozinku. Nakon toga se vratite na prijavu i ulogujte se.</p>
+        <label>Email</label>
+        <input id="regEmail" type="email" placeholder="npr. ime@email.com" />
+        <label>Lozinka</label>
+        <input id="regPassword" type="password" placeholder="minimum 8 karaktera" />
+        <label>Potvrdi lozinku</label>
+        <input id="regPasswordConfirm" type="password" placeholder="ponovite lozinku" />
+        <button onclick="registerUser()">Napravi nalog</button>
+        <button class="ghost" onclick="showLoginMode()">Već imam nalog</button>
+      </div>
+
+      <div id="authMessage" class="login-error">Unesite email i lozinku za prijavu.</div>
+      <div class="mini-note">Ako još nemate aktivan paket, idite na <strong>Cenovnik</strong> i izaberite paket.</div>
+    </div>
+  </div>
+
+  <div class="header">
+    <div onclick="showPage('generator')" style="cursor:pointer;">
+      <div class="brand">PonudaPro</div>
+      <div class="subtitle">Generator profesionalnih PDF ponuda za majstore i male biznise.</div>
+    </div>
+
+    <div class="nav">
+      <button id="generatorNav" class="active" onclick="showPage('generator')">Generator</button>
+      <button id="pricingNav" onclick="showPage('pricing')">Cenovnik</button>
+      <button id="logoutBtn" onclick="logoutUser()" style="display:none;">Odjavi se</button>
+    </div>
+  </div>
+
+  <div class="page" id="generatorPage">
+    <div class="card form-card">
+      <h1>Generator ponuda</h1>
+      <p class="muted">Za korišćenje generatora morate biti prijavljeni i imati aktivan paket.</p>
+
+      <div class="status-box" id="userStatusBox" style="display:none;"></div>
+      <div class="locked-message" id="lockedMessage"><strong>Generator je zaključan.</strong><br>Prijavite se i proverite da li imate aktivan paket. Ako nemate paket, idite na <strong>Cenovnik</strong>.</div>
+
+      <div id="lockedContent" class="locked-content">
+        <h2>Logo, pečat i potpis</h2>
+        <div class="upload-grid">
+          <div class="upload-card">
+            <label>Logo firme</label>
+            <input id="logoInput" class="hidden-file" type="file" accept="image/*" onchange="loadImage('logoInput','logoPreview','outLogo','Logo')" />
+            <label for="logoInput" class="btn small-btn">Izaberi logo</label>
+            <div id="logoPreview" class="upload-preview">Nema loga</div>
+          </div>
+          <div class="upload-card">
+            <label>Pečat</label>
+            <input id="stampInput" class="hidden-file" type="file" accept="image/*" onchange="loadImage('stampInput','stampPreview','outStamp','Pečat')" />
+            <label for="stampInput" class="btn small-btn">Izaberi pečat</label>
+            <div id="stampPreview" class="upload-preview">Nema pečata</div>
+          </div>
+          <div class="upload-card">
+            <label>Potpis</label>
+            <input id="signatureInput" class="hidden-file" type="file" accept="image/*" onchange="loadImage('signatureInput','signaturePreview','outSignature','Potpis')" />
+            <label for="signatureInput" class="btn small-btn">Izaberi potpis</label>
+            <div id="signaturePreview" class="upload-preview">Nema potpisa</div>
+          </div>
+        </div>
+
+        <h2>Podaci firme</h2>
+        <label>Naziv firme / tvoje ime</label><input id="company" value="Moj Biznis" oninput="updateOffer()" />
+        <label>Adresa firme</label><input id="companyAddress" value="Bulevar primer 12, Beograd" oninput="updateOffer()" />
+        <div class="two">
+          <div><label>Telefon</label><input id="companyPhone" value="0603445446" oninput="updateOffer()" /></div>
+          <div><label>Email</label><input id="companyEmail" value="info@mojbiznis.rs" oninput="updateOffer()" /></div>
+        </div>
+        <div class="two">
+          <div><label>PIB</label><input id="companyPib" value="123456789" oninput="updateOffer()" /></div>
+          <div><label>Matični broj</label><input id="companyMb" value="98765432" oninput="updateOffer()" /></div>
+        </div>
+        <div class="two">
+          <div><label>Žiro račun</label><input id="bankAccount" value="160-0000000000000-00" oninput="updateOffer()" /></div>
+          <div><label>Način plaćanja</label><select id="paymentMethod" onchange="updateOffer()"><option>Po dogovoru</option><option>Gotovina</option><option>Uplata na račun</option><option>Avans 50% / ostatak po završetku</option></select></div>
+        </div>
+
+        <h2>Podaci ponude</h2>
+        <div class="two">
+          <div><label>Broj ponude</label><input id="offerNumber" value="001/2026" oninput="updateOffer()" /></div>
+          <div><label>Valuta</label><select id="currency" onchange="updateOffer()"><option value="€">€</option><option value="RSD">RSD</option></select></div>
+        </div>
+        <label>Naziv ponude</label><input id="title" value="Ponuda za renoviranje kupatila" oninput="updateOffer()" />
+        <div class="two">
+          <div><label>Rok izrade</label><input id="deadline" value="5 dana" oninput="updateOffer()" /></div>
+          <div><label>Ponuda važi do</label><input id="validUntil" value="10.05.2026." oninput="updateOffer()" /></div>
+        </div>
+
+        <h2>Podaci klijenta</h2>
+        <label>Ime / naziv klijenta</label><input id="client" value="Petar Petrović" oninput="updateOffer()" />
+        <label>Adresa klijenta</label><input id="clientAddress" value="Primer ulica 5, Beograd" oninput="updateOffer()" />
+        <div class="two">
+          <div><label>Telefon klijenta</label><input id="clientPhone" oninput="updateOffer()" /></div>
+          <div><label>Email klijenta</label><input id="clientEmail" oninput="updateOffer()" /></div>
+        </div>
+
+        <h2>Stavke ponude</h2>
+        <div id="itemsContainer"></div>
+        <button class="secondary" onclick="addItem('',1,'kom',0)">+ Dodaj stavku</button>
+
+        <h2>Obračun</h2>
+        <div class="two">
+          <div><label>Popust (%)</label><input id="discount" type="number" value="0" min="0" oninput="updateOffer()" /></div>
+          <div><label>PDV (%)</label><input id="tax" type="number" value="0" min="0" oninput="updateOffer()" /></div>
+        </div>
+        <div class="checkbox-row"><input id="hideZeroRows" type="checkbox" checked onchange="updateOffer()" /><span>Sakrij popust i PDV ako su 0</span></div>
+        <label>Napomena / uslovi</label><textarea id="note" oninput="updateOffer()">Ponuda važi do navedenog datuma. Cena može varirati ukoliko se obim posla promeni. Plaćanje se vrši po dogovoru.</textarea>
+        <button onclick="updateOffer()">Osveži ponudu</button>
+        <button class="ghost" onclick="resetExample()">Vrati primer</button>
+      </div>
+    </div>
+
+    <div class="card offer">
+      <div class="top-line"></div>
+      <div class="offer-header">
+        <div class="company-block">
+          <div class="offer-logo" id="outLogo"></div>
+          <div>
+            <div class="brand-name" id="outCompany">Moj Biznis</div>
+            <div class="muted"><span id="outCompanyAddress"></span><br>Tel: <span id="outCompanyPhone"></span> | Email: <span id="outCompanyEmail"></span><br>PIB: <span id="outCompanyPib"></span> | MB: <span id="outCompanyMb"></span></div>
+          </div>
+        </div>
+        <div class="offer-meta"><strong>PONUDA</strong><br>Broj: <span id="outOfferNumber"></span><br>Datum: <span id="outDate"></span><br>Važi do: <span id="outValidUntil"></span></div>
+      </div>
+
+      <div class="offer-title" id="outTitle"></div>
+      <div class="info-grid">
+        <div class="info-box"><strong>Podaci o klijentu</strong><span id="outClient"></span><br><span id="outClientAddress"></span><br><span id="outClientPhone"></span><br><span id="outClientEmail"></span></div>
+        <div class="info-box"><strong>Uslovi ponude</strong>Rok izrade: <span id="outDeadline"></span><br>Valuta: <span id="outCurrencyInfo"></span><br>Status: informativna ponuda</div>
+      </div>
+
+      <table>
+        <thead><tr><th>Opis stavke</th><th class="right">Količina</th><th>Jedinica</th><th class="right">Cena</th><th class="right">Ukupno</th></tr></thead>
+        <tbody id="outItems"></tbody>
+      </table>
+
+      <div class="summary">
+        <div class="sum-row"><span>Međuzbir</span><strong><span id="outSubtotal">0</span> <span class="outCurrency">€</span></strong></div>
+        <div class="sum-row" id="discountRow"><span>Popust</span><strong>- <span id="outDiscountAmount">0</span> <span class="outCurrency">€</span></strong></div>
+        <div class="sum-row" id="taxRow"><span>PDV</span><strong><span id="outTaxAmount">0</span> <span class="outCurrency">€</span></strong></div>
+        <div class="sum-row sum-total"><span>Ukupno za plaćanje</span><span><span id="outTotal">0</span> <span class="outCurrency">€</span></span></div>
+      </div>
+
+      <div class="payment-box">
+        <div class="payment-card"><strong>Način plaćanja</strong><span id="outPaymentMethod"></span></div>
+        <div class="payment-card"><strong>Žiro račun</strong><span id="outBankAccount"></span></div>
+      </div>
+
+      <div class="note" id="outNote"></div>
+
+      <div class="signature-area">
+        <div class="signature-box"><div class="stamp-box" id="outStamp"></div>Pečat firme</div>
+        <div class="signature-box"><div class="signature-image-box" id="outSignature"></div><div class="signature-line">Potpis odgovornog lica</div></div>
+      </div>
+
+      <div class="footer-text">
+        <span id="freeWatermark">PonudaPro</span>
+        <span id="paidFooter" style="display:none;">Ova ponuda je izrađena elektronski i važi do datuma navedenog u dokumentu.</span>
+        <div class="license-line" id="licenseLine" style="display:none;"></div>
+      </div>
+      <button class="print-button" onclick="printOffer()">Preuzmi kao PDF</button>
+    </div>
+  </div>
+
+  <div class="pricing-page" id="pricingPage">
+  <div class="pricing-hero">
+    <h1>Cenovnik i paketi</h1>
+    <p>Možete koristiti PonudaPro za probu. Ako želite profesionalne ponude bez oznake PonudaPro i sa svim opcijama, izaberite paket.</p>
+  </div>
+
+  <div class="pricing-grid">
+  <div class="price-card">
+    <div class="price-name">Jedna ponuda</div>
+    <div class="price-desc">Za one kojima treba samo jedna PDF ponuda.</div>
+    <div class="price">299 RSD</div>
+    <div class="price-small">naplaćuje se 2.49 € preko Paddle-a</div>
+    <ul class="features">
+      <li>1 PDF ponuda</li>
+      <li>Bez PonudaPro oznake</li>
+      <li>Logo, pečat i potpis</li>
+    </ul>
+    <button onclick="buyPlan('one_offer')">Plati karticom / PayPal</button>
+  </div>
+
+  <div class="price-card featured">
+    <div class="tag">Najpopularnije</div>
+    <div class="price-name">Mesečni paket</div>
+    <div class="price-desc">Za majstore i firme koji često šalju ponude.</div>
+    <div class="price">999 RSD</div>
+    <div class="price-small">naplaćuje se 8.49 € mesečno preko Paddle-a</div>
+    <ul class="features">
+      <li>Neograničeno PDF ponuda 30 dana</li>
+      <li>Bez PonudaPro oznake</li>
+      <li>Sve funkcije alata</li>
+    </ul>
+    <button onclick="buyPlan('monthly')">Plati karticom / PayPal</button>
+  </div>
+
+  <div class="price-card">
+    <div class="price-name">Trajni pristup</div>
+    <div class="price-desc">Za one koji ne žele mesečno plaćanje.</div>
+    <div class="price">4.999 RSD</div>
+    <div class="price-small">naplaćuje se 42.49 € preko Paddle-a</div>
+    <ul class="features">
+      <li>Koristite alat bez mesečne pretplate</li>
+      <li>Bez PonudaPro oznake</li>
+      <li>Sve funkcije alata</li>
+    </ul>
+    <button onclick="buyPlan('lifetime')">Plati karticom / PayPal</button>
+  </div>
+</div>
+
+  <div class="explain-box">
+    <h2>Kako funkcioniše plaćanje?</h2>
+    <div class="explain-grid">
+      <div class="simple-box"><strong>1. Prijavite se</strong><br>Napravite nalog ili se prijavite preko Google naloga.</div>
+      <div class="simple-box"><strong>2. Izaberite paket</strong><br>Kliknite na dugme za plaćanje karticom / PayPal-om.</div>
+      <div class="simple-box"><strong>3. Plaćanje se obrađuje preko Paddle-a</strong><br>Kartični podaci se ne čuvaju na PonudaPro sajtu.</div>
+      <div class="simple-box"><strong>4. Aktivacija paketa</strong><br>Nakon plaćanja paket se vezuje za email nalog kojim ste prijavljeni.</div>
+    </div>
+  </div>
+</div>
+
+  <div class="policy-page" id="policyPage">
+    <span class="policy-back" onclick="showPage('pricing')">← Nazad na cenovnik</span>
+    <div class="policy-card" id="policyContent"></div>
+  </div>
+
+  <div class="site-footer">
+    <div>© 2026 PonudaPro</div>
+    <div>
+      <a onclick="showPage('pricing')">Pricing</a>
+      <a onclick="showPolicy('terms')">Terms / Uslovi</a>
+      <a onclick="showPolicy('privacy')">Privacy / Privatnost</a>
+      <a onclick="showPolicy('refund')">Refund / Povraćaj</a>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://mhrzwtunpbmnpajgnvqs.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_OC5zOnAf6JCRdiQacIaovA_7uAXTw6u';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    var currentUser = null;
+    var activeSubscription = null;
+    var isSubscriptionActive = false;
+    var FREE_TRIAL_KEY = 'ponudapro_free_trial_used_v1';
+    var isFreeTrialAvailable = false;
+
+    var PADDLE_CLIENT_TOKEN = 'live_f3af93b60f445b8a235393c07dd';
+    var PADDLE_ONE_OFFER_PRICE_ID = 'pri_01kqyr6p3rj7xa2t48d67hymna';
+    var PADDLE_MONTHLY_PRICE_ID = 'pri_01kqyr3eqfgg1t0v3kt486rezf';
+    var PADDLE_LIFETIME_PRICE_ID = 'pri_01kqyr7w6fzxbjfks5prwmx5fz';
+    var isPaddleReady = false;
+
+    function el(id) { return document.getElementById(id); }
+
+    function initPaddleCheckout() {
+      try {
+        if (!window.Paddle) {
+          console.warn('Paddle.js nije učitan.');
+          return;
+        }
+
+        if (!PADDLE_CLIENT_TOKEN || PADDLE_CLIENT_TOKEN === 'OVDE_NALEPI_PADDLE_CLIENT_SIDE_TOKEN') {
+          console.warn('Paddle client-side token nije unet.');
+          return;
+        }
+
+        if (PADDLE_CLIENT_TOKEN.startsWith('test_')) {
+          Paddle.Environment.set('sandbox');
+        }
+
+        Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN });
+        isPaddleReady = true;
+      } catch (err) {
+        console.error('Paddle init greška:', err);
+        isPaddleReady = false;
+      }
+    }
+
+    function showLoginModal(message) {
+      el('loginOverlay').classList.add('show');
+      if (message) el('authMessage').textContent = message;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideLoginModal() {
+      el('loginOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    function showLoginMode() {
+      el('loginMode').style.display = 'block';
+      el('registerMode').style.display = 'none';
+      el('authMessage').textContent = 'Unesite email i lozinku za prijavu.';
+    }
+
+    function showRegisterMode() {
+      el('loginMode').style.display = 'none';
+      el('registerMode').style.display = 'block';
+      el('authMessage').textContent = 'Napravite nalog, pa se zatim prijavite.';
+    }
+
+    function hasUsedFreeTrial() {
+      return localStorage.getItem(FREE_TRIAL_KEY) === 'yes';
+    }
+
+    function markFreeTrialUsed() {
+      localStorage.setItem(FREE_TRIAL_KEY, 'yes');
+      isFreeTrialAvailable = false;
+    }
+
+    async function initApp() {
+      el('outDate').textContent = new Date().toLocaleDateString('sr-RS');
+      initPaddleCheckout();
+      resetExample();
+      await checkSession();
+      updateOffer();
+      routePage();
+    }
+
+    async function checkSession() {
+      const { data } = await supabaseClient.auth.getSession();
+      currentUser = data.session ? data.session.user : null;
+
+      if (currentUser) {
+        el('logoutBtn').style.display = 'inline-block';
+        await checkSubscription();
+      } else {
+        el('logoutBtn').style.display = 'none';
+        activeSubscription = null;
+        isSubscriptionActive = false;
+
+        if (!hasUsedFreeTrial()) {
+          isFreeTrialAvailable = true;
+          unlockFreeTrial();
+        } else {
+          isFreeTrialAvailable = false;
+          lockGenerator('Probna ponuda je iskorišćena. Prijavite se ili napravite nalog da biste nastavili.');
+        }
+      }
+    }
+
+    async function loginWithGoogle() {
+      el('authMessage').textContent = 'Otvaramo Google prijavu...';
+      const { error } = await supabaseClient.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
+      if (error) {
+        el('authMessage').textContent = 'Greška pri Google prijavi: ' + error.message;
+        alert('Greška pri Google prijavi: ' + error.message);
+      }
+    }
+
+    async function registerUser() {
+      var email = el('regEmail').value.trim();
+      var password = el('regPassword').value.trim();
+      var confirmPassword = el('regPasswordConfirm').value.trim();
+
+      if (!email || !password || !confirmPassword) {
+        el('authMessage').textContent = 'Unesite email, lozinku i potvrdu lozinke.';
+        alert('Unesite email, lozinku i potvrdu lozinke.');
+        return;
+      }
+
+      if (password.length < 8) {
+        el('authMessage').textContent = 'Lozinka mora imati minimum 8 karaktera.';
+        alert('Lozinka mora imati minimum 8 karaktera.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        el('authMessage').textContent = 'Lozinke se ne poklapaju.';
+        alert('Lozinke se ne poklapaju.');
+        return;
+      }
+
+      el('authMessage').textContent = 'Pravimo nalog...';
+
+      try {
+        const { error } = await supabaseClient.auth.signUp({ email: email, password: password });
+
+        if (error) {
+          el('authMessage').textContent = 'Greška: ' + error.message;
+          alert('Greška: ' + error.message);
+          return;
+        }
+
+        showLoginMode();
+        el('authEmail').value = email;
+        el('authPassword').value = '';
+        el('authMessage').textContent = 'Nalog je napravljen. Sada unesite lozinku i prijavite se.';
+        alert('Nalog je napravljen. Sada se prijavite.');
+      } catch (err) {
+        console.error(err);
+        el('authMessage').textContent = 'Došlo je do greške. Proverite internet ili Supabase podešavanja.';
+        alert('Došlo je do greške. Proverite internet ili Supabase podešavanja.');
+      }
+    }
+
+    async function loginUser() {
+      var email = el('authEmail').value.trim();
+      var password = el('authPassword').value.trim();
+
+      if (!email || !password) {
+        el('authMessage').textContent = 'Unesite email i lozinku.';
+        return;
+      }
+
+      el('authMessage').textContent = 'Prijavljivanje...';
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email: email, password: password });
+
+      if (error) {
+        el('authMessage').textContent = 'Neuspešna prijava: ' + error.message;
+        return;
+      }
+
+      currentUser = data.user;
+      el('authMessage').textContent = 'Uspešno ste prijavljeni.';
+      await checkSession();
+    }
+
+    async function logoutUser() {
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      activeSubscription = null;
+      isSubscriptionActive = false;
+      await checkSession();
+    }
+
+    async function checkSubscription() {
+      if (!currentUser) {
+        lockGenerator('Prijavite se da biste koristili generator.');
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from('subscriptions')
+        .select('*')
+        .eq('email', currentUser.email)
+        .eq('status', 'active')
+        .order('expires_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (error) {
+        console.error(error);
+        lockGenerator('Došlo je do greške pri proveri paketa.');
+        return;
+      }
+
+      if (!data) {
+        lockGenerator('Prijavljeni ste kao ' + currentUser.email + ', ali nemate aktivan paket.');
+        return;
+      }
+
+      var now = new Date();
+      var expires = new Date(data.expires_at);
+      var usedPrints = Number(data.used_prints || 0);
+      var maxPrints = data.max_prints === null ? null : Number(data.max_prints);
+
+      if (expires <= now) {
+        lockGenerator('Paket je istekao. Izaberite novi paket u delu Cenovnik.');
+        return;
+      }
+
+      if (maxPrints !== null && usedPrints >= maxPrints) {
+        lockGenerator('Iskoristili ste broj PDF ponuda za ovaj paket.');
+        return;
+      }
+
+      activeSubscription = data;
+      isSubscriptionActive = true;
+      unlockGenerator(data);
+    }
+
+    function unlockGenerator(subscription) {
+      var expires = new Date(subscription.expires_at);
+      var daysLeft = Math.ceil((expires - new Date()) / 86400000);
+      var planText = subscription.plan || 'aktivni paket';
+
+      el('userStatusBox').style.display = 'block';
+      el('userStatusBox').innerHTML = '<strong>Prijavljeni ste:</strong> ' + currentUser.email + '<br><strong>Paket:</strong> ' + planText + '<br><strong>Važi još:</strong> ' + daysLeft + ' dana';
+      el('lockedMessage').style.display = 'none';
+      el('lockedContent').classList.remove('locked-content');
+      el('freeWatermark').style.display = 'none';
+      el('paidFooter').style.display = 'inline';
+      el('licenseLine').style.display = 'block';
+      el('licenseLine').textContent = 'Korisnik: ' + currentUser.email + ' | Paket: ' + planText;
+      hideLoginModal();
+    }
+
+    function unlockFreeTrial() {
+      el('userStatusBox').style.display = 'block';
+      el('userStatusBox').innerHTML = '<strong>Probna verzija:</strong> Možete napraviti 1 probnu PDF ponudu na ovom računaru.';
+      el('lockedMessage').style.display = 'none';
+      el('lockedContent').classList.remove('locked-content');
+      el('freeWatermark').style.display = 'inline';
+      el('paidFooter').style.display = 'none';
+      el('licenseLine').style.display = 'none';
+      hideLoginModal();
+    }
+
+    function lockGenerator(message) {
+      el('userStatusBox').style.display = 'block';
+      el('userStatusBox').innerHTML = '<strong>Status:</strong> ' + message;
+      el('lockedMessage').style.display = 'block';
+      el('lockedContent').classList.add('locked-content');
+      el('freeWatermark').style.display = 'inline';
+      el('paidFooter').style.display = 'none';
+      el('licenseLine').style.display = 'none';
+      isSubscriptionActive = false;
+
+      if (!currentUser) {
+        showLoginMode();
+        showLoginModal(message);
+      } else {
+        hideLoginModal();
+      }
+    }
+
+    function showPage(page) {
+      el('policyPage').style.display = 'none';
+
+      if (page === 'pricing') {
+        el('generatorPage').style.display = 'none';
+        el('pricingPage').style.display = 'block';
+        el('generatorNav').classList.remove('active');
+        el('pricingNav').classList.add('active');
+        if (window.location.pathname !== '/pricing') history.pushState(null, '', '/pricing');
+      } else {
+        el('generatorPage').style.display = 'grid';
+        el('pricingPage').style.display = 'none';
+        el('pricingNav').classList.remove('active');
+        el('generatorNav').classList.add('active');
+        if (window.location.pathname !== '/') history.pushState(null, '', '/');
+      }
+
+      window.scrollTo(0, 0);
+    }
+
+    function showPolicy(type) {
+      var content = '';
+
+      if (type === 'terms') {
+        content = '<h1>Terms of Service / Uslovi korišćenja</h1>' +
+          '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
+          '<h2>English</h2>' +
+          '<p>PonudaPro is a web-based SaaS tool for creating professional PDF offers, quotes, and business documents.</p>' +
+          '<p>Users may use PonudaPro to create offers for their own business or client work. Users are responsible for the accuracy of all information entered into the generator.</p>' +
+          '<p>Paid plans give access to the features described on the pricing page. PonudaPro does not provide legal, tax, accounting, or financial advice.</p>' +
+          '<h2>Srpski</h2>' +
+          '<p>PonudaPro je web SaaS alat za kreiranje profesionalnih PDF ponuda, predračuna i poslovnih dokumenata.</p>' +
+          '<p>Korisnik je odgovoran za tačnost svih podataka koje unese u generator, uključujući cene, poreze, podatke o klijentu, uslove plaćanja i podatke firme.</p>' +
+          '<p>PonudaPro ne pruža pravne, poreske, računovodstvene ili finansijske savete.</p>' +
+          '<h2>Contact / Kontakt</h2>' +
+          '<p>For support / Za podršku: nivanovic505@gmail.com</p>';
+        history.pushState(null, '', '/terms');
+      }
+
+      if (type === 'privacy') {
+        content = '<h1>Privacy Policy / Politika privatnosti</h1>' +
+          '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
+          '<h2>English</h2>' +
+          '<p>PonudaPro collects only the information needed to provide the service, such as account email, subscription status, and offer data created by the user.</p>' +
+          '<p>Payments are processed by third-party payment providers. PonudaPro does not store full card details.</p>' +
+          '<h2>Srpski</h2>' +
+          '<p>PonudaPro prikuplja samo podatke koji su potrebni da servis radi, kao što su email naloga, status pretplate i podaci ponuda koje korisnik napravi.</p>' +
+          '<p>Plaćanja obrađuju nezavisni payment provajderi. PonudaPro ne čuva pune podatke platnih kartica.</p>' +
+          '<h2>Contact / Kontakt</h2>' +
+          '<p>For privacy questions / Za pitanja o privatnosti: nivanovic505@gmail.com</p>';
+        history.pushState(null, '', '/privacy');
+      }
+
+      if (type === 'refund') {
+        content = '<h1>Refund Policy / Politika povraćaja novca</h1>' +
+          '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
+          '<h2>English</h2>' +
+          '<p>PonudaPro sells access to a digital SaaS tool. Refunds are handled fairly and depend on the type of plan purchased.</p>' +
+          '<p>If a one-time offer credit has not been used, a refund may be requested within 7 days of purchase.</p>' +
+          '<p>Monthly plans can be cancelled before the next billing period. Refund requests may be reviewed if the service was not used after purchase.</p>' +
+          '<h2>Srpski</h2>' +
+          '<p>PonudaPro prodaje pristup digitalnom SaaS alatu. Zahtevi za povraćaj novca razmatraju se fer i zavise od vrste kupljenog paketa.</p>' +
+          '<p>Za paket “Jedna ponuda”, povraćaj se može zatražiti u roku od 7 dana ako kredit za ponudu nije iskorišćen.</p>' +
+          '<p>Mesečni paket može se otkazati pre sledećeg obračunskog perioda.</p>' +
+          '<h2>How to request a refund / Kako zatražiti povraćaj</h2>' +
+          '<p>Contact / Kontakt: nivanovic505@gmail.com with your account email and purchase details.</p>';
+        history.pushState(null, '', '/refund');
+      }
+
+      el('generatorPage').style.display = 'none';
+      el('pricingPage').style.display = 'none';
+      el('policyPage').style.display = 'block';
+      el('generatorNav').classList.remove('active');
+      el('pricingNav').classList.remove('active');
+      el('policyContent').innerHTML = content;
+      window.scrollTo(0, 0);
+    }
+
+    function routePage() {
+      var path = window.location.pathname;
+      if (path === '/pricing') {
+        el('generatorPage').style.display = 'none';
+        el('pricingPage').style.display = 'block';
+        el('policyPage').style.display = 'none';
+        el('generatorNav').classList.remove('active');
+        el('pricingNav').classList.add('active');
+      } else if (path === '/terms') {
+        showPolicy('terms');
+      } else if (path === '/privacy') {
+        showPolicy('privacy');
+      } else if (path === '/refund') {
+        showPolicy('refund');
+      }
+    }
+
+    window.addEventListener('popstate', routePage);
+
+    function loadImage(inputId, previewId, outputId, altText) {
+      var file = el(inputId).files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = '<img src="' + e.target.result + '" alt="' + altText + '">';
+        el(previewId).innerHTML = img;
+        el(outputId).innerHTML = img;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function addItem(name, quantity, unit, price) {
+      var box = document.createElement('div');
+      box.className = 'item-box';
+      box.innerHTML = '<label>Opis stavke</label><input class="item-name" value="' + (name || '') + '" oninput="updateOffer()"><div class="three"><div><label>Količina</label><input class="item-quantity" type="number" value="' + (quantity || 1) + '" oninput="updateOffer()"></div><div><label>Jedinica mere</label><select class="item-unit" onchange="updateOffer()"><option value="kom">kom</option><option value="m²">m²</option><option value="m">m</option><option value="sat">sat</option><option value="dan">dan</option><option value="kg">kg</option><option value="l">l</option><option value="paket">paket</option></select></div><div><label>Cena po jedinici</label><input class="item-price" type="number" value="' + (price || 0) + '" oninput="updateOffer()"></div></div><button class="danger" onclick="this.parentElement.remove(); updateOffer();">Obriši stavku</button>';
+      el('itemsContainer').appendChild(box);
+      if (unit) box.querySelector('.item-unit').value = unit;
+      updateOffer();
+    }
+
+    function formatNumber(n) {
+      return Number(n).toLocaleString('sr-RS', { maximumFractionDigits: 2 });
+    }
+
+    function updateOffer() {
+      el('outCompany').textContent = el('company').value;
+      el('outCompanyAddress').textContent = el('companyAddress').value;
+      el('outCompanyPhone').textContent = el('companyPhone').value;
+      el('outCompanyEmail').textContent = el('companyEmail').value;
+      el('outCompanyPib').textContent = el('companyPib').value;
+      el('outCompanyMb').textContent = el('companyMb').value;
+      el('outBankAccount').textContent = el('bankAccount').value;
+      el('outPaymentMethod').textContent = el('paymentMethod').value;
+      el('outOfferNumber').textContent = el('offerNumber').value;
+      el('outValidUntil').textContent = el('validUntil').value;
+      el('outTitle').textContent = el('title').value;
+      el('outDeadline').textContent = el('deadline').value;
+      el('outCurrencyInfo').textContent = el('currency').value;
+      el('outClient').textContent = el('client').value;
+      el('outClientAddress').textContent = el('clientAddress').value;
+      el('outClientPhone').textContent = el('clientPhone').value ? 'Tel: ' + el('clientPhone').value : '';
+      el('outClientEmail').textContent = el('clientEmail').value ? 'Email: ' + el('clientEmail').value : '';
+      el('outNote').textContent = el('note').value;
+
+      var currency = el('currency').value;
+      document.querySelectorAll('.outCurrency').forEach(function(s) { s.textContent = currency; });
+      var rows = '';
+      var subtotal = 0;
+
+      document.querySelectorAll('.item-box').forEach(function(box) {
+        var name = box.querySelector('.item-name').value;
+        var qty = Number(box.querySelector('.item-quantity').value) || 0;
+        var unit = box.querySelector('.item-unit').value;
+        var price = Number(box.querySelector('.item-price').value) || 0;
+        var total = qty * price;
+
+        if (name.trim() !== '') {
+          subtotal += total;
+          rows += '<tr><td>' + name + '</td><td class="right">' + formatNumber(qty) + '</td><td>' + unit + '</td><td class="right">' + formatNumber(price) + ' ' + currency + '</td><td class="right"><strong>' + formatNumber(total) + ' ' + currency + '</strong></td></tr>';
+        }
+      });
+
+      var discount = subtotal * ((Number(el('discount').value) || 0) / 100);
+      var afterDiscount = subtotal - discount;
+      var tax = afterDiscount * ((Number(el('tax').value) || 0) / 100);
+      var finalTotal = afterDiscount + tax;
+
+      el('outItems').innerHTML = rows;
+      el('outSubtotal').textContent = formatNumber(subtotal);
+      el('outDiscountAmount').textContent = formatNumber(discount);
+      el('outTaxAmount').textContent = formatNumber(tax);
+      el('outTotal').textContent = formatNumber(finalTotal);
+      el('discountRow').style.display = el('hideZeroRows').checked && discount === 0 ? 'none' : 'flex';
+      el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 'flex';
+    }
+
+    async function printOffer() {
+      updateOffer();
+
+      if (!currentUser && isFreeTrialAvailable && !hasUsedFreeTrial()) {
+        markFreeTrialUsed();
+        alert('Ovo je vaša jedna besplatna probna ponuda. Nakon ovoga potrebno je da se prijavite i izaberete paket.');
+        setTimeout(function() { window.print(); }, 200);
+        return;
+      }
+
+      if (currentUser) {
+        await checkSubscription();
+      }
+
+      if (!isSubscriptionActive) {
+        alert('Za nastavak korišćenja potrebno je da se prijavite i izaberete paket u Cenovniku.');
+        if (!currentUser) {
+          showLoginMode();
+          showLoginModal('Napravite nalog ili se prijavite da biste nastavili.');
+        } else {
+          showPage('pricing');
+        }
+        return;
+      }
+
+      await saveOfferToDatabase();
+      await increaseUsedPrints();
+      setTimeout(function() { window.print(); }, 200);
+    }
+
+    async function saveOfferToDatabase() {
+      if (!currentUser) return;
+      var offerData = collectOfferData();
+      var totalAmount = Number(el('outTotal').textContent.replace(/\./g, '').replace(',', '.')) || 0;
+      await supabaseClient.from('offers').insert({ email: currentUser.email, offer_number: el('offerNumber').value, client_name: el('client').value, title: el('title').value, total_amount: totalAmount, currency: el('currency').value, offer_data: offerData });
+    }
+
+    async function increaseUsedPrints() {
+      if (!activeSubscription || activeSubscription.max_prints === null) return;
+      var newUsed = Number(activeSubscription.used_prints || 0) + 1;
+      await supabaseClient.from('subscriptions').update({ used_prints: newUsed }).eq('id', activeSubscription.id);
+      activeSubscription.used_prints = newUsed;
+    }
+
+    function collectOfferData() {
+      var items = [];
+      document.querySelectorAll('.item-box').forEach(function(box) {
+        items.push({ name: box.querySelector('.item-name').value, quantity: box.querySelector('.item-quantity').value, unit: box.querySelector('.item-unit').value, price: box.querySelector('.item-price').value });
+      });
+      return { company: el('company').value, companyAddress: el('companyAddress').value, companyPhone: el('companyPhone').value, companyEmail: el('companyEmail').value, companyPib: el('companyPib').value, companyMb: el('companyMb').value, bankAccount: el('bankAccount').value, paymentMethod: el('paymentMethod').value, offerNumber: el('offerNumber').value, title: el('title').value, deadline: el('deadline').value, validUntil: el('validUntil').value, client: el('client').value, clientAddress: el('clientAddress').value, currency: el('currency').value, items: items };
+    }
+
+    function resetExample() {
+      el('company').value = 'Moj Biznis';
+      el('companyAddress').value = 'Bulevar primer 12, Beograd';
+      el('companyPhone').value = '0603445446';
+      el('companyEmail').value = 'info@mojbiznis.rs';
+      el('companyPib').value = '123456789';
+      el('companyMb').value = '98765432';
+      el('bankAccount').value = '160-0000000000000-00';
+      el('paymentMethod').value = 'Po dogovoru';
+      el('offerNumber').value = '001/2026';
+      el('currency').value = '€';
+      el('title').value = 'Ponuda za renoviranje kupatila';
+      el('deadline').value = '5 dana';
+      el('validUntil').value = '10.05.2026.';
+      el('client').value = 'Petar Petrović';
+      el('clientAddress').value = 'Primer ulica 5, Beograd';
+      el('clientPhone').value = '';
+      el('clientEmail').value = '';
+      el('discount').value = '0';
+      el('tax').value = '0';
+      el('note').value = 'Ponuda važi do navedenog datuma. Cena može varirati ukoliko se obim posla promeni. Plaćanje se vrši po dogovoru.';
+      el('itemsContainer').innerHTML = '';
+      addItem('Demontaža postojećih pločica', 12, 'm²', 6);
+      addItem('Lepljenje novih pločica', 12, 'm²', 18);
+      addItem('Materijal i potrošni pribor', 1, 'paket', 100);
+      updateOffer();
+    }
+
+    function buyPlan(plan) {
+      if (!currentUser) {
+        showPage('pricing');
+        showLoginMode();
+        showLoginModal('Prvo se prijavite ili napravite nalog, pa zatim kupite paket.');
+        return;
+      }
+
+      if (!isPaddleReady) {
+        alert('Plaćanje još nije spremno. Proverite da li je Paddle client-side token unet u kod.');
+        return;
+      }
+
+      var priceId = '';
+      var planName = '';
+
+      if (plan === 'one_offer') { priceId = PADDLE_ONE_OFFER_PRICE_ID; planName = 'one_offer'; }
+      if (plan === 'monthly') { priceId = PADDLE_MONTHLY_PRICE_ID; planName = 'monthly'; }
+      if (plan === 'lifetime') { priceId = PADDLE_LIFETIME_PRICE_ID; planName = 'lifetime'; }
+
+      Paddle.Checkout.open({
+        items: [{ priceId: priceId, quantity: 1 }],
+        customer: { email: currentUser.email },
+        customData: { supabase_email: currentUser.email, plan: planName },
+        settings: { displayMode: 'overlay', theme: 'light', successUrl: window.location.origin + '/pricing?checkout=success' }
+      });
+    }
+  </script>
+</body>
+</html>
