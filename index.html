@@ -1148,10 +1148,14 @@
         return;
       }
 
-      await saveOfferToDatabase();
-      await increaseUsedPrints();
-      setTimeout(function() { window.print(); }, 200);
-    }
+     var canPrint = await increaseUsedPrints();
+
+if (!canPrint) {
+  return;
+}
+
+await saveOfferToDatabase();
+setTimeout(function() { window.print(); }, 200);
 
     async function saveOfferToDatabase() {
       if (!currentUser) return;
@@ -1160,12 +1164,23 @@
       await supabaseClient.from('offers').insert({ email: currentUser.email, offer_number: el('offerNumber').value, client_name: el('client').value, title: el('title').value, total_amount: totalAmount, currency: el('currency').value, offer_data: offerData });
     }
 
-    async function increaseUsedPrints() {
-      if (!activeSubscription || activeSubscription.max_prints === null) return;
-      var newUsed = Number(activeSubscription.used_prints || 0) + 1;
-      await supabaseClient.from('subscriptions').update({ used_prints: newUsed }).eq('id', activeSubscription.id);
-      activeSubscription.used_prints = newUsed;
-    }
+   async function increaseUsedPrints() {
+  if (!activeSubscription || activeSubscription.max_prints === null) {
+    return true;
+  }
+
+  const { data, error } = await supabaseClient.rpc('increment_print_usage');
+
+  if (error) {
+    console.error('Greška pri brojanju PDF skidanja:', error);
+    alert('Iskoristili ste broj PDF ponuda za ovaj paket. Izaberite novi paket u Cenovniku.');
+    await checkSubscription();
+    return false;
+  }
+
+  activeSubscription.used_prints = Number(activeSubscription.used_prints || 0) + 1;
+  return true;
+}
 
     function collectOfferData() {
       var items = [];
