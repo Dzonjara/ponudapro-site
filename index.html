@@ -1156,7 +1156,7 @@ if (!canPrint) {
 
 await saveOfferToDatabase();
 setTimeout(function() { window.print(); }, 200);
-
+}
     async function saveOfferToDatabase() {
       if (!currentUser) return;
       var offerData = collectOfferData();
