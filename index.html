@@ -910,7 +910,21 @@
       var planText = subscription.plan || 'aktivni paket';
 
       el('userStatusBox').style.display = 'block';
-      el('userStatusBox').innerHTML = '<strong>Prijavljeni ste:</strong> ' + currentUser.email + '<br><strong>Paket:</strong> ' + planText + '<br><strong>Važi još:</strong> ' + daysLeft + ' dana';
+      var statusHtml = '<strong>Prijavljeni ste:</strong> ' + currentUser.email;
+
+if (activeSubscription.plan === 'one_offer') {
+  var usedPrints = Number(activeSubscription.used_prints || 0);
+  var maxPrints = Number(activeSubscription.max_prints || 1);
+  var remainingPrints = Math.max(maxPrints - usedPrints, 0);
+
+  statusHtml += '<br><strong>Paket:</strong> Jedna PDF ponuda';
+  statusHtml += '<br><strong>Preostalo PDF skidanja:</strong> ' + remainingPrints + ' od ' + maxPrints;
+} else {
+  statusHtml += '<br><strong>Paket:</strong> ' + planText;
+  statusHtml += '<br><strong>Važi još:</strong> ' + daysLeft + ' dana';
+}
+
+el('userStatusBox').innerHTML = statusHtml;
       el('lockedMessage').style.display = 'none';
       el('lockedContent').classList.remove('locked-content');
       el('freeWatermark').style.display = 'none';
