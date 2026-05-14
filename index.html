@@ -52,7 +52,10 @@
       color: white;
       border-color: #2563eb;
     }
-
+    .language-btn {
+  min-width: 76px;
+  font-weight: 900;
+}
     .page {
       max-width: 1320px;
       margin: 0 auto;
@@ -417,11 +420,11 @@
       }
 
       .nav {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.75fr;
+  gap: 8px;
+}
 
       .nav button {
         width: 100%;
@@ -432,8 +435,8 @@
       }
 
       #logoutBtn {
-        grid-column: span 2;
-      }
+  grid-column: span 3;
+}
 
       .page {
         display: block;
@@ -813,20 +816,21 @@
   <div class="header">
     <div onclick="showPage('generator')" style="cursor:pointer;">
       <div class="brand">PonudaPro</div>
-      <div class="subtitle">Profesionalna platforma za izradu ponuda, predračuna i poslovne dokumentacije.</div>
+      <div class="subtitle" id="siteSubtitle">Profesionalna platforma za izradu ponuda, predračuna i poslovne dokumentacije.</div>
     </div>
 
     <div class="nav">
-      <button id="generatorNav" class="active" onclick="showPage('generator')">Generator</button>
-      <button id="pricingNav" onclick="showPage('pricing')">Cenovnik</button>
-      <button id="logoutBtn" onclick="logoutUser()" style="display:none;">Odjavi se</button>
-    </div>
+  <button id="generatorNav" class="active" onclick="showPage('generator')">Generator</button>
+  <button id="pricingNav" onclick="showPage('pricing')">Cenovnik</button>
+  <button id="languageToggle" class="ghost language-btn" onclick="toggleLanguage()">SR / EN</button>
+  <button id="logoutBtn" onclick="logoutUser()" style="display:none;">Odjavi se</button>
+</div>
   </div>
 
   <div class="page" id="generatorPage">
     <div class="card form-card">
-      <h1>Izrada poslovne ponude</h1>
-<p class="muted">Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.</p>
+     <h1 id="mainTitle">Izrada poslovne ponude</h1>
+<p class="muted" id="mainDescription">Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.</p>
 
       <div class="status-box" id="userStatusBox" style="display:none;"></div>
      <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
@@ -873,7 +877,18 @@
         <h2>Podaci dokumenta</h2>
         <div class="two">
           <div><label>Broj ponude</label><input id="offerNumber" value="001/2026" oninput="updateOffer()" /></div>
-          <div><label>Valuta</label><select id="currency" onchange="updateOffer()"><option value="€">€</option><option value="RSD">RSD</option></select></div>
+          <div>
+  <label id="currencyInputLabel">Valuta</label>
+  <select id="currency" onchange="updateOffer()">
+    <option value="RSD">RSD</option>
+    <option value="€">EUR (€)</option>
+    <option value="$">USD ($)</option>
+    <option value="£">GBP (£)</option>
+    <option value="CHF">CHF</option>
+    <option value="CAD">CAD</option>
+    <option value="AUD">AUD</option>
+  </select>
+</div>
         </div>
         <label>Naziv ponude</label><input id="title" value="Ponuda za renoviranje kupatila" oninput="updateOffer()" />
         <div class="two">
@@ -920,8 +935,20 @@
 
       <div class="offer-title" id="outTitle"></div>
       <div class="info-grid">
-        <div class="info-box"><strong>Podaci o klijentu</strong><span id="outClient"></span><br><span id="outClientAddress"></span><br><span id="outClientPhone"></span><br><span id="outClientEmail"></span></div>
-        <div class="info-box"><strong>Uslovi ponude</strong>Rok izrade: <span id="outDeadline"></span><br>Valuta: <span id="outCurrencyInfo"></span><br>Status: informativna ponuda</div>
+        <div class="info-box">
+  <strong id="clientBoxTitle">Podaci o klijentu</strong><br>
+  <span id="outClient"></span><br>
+  <span id="outClientAddress"></span><br>
+  <span id="outClientPhone"></span><br>
+  <span id="outClientEmail"></span>
+</div>
+
+<div class="info-box">
+  <strong id="termsBoxTitle">Uslovi ponude</strong><br>
+  <span id="deadlineLabel">Rok izrade:</span> <span id="outDeadline"></span><br>
+  <span id="currencyLabel">Valuta:</span> <span id="outCurrencyInfo"></span><br>
+  <span id="statusLabel">Status:</span> <span id="statusText">informativna ponuda</span>
+</div>
       </div>
 
       <table>
@@ -937,8 +964,8 @@
       </div>
 
       <div class="payment-box">
-        <div class="payment-card"><strong>Način plaćanja</strong><span id="outPaymentMethod"></span></div>
-        <div class="payment-card"><strong>Instrukcije za uplatu</strong><span id="outBankAccount"></span></div>
+        <div class="payment-card"><strong>Način plaćanja</strong><br><span id="outPaymentMethod"></span></div>
+<div class="payment-card"><strong>Instrukcije za uplatu</strong><br><span id="outBankAccount"></span></div>
       </div>
 
       <div class="note" id="outNote"></div>
@@ -948,20 +975,17 @@
         <div class="signature-box"><div class="signature-image-box" id="outSignature"></div><div class="signature-line">Potpis odgovornog lica</div></div>
       </div>
 
-      <div class="footer-text">
-        <span id="freeWatermark">PonudaPro</span>
-        <span id="paidFooter" style="display:none;">Dokument je izrađen elektronski i važi prema uslovima navedenim u dokumentu.</span>
-        <div class="license-line" id="licenseLine" style="display:none;"></div>
-      </div>
+     <div class="footer-text">
+  <span id="freeWatermark">PonudaPro</span>
+</div>
       <button class="print-button" onclick="printOffer()">Preuzmi kao PDF</button>
     </div>
   </div>
 
   <div class="pricing-page" id="pricingPage">
   <div class="pricing-hero">
-  <h1>Paketi i pristup</h1>
-  <p>Izaberite paket koji odgovara obimu vašeg poslovanja i načinu korišćenja. Svi plaćeni paketi omogućavaju izradu profesionalnih PDF dokumenata bez PonudaPro oznake.</p>
-</div>
+  <h1 id="pricingTitle">Paketi i pristup</h1>
+<p id="pricingDescription">Izaberite paket koji odgovara obimu vašeg poslovanja i načinu korišćenja. Svi plaćeni paketi omogućavaju izradu profesionalnih PDF dokumenata bez PonudaPro oznake.</p>
 
 <div class="pricing-grid">
   <div class="price-card">
@@ -981,8 +1005,8 @@
     <div class="tag">Najčešći izbor</div>
     <div class="price-name">Business Monthly</div>
     <div class="price-desc">Mesečni pristup za firme koje redovno pripremaju i šalju poslovne ponude.</div>
-    <div class="price">2.990 RSD</div>
-    <div class="price-small">naplaćuje se oko 25.49 € mesečno preko Paddle-a</div>
+    <div class="price">4.999 RSD</div>
+    <div class="price-small">naplaćuje se oko 42.99 € mesečno preko Paddle-a</div>
     <ul class="features">
       <li>Neograničen broj PDF dokumenata tokom 30 dana</li>
       <li>Dokumenti bez PonudaPro oznake</li>
@@ -1047,8 +1071,66 @@
     var PADDLE_MONTHLY_PRICE_ID = 'pri_01kqyr3eqfgg1t0v3kt486rezf';
     var PADDLE_LIFETIME_PRICE_ID = 'pri_01kqyr7w6fzxbjfks5prwmx5fz';
     var isPaddleReady = false;
+var currentLanguage = localStorage.getItem('ponudapro_language') || 'sr';
 
-    function el(id) { return document.getElementById(id); }
+function el(id) { return document.getElementById(id); }
+
+function setText(id, text) {
+  var element = el(id);
+  if (element) element.textContent = text;
+}
+
+function toggleLanguage() {
+  currentLanguage = currentLanguage === 'sr' ? 'en' : 'sr';
+  localStorage.setItem('ponudapro_language', currentLanguage);
+  applyLanguage();
+}
+
+function applyLanguage() {
+  if (currentLanguage === 'en') {
+    document.documentElement.lang = 'en';
+
+    setText('siteSubtitle', 'Professional platform for creating offers, quotes and business documentation.');
+    setText('generatorNav', 'Generator');
+    setText('pricingNav', 'Pricing');
+    setText('logoutBtn', 'Log out');
+    setText('languageToggle', 'EN / SR');
+
+    setText('mainTitle', 'Create a business offer');
+    setText('mainDescription', 'Create a clean, branded and ready-to-send PDF document for clients or internal records.');
+
+    setText('clientBoxTitle', 'Client information');
+    setText('termsBoxTitle', 'Offer terms');
+    setText('deadlineLabel', 'Delivery time:');
+    setText('currencyLabel', 'Currency:');
+    setText('statusLabel', 'Status:');
+    setText('statusText', 'informational offer');
+
+    setText('pricingTitle', 'Plans and access');
+    setText('pricingDescription', 'Choose a plan that matches your business volume and usage needs. All paid plans allow you to create professional PDF documents without the PonudaPro mark.');
+  } else {
+    document.documentElement.lang = 'sr';
+
+    setText('siteSubtitle', 'Profesionalna platforma za izradu ponuda, predračuna i poslovne dokumentacije.');
+    setText('generatorNav', 'Generator');
+    setText('pricingNav', 'Cenovnik');
+    setText('logoutBtn', 'Odjavi se');
+    setText('languageToggle', 'SR / EN');
+
+    setText('mainTitle', 'Izrada poslovne ponude');
+    setText('mainDescription', 'Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.');
+
+    setText('clientBoxTitle', 'Podaci o klijentu');
+    setText('termsBoxTitle', 'Uslovi ponude');
+    setText('deadlineLabel', 'Rok izrade:');
+    setText('currencyLabel', 'Valuta:');
+    setText('statusLabel', 'Status:');
+    setText('statusText', 'informativna ponuda');
+
+    setText('pricingTitle', 'Paketi i pristup');
+    setText('pricingDescription', 'Izaberite paket koji odgovara obimu vašeg poslovanja i načinu korišćenja. Svi plaćeni paketi omogućavaju izradu profesionalnih PDF dokumenata bez PonudaPro oznake.');
+  }
+}
 
     function initPaddleCheckout() {
       try {
@@ -1107,13 +1189,14 @@
     }
 
     async function initApp() {
-      el('outDate').textContent = new Date().toLocaleDateString('sr-RS');
-      initPaddleCheckout();
-      resetExample();
-      await checkSession();
-      updateOffer();
-      routePage();
-    }
+  el('outDate').textContent = new Date().toLocaleDateString('sr-RS');
+  initPaddleCheckout();
+  resetExample();
+  applyLanguage();
+  await checkSession();
+  updateOffer();
+  routePage();
+}
 
     async function checkSession() {
       const { data } = await supabaseClient.auth.getSession();
@@ -1300,15 +1383,6 @@ el('userStatusBox').innerHTML = statusHtml;
       el('lockedMessage').style.display = 'none';
       el('lockedContent').classList.remove('locked-content');
       el('freeWatermark').style.display = 'none';
-      el('paidFooter').style.display = 'inline';
-      el('licenseLine').style.display = 'block';
-      var footerPlanText = planText;
-
-if (activeSubscription.plan === 'one_offer') {
-  footerPlanText = 'Jedna PDF ponuda';
-}
-
-el('licenseLine').textContent = 'Korisnik: ' + currentUser.email + ' | Paket: ' + footerPlanText;
       hideLoginModal();
     }
 
@@ -1318,8 +1392,6 @@ el('licenseLine').textContent = 'Korisnik: ' + currentUser.email + ' | Paket: ' 
       el('lockedMessage').style.display = 'none';
       el('lockedContent').classList.remove('locked-content');
       el('freeWatermark').style.display = 'inline';
-      el('paidFooter').style.display = 'none';
-      el('licenseLine').style.display = 'none';
       hideLoginModal();
     }
 
@@ -1329,8 +1401,6 @@ el('licenseLine').textContent = 'Korisnik: ' + currentUser.email + ' | Paket: ' 
       el('lockedMessage').style.display = 'block';
       el('lockedContent').classList.add('locked-content');
       el('freeWatermark').style.display = 'inline';
-      el('paidFooter').style.display = 'none';
-      el('licenseLine').style.display = 'none';
       isSubscriptionActive = false;
 
       if (!currentUser) {
