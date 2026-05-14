@@ -364,17 +364,381 @@
     .policy-card ul { margin: 10px 0 10px 22px; }
     .policy-back { display: inline-block; margin-bottom: 16px; color: #2563eb; font-weight: 900; cursor: pointer; }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
+    button,
+    .btn,
+    .nav button {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    button:active,
+    .btn:active,
+    .nav button:active {
+      transform: scale(0.98);
+    }
+
     @media (max-width: 980px) {
       .page, .pricing-grid, .explain-grid { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 700px) {
-      .header { flex-direction: column; align-items: flex-start; }
-      .two, .three, .upload-grid, .offer-header, .info-grid, .payment-box, .signature-area { grid-template-columns: 1fr; }
-      .card { padding: 20px; }
-      .top-line { margin: -20px -20px 20px; }
-      .offer-meta { text-align: left; }
-      .summary { width: 100%; }
+       @media (max-width: 700px) {
+      body {
+        background: #f8fafc;
+        overflow-x: hidden;
+      }
+
+      .header {
+        padding: 16px 14px 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        background: rgba(248, 250, 252, 0.96);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .brand {
+        font-size: 25px;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        font-size: 13px;
+        line-height: 1.45;
+        margin-top: 6px;
+        max-width: 100%;
+      }
+
+      .nav {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .nav button {
+        width: 100%;
+        margin: 0;
+        padding: 11px 10px;
+        font-size: 13px;
+        border-radius: 12px;
+      }
+
+      #logoutBtn {
+        grid-column: span 2;
+      }
+
+      .page {
+        display: block;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      .form-card {
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 1.15;
+        margin-bottom: 8px;
+      }
+
+      h2 {
+        font-size: 16px;
+        margin-top: 22px;
+        padding-top: 16px;
+      }
+
+      .muted {
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      label {
+        font-size: 13px;
+        margin-top: 11px;
+      }
+
+      input,
+      select,
+      textarea {
+        font-size: 16px;
+        padding: 13px 12px;
+        border-radius: 12px;
+      }
+
+      textarea {
+        min-height: 96px;
+      }
+
+      button,
+      .btn {
+        padding: 14px 14px;
+        font-size: 14px;
+        border-radius: 13px;
+      }
+
+      .two,
+      .three,
+      .upload-grid,
+      .offer-header,
+      .info-grid,
+      .payment-box,
+      .signature-area,
+      .explain-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .upload-grid {
+        gap: 10px;
+      }
+
+      .upload-card {
+        padding: 12px;
+      }
+
+      .upload-preview {
+        height: 86px;
+      }
+
+      .status-box,
+      .locked-message,
+      .item-box,
+      .upload-card,
+      .info-box,
+      .payment-card,
+      .note {
+        border-radius: 14px;
+        padding: 13px;
+      }
+
+      .locked-message {
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .offer {
+        min-height: auto;
+        margin-top: 16px;
+      }
+
+      .top-line {
+        height: 6px;
+        margin: -18px -18px 18px;
+        border-radius: 18px 18px 0 0;
+      }
+
+      .offer-header {
+        gap: 14px;
+        padding-bottom: 16px;
+        margin-bottom: 18px;
+      }
+
+      .company-block {
+        gap: 12px;
+      }
+
+      .offer-logo {
+        width: 76px;
+        height: 58px;
+        flex-shrink: 0;
+      }
+
+      .brand-name {
+        font-size: 21px;
+        line-height: 1.2;
+      }
+
+      .offer-meta {
+        text-align: left;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 12px;
+        font-size: 13px;
+      }
+
+      .offer-title {
+        font-size: 22px;
+        line-height: 1.25;
+        margin-bottom: 16px;
+      }
+
+      .info-box,
+      .payment-card {
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 13px;
+        border-radius: 12px;
+      }
+
+      th,
+      td {
+        padding: 10px 8px;
+      }
+
+      .summary {
+        width: 100%;
+        margin-top: 16px;
+        border-radius: 14px;
+      }
+
+      .sum-row {
+        padding: 11px 13px;
+        font-size: 13px;
+      }
+
+      .sum-total {
+        font-size: 17px;
+      }
+
+      .signature-area {
+        margin-top: 28px;
+        gap: 22px;
+      }
+
+      .stamp-box {
+        height: 80px;
+      }
+
+      .signature-image-box {
+        height: 58px;
+      }
+
+      .footer-text {
+        font-size: 11px;
+        line-height: 1.45;
+      }
+
+      .print-button {
+        position: sticky;
+        bottom: 12px;
+        z-index: 900;
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.32);
+      }
+
+      .pricing-page {
+        padding: 18px 14px 40px;
+      }
+
+      .pricing-hero {
+        text-align: left;
+        margin-bottom: 18px;
+      }
+
+      .pricing-hero h1 {
+        font-size: 28px;
+      }
+
+      .pricing-hero p {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .price-card {
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      .price-card.featured {
+        border-width: 2px;
+      }
+
+      .tag {
+        position: static;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+
+      .price-name {
+        font-size: 20px;
+      }
+
+      .price-desc {
+        min-height: auto;
+        font-size: 13px;
+      }
+
+      .price {
+        font-size: 30px;
+      }
+
+      .features li {
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .explain-box {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .simple-box {
+        font-size: 13px;
+      }
+
+      .login-modal {
+        max-width: 100%;
+        padding: 22px;
+        border-radius: 20px;
+      }
+
+      .login-modal h2 {
+        font-size: 24px;
+      }
+
+      .auth-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .site-footer {
+        padding: 18px 16px 28px;
+        display: block;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .site-footer a {
+        display: inline-block;
+        margin: 8px 10px 0 0;
+      }
+
+      .policy-page {
+        padding: 18px 14px 40px;
+      }
+
+      .policy-card {
+        padding: 20px;
+        border-radius: 18px;
+        font-size: 14px;
+      }
     }
 
     @media print {
@@ -411,11 +775,11 @@
 <body onload="initApp()">
   <div id="loginOverlay" class="login-overlay">
     <div class="login-modal">
-      <div class="login-badge">PonudaPro pristup</div>
+      <div class="login-badge">Korisnički pristup</div>
 
       <div id="loginMode">
         <h2>Prijavi se</h2>
-        <p>Prijavite se svojim nalogom. Ako vam je paket aktiviran, generator će se automatski otključati.</p>
+        <p>Prijavite se svojim nalogom. Ako je pristup aktivan, platforma će automatski učitati vaš paket.</p>
         <button class="google-login-btn" onclick="loginWithGoogle()"><span class="google-icon">G</span> Nastavi sa Google nalogom</button>
         <div class="login-divider">ili</div>
         <label>Email</label>
@@ -442,14 +806,14 @@
       </div>
 
       <div id="authMessage" class="login-error">Unesite email i lozinku za prijavu.</div>
-      <div class="mini-note">Ako još nemate aktivan paket, idite na <strong>Cenovnik</strong> i izaberite paket.</div>
+      <div class="mini-note">Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
     </div>
   </div>
 
   <div class="header">
     <div onclick="showPage('generator')" style="cursor:pointer;">
       <div class="brand">PonudaPro</div>
-      <div class="subtitle">Generator profesionalnih PDF ponuda za majstore i male biznise.</div>
+      <div class="subtitle">Profesionalna platforma za izradu ponuda, predračuna i poslovne dokumentacije.</div>
     </div>
 
     <div class="nav">
@@ -461,11 +825,11 @@
 
   <div class="page" id="generatorPage">
     <div class="card form-card">
-      <h1>Generator ponuda</h1>
-      <p class="muted">Za korišćenje generatora morate biti prijavljeni i imati aktivan paket.</p>
+      <h1>Izrada poslovne ponude</h1>
+<p class="muted">Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.</p>
 
       <div class="status-box" id="userStatusBox" style="display:none;"></div>
-      <div class="locked-message" id="lockedMessage"><strong>Generator je zaključan.</strong><br>Prijavite se i proverite da li imate aktivan paket. Ako nemate paket, idite na <strong>Cenovnik</strong>.</div>
+     <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
 
       <div id="lockedContent" class="locked-content">
         <h2>Logo, pečat i potpis</h2>
@@ -502,11 +866,11 @@
           <div><label>Matični broj</label><input id="companyMb" value="98765432" oninput="updateOffer()" /></div>
         </div>
         <div class="two">
-          <div><label>Žiro račun</label><input id="bankAccount" value="160-0000000000000-00" oninput="updateOffer()" /></div>
-          <div><label>Način plaćanja</label><select id="paymentMethod" onchange="updateOffer()"><option>Po dogovoru</option><option>Gotovina</option><option>Uplata na račun</option><option>Avans 50% / ostatak po završetku</option></select></div>
+          <div><label>Instrukcije za uplatu</label><input id="bankAccount" value="160-0000000000000-00" oninput="updateOffer()" /></div>
+          <div><label>Način plaćanja</label><select id="paymentMethod" onchange="updateOffer()"><option>Po dogovoru</option><option>Gotovina</option><option>Bankarski transfer</option><option>Avans 50% / ostatak po završetku</option></select></div>
         </div>
 
-        <h2>Podaci ponude</h2>
+        <h2>Podaci dokumenta</h2>
         <div class="two">
           <div><label>Broj ponude</label><input id="offerNumber" value="001/2026" oninput="updateOffer()" /></div>
           <div><label>Valuta</label><select id="currency" onchange="updateOffer()"><option value="€">€</option><option value="RSD">RSD</option></select></div>
@@ -574,7 +938,7 @@
 
       <div class="payment-box">
         <div class="payment-card"><strong>Način plaćanja</strong><span id="outPaymentMethod"></span></div>
-        <div class="payment-card"><strong>Žiro račun</strong><span id="outBankAccount"></span></div>
+        <div class="payment-card"><strong>Instrukcije za uplatu</strong><span id="outBankAccount"></span></div>
       </div>
 
       <div class="note" id="outNote"></div>
@@ -586,7 +950,7 @@
 
       <div class="footer-text">
         <span id="freeWatermark">PonudaPro</span>
-        <span id="paidFooter" style="display:none;">Ova ponuda je izrađena elektronski i važi do datuma navedenog u dokumentu.</span>
+        <span id="paidFooter" style="display:none;">Dokument je izrađen elektronski i važi prema uslovima navedenim u dokumentu.</span>
         <div class="license-line" id="licenseLine" style="display:none;"></div>
       </div>
       <button class="print-button" onclick="printOffer()">Preuzmi kao PDF</button>
@@ -595,59 +959,59 @@
 
   <div class="pricing-page" id="pricingPage">
   <div class="pricing-hero">
-    <h1>Cenovnik i paketi</h1>
-    <p>Možete koristiti PonudaPro za probu. Ako želite profesionalne ponude bez oznake PonudaPro i sa svim opcijama, izaberite paket.</p>
-  </div>
+  <h1>Paketi i pristup</h1>
+  <p>Izaberite paket koji odgovara obimu vašeg poslovanja i načinu korišćenja. Svi plaćeni paketi omogućavaju izradu profesionalnih PDF dokumenata bez PonudaPro oznake.</p>
+</div>
 
-  <div class="pricing-grid">
+<div class="pricing-grid">
   <div class="price-card">
-    <div class="price-name">Jedna ponuda</div>
-    <div class="price-desc">Za one kojima treba samo jedna PDF ponuda.</div>
-    <div class="price">299 RSD</div>
-    <div class="price-small">naplaćuje se 2.49 € preko Paddle-a</div>
+    <div class="price-name">Single Document</div>
+    <div class="price-desc">Jednokratni pristup za izradu jednog profesionalnog PDF dokumenta.</div>
+    <div class="price">990 RSD</div>
+    <div class="price-small">naplaćuje se oko 8.49 € preko Paddle-a</div>
     <ul class="features">
-      <li>1 PDF ponuda</li>
-      <li>Bez PonudaPro oznake</li>
-      <li>Logo, pečat i potpis</li>
+      <li>1 PDF dokument</li>
+      <li>Dokument bez PonudaPro oznake</li>
+      <li>Logo, pečat, potpis i poslovni podaci</li>
     </ul>
-    <button onclick="buyPlan('one_offer')">Plati karticom / PayPal</button>
+    <button onclick="buyPlan('one_offer')">Aktiviraj paket</button>
   </div>
 
   <div class="price-card featured">
-    <div class="tag">Najpopularnije</div>
-    <div class="price-name">Mesečni paket</div>
-    <div class="price-desc">Za majstore i firme koji često šalju ponude.</div>
-    <div class="price">999 RSD</div>
-    <div class="price-small">naplaćuje se 8.49 € mesečno preko Paddle-a</div>
+    <div class="tag">Najčešći izbor</div>
+    <div class="price-name">Business Monthly</div>
+    <div class="price-desc">Mesečni pristup za firme koje redovno pripremaju i šalju poslovne ponude.</div>
+    <div class="price">2.990 RSD</div>
+    <div class="price-small">naplaćuje se oko 25.49 € mesečno preko Paddle-a</div>
     <ul class="features">
-      <li>Neograničeno PDF ponuda 30 dana</li>
-      <li>Bez PonudaPro oznake</li>
-      <li>Sve funkcije alata</li>
+      <li>Neograničen broj PDF dokumenata tokom 30 dana</li>
+      <li>Dokumenti bez PonudaPro oznake</li>
+      <li>Kompletan pristup svim funkcijama</li>
     </ul>
-    <button onclick="buyPlan('monthly')">Plati karticom / PayPal</button>
+    <button onclick="buyPlan('monthly')">Aktiviraj paket</button>
   </div>
 
   <div class="price-card">
-    <div class="price-name">Trajni pristup</div>
-    <div class="price-desc">Za one koji ne žele mesečno plaćanje.</div>
-    <div class="price">4.999 RSD</div>
-    <div class="price-small">naplaćuje se 42.49 € preko Paddle-a</div>
+    <div class="price-name">Lifetime Access</div>
+    <div class="price-desc">Trajni pristup za korisnike koji žele dugoročno rešenje bez mesečne pretplate.</div>
+    <div class="price">24.990 RSD</div>
+    <div class="price-small">naplaćuje se oko 212.99 € preko Paddle-a</div>
     <ul class="features">
-      <li>Koristite alat bez mesečne pretplate</li>
-      <li>Bez PonudaPro oznake</li>
-      <li>Sve funkcije alata</li>
+      <li>Trajni pristup platformi</li>
+      <li>Dokumenti bez PonudaPro oznake</li>
+      <li>Kompletan pristup svim funkcijama</li>
     </ul>
-    <button onclick="buyPlan('lifetime')">Plati karticom / PayPal</button>
+    <button onclick="buyPlan('lifetime')">Aktiviraj paket</button>
   </div>
 </div>
 
   <div class="explain-box">
-    <h2>Kako funkcioniše plaćanje?</h2>
+    <h2>Kako funkcioniše aktivacija?</h2>
     <div class="explain-grid">
-      <div class="simple-box"><strong>1. Prijavite se</strong><br>Napravite nalog ili se prijavite preko Google naloga.</div>
-      <div class="simple-box"><strong>2. Izaberite paket</strong><br>Kliknite na dugme za plaćanje karticom / PayPal-om.</div>
-      <div class="simple-box"><strong>3. Plaćanje se obrađuje preko Paddle-a</strong><br>Kartični podaci se ne čuvaju na PonudaPro sajtu.</div>
-      <div class="simple-box"><strong>4. Aktivacija paketa</strong><br>Nakon plaćanja paket se vezuje za email nalog kojim ste prijavljeni.</div>
+      <div class="simple-box"><strong>1. Prijava na nalog</strong><br>Prijavite se email adresom ili putem Google naloga.</div>
+      <div class="simple-box"><strong>2. Izbor paketa</strong><br>Izaberite paket koji odgovara vašem načinu korišćenja.</div>
+      <div class="simple-box"><strong>3. Sigurna obrada plaćanja</strong><br>Plaćanje se obrađuje preko Paddle platforme. Podaci platne kartice se ne čuvaju na PonudaPro sajtu.</div>
+      <div class="simple-box"><strong>4. Automatska aktivacija</strong><br>Nakon uspešnog plaćanja, pristup se povezuje sa email adresom vašeg naloga.</div>
     </div>
   </div>
 </div>
@@ -768,7 +1132,7 @@
           unlockFreeTrial();
         } else {
           isFreeTrialAvailable = false;
-          lockGenerator('Probna ponuda je iskorišćena. Prijavite se ili napravite nalog da biste nastavili.');
+          lockGenerator('Probni pristup je iskorišćen. Prijavite se ili napravite nalog da biste nastavili.');
         }
       }
     }
@@ -860,7 +1224,7 @@
 
     async function checkSubscription() {
       if (!currentUser) {
-        lockGenerator('Prijavite se da biste koristili generator.');
+        lockGenerator('Prijavite se da biste koristili platformu.');
         return;
       }
 
@@ -950,7 +1314,7 @@ el('licenseLine').textContent = 'Korisnik: ' + currentUser.email + ' | Paket: ' 
 
     function unlockFreeTrial() {
       el('userStatusBox').style.display = 'block';
-      el('userStatusBox').innerHTML = '<strong>Probna verzija:</strong> Možete napraviti 1 probnu PDF ponudu na ovom računaru.';
+      el('userStatusBox').innerHTML = '<strong>Probni pristup:</strong> Možete izraditi 1 probni PDF dokument na ovom uređaju.';
       el('lockedMessage').style.display = 'none';
       el('lockedContent').classList.remove('locked-content');
       el('freeWatermark').style.display = 'inline';
@@ -1008,7 +1372,7 @@ el('licenseLine').textContent = 'Korisnik: ' + currentUser.email + ' | Paket: ' 
           '<p>Users may use PonudaPro to create offers for their own business or client work. Users are responsible for the accuracy of all information entered into the generator.</p>' +
           '<p>Paid plans give access to the features described on the pricing page. PonudaPro does not provide legal, tax, accounting, or financial advice.</p>' +
           '<h2>Srpski</h2>' +
-          '<p>PonudaPro je web SaaS alat za kreiranje profesionalnih PDF ponuda, predračuna i poslovnih dokumenata.</p>' +
+          '<p>PonudaPro je web SaaS platforma za kreiranje profesionalnih PDF ponuda, komercijalnih dokumenata i poslovne dokumentacije.</p>' +
           '<p>Korisnik je odgovoran za tačnost svih podataka koje unese u generator, uključujući cene, poreze, podatke o klijentu, uslove plaćanja i podatke firme.</p>' +
           '<p>PonudaPro ne pruža pravne, poreske, računovodstvene ili finansijske savete.</p>' +
           '<h2>Contact / Kontakt</h2>' +
@@ -1156,7 +1520,7 @@ el('licenseLine').textContent = 'Korisnik: ' + currentUser.email + ' | Paket: ' 
 
       if (!currentUser && isFreeTrialAvailable && !hasUsedFreeTrial()) {
         markFreeTrialUsed();
-        alert('Ovo je vaša jedna besplatna probna ponuda. Nakon ovoga potrebno je da se prijavite i izaberete paket.');
+        alert('Ovo je vaš jedan besplatan probni PDF dokument. Nakon toga je potrebno da se prijavite i izaberete paket.');
         setTimeout(function() { window.print(); }, 200);
         return;
       }
@@ -1229,7 +1593,7 @@ setTimeout(function() { window.print(); }, 200);
       el('paymentMethod').value = 'Po dogovoru';
       el('offerNumber').value = '001/2026';
       el('currency').value = '€';
-      el('title').value = 'Ponuda za renoviranje kupatila';
+      el('title').value = 'Ponuda za poslovne usluge';
       el('deadline').value = '5 dana';
       el('validUntil').value = '10.05.2026.';
       el('client').value = 'Petar Petrović';
@@ -1238,11 +1602,11 @@ setTimeout(function() { window.print(); }, 200);
       el('clientEmail').value = '';
       el('discount').value = '0';
       el('tax').value = '0';
-      el('note').value = 'Ponuda važi do navedenog datuma. Cena može varirati ukoliko se obim posla promeni. Plaćanje se vrši po dogovoru.';
+      el('note').value = 'Dokument važi do navedenog datuma. Konačni uslovi realizacije, rokovi i način plaćanja definišu se u dogovoru sa klijentom.';
       el('itemsContainer').innerHTML = '';
-      addItem('Demontaža postojećih pločica', 12, 'm²', 6);
-      addItem('Lepljenje novih pločica', 12, 'm²', 18);
-      addItem('Materijal i potrošni pribor', 1, 'paket', 100);
+      addItem('Priprema i organizacija projekta', 1, 'paket', 120);
+      addItem('Izrada i realizacija usluge', 1, 'paket', 480);
+      addItem('Završna obrada i isporuka dokumentacije', 1, 'paket', 150);
       updateOffer();
     }
 
@@ -1255,7 +1619,7 @@ setTimeout(function() { window.print(); }, 200);
       }
 
       if (!isPaddleReady) {
-        alert('Plaćanje još nije spremno. Proverite da li je Paddle client-side token unet u kod.');
+        alert('Plaćanje trenutno nije spremno. Pokušajte ponovo za nekoliko trenutaka.');
         return;
       }
 
