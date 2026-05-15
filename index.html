@@ -1541,10 +1541,31 @@ el('userStatusBox').innerHTML = statusHtml;
       }
     }
 
-   function showPage(page) {
+  function showPage(page) {
+  el('policyPage').style.display = 'none';
 
-    function showPolicy(type) {
-      var content = '';
+  if (page === 'pricing') {
+    el('landingSection').style.display = 'none';
+    el('generatorPage').style.display = 'none';
+    el('pricingPage').style.display = 'block';
+    el('generatorNav').classList.remove('active');
+    el('pricingNav').classList.add('active');
+    if (window.location.pathname !== '/pricing') history.pushState(null, '', '/pricing');
+  } else {
+    el('landingSection').style.display = 'block';
+    el('generatorPage').style.display = 'grid';
+    el('pricingPage').style.display = 'none';
+    el('policyPage').style.display = 'none';
+    el('pricingNav').classList.remove('active');
+    el('generatorNav').classList.add('active');
+    if (window.location.pathname !== '/') history.pushState(null, '', '/');
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function showPolicy(type) {
+  var content = '';
 
       if (type === 'terms') {
   content = '<h1>Terms of Service / Uslovi korišćenja</h1>' +
