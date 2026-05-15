@@ -366,7 +366,79 @@
     .policy-card p { margin: 10px 0; }
     .policy-card ul { margin: 10px 0 10px 22px; }
     .policy-back { display: inline-block; margin-bottom: 16px; color: #2563eb; font-weight: 900; cursor: pointer; }
+    .landing-section {
+  max-width: 1320px;
+  margin: 22px auto 0;
+  padding: 0 20px;
+}
 
+.landing-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.10);
+  border-radius: 24px;
+  padding: 34px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.landing-kicker {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+
+.landing-card h1 {
+  font-size: 42px;
+  line-height: 1.05;
+  margin: 0 0 14px;
+}
+
+.landing-card p {
+  color: #475569;
+  line-height: 1.65;
+  font-size: 15px;
+  margin: 0 0 14px;
+}
+
+.landing-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.landing-actions button {
+  width: auto;
+  margin-top: 0;
+  padding: 13px 18px;
+}
+
+.landing-points {
+  display: grid;
+  gap: 12px;
+}
+
+.landing-point {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 15px;
+  color: #334155;
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.landing-point strong {
+  color: #0f172a;
+}
     html {
       scroll-behavior: smooth;
     }
@@ -742,12 +814,41 @@
         border-radius: 18px;
         font-size: 14px;
       }
+         .landing-section {
+  padding: 0 14px;
+  margin-top: 14px;
+}
+
+.landing-card {
+  grid-template-columns: 1fr;
+  padding: 22px;
+  border-radius: 20px;
+  gap: 20px;
+}
+
+.landing-card h1 {
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.landing-card p {
+  font-size: 14px;
+}
+
+.landing-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.landing-actions button {
+  width: 100%;
+}
     }
 
     @media print {
       @page { size: A4; margin: 8mm; }
       body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .header, .form-card, .print-button, .pricing-page, .policy-page, .login-overlay, .site-footer { display: none !important; }
+     .header, .landing-section, .form-card, .print-button, .pricing-page, .policy-page, .login-overlay, .site-footer { display: none !important; }
       .page { display: block !important; max-width: 100%; padding: 0; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; border-radius: 0; }
       .top-line { height: 5px; margin: 0 0 14px; border-radius: 0; }
@@ -826,7 +927,36 @@
   <button id="logoutBtn" onclick="logoutUser()" style="display:none;">Odjavi se</button>
 </div>
   </div>
+  
+   <section class="landing-section" id="landingSection">
+    <div class="landing-card">
+      <div>
+        <div class="landing-kicker">PonudaPro SaaS platforma</div>
+        <h1>Profesionalna izrada PDF ponuda i poslovnih dokumenata</h1>
+        <p>
+          PonudaPro je web platforma za kreiranje urednih, brendiranih i spremnih PDF dokumenata za poslovnu komunikaciju sa klijentima.
+        </p>
+        <p>
+          Korisnici mogu da unesu podatke firme, podatke klijenta, stavke usluge, cene, rokove, uslove plaćanja, logo, pečat i potpis, a zatim da dokument preuzmu kao PDF.
+        </p>
+        <p>
+          Plaćeni paketi omogućavaju izradu dokumenata bez PonudaPro oznake i pristup funkcijama prema izabranom paketu.
+        </p>
 
+        <div class="landing-actions">
+          <button onclick="showPage('generator')">Otvori generator</button>
+          <button class="secondary" onclick="showPage('pricing')">Pogledaj pakete</button>
+        </div>
+      </div>
+
+      <div class="landing-points">
+        <div class="landing-point"><strong>Namena:</strong><br>Izrada profesionalnih ponuda, predračuna, komercijalnih dokumenata i poslovnih PDF fajlova.</div>
+        <div class="landing-point"><strong>Za korisnike:</strong><br>Firme, agencije, pružaoce usluga, timove prodaje i sve korisnike koji redovno šalju poslovne ponude.</div>
+        <div class="landing-point"><strong>Podrška:</strong><br>Za pitanja, podršku i refund zahteve kontaktirajte support@ponuda-pro.com.</div>
+      </div>
+    </div>
+  </section>
+  
   <div class="page" id="generatorPage">
     <div class="card form-card">
      <h1 id="mainTitle">Izrada poslovne ponude</h1>
@@ -1046,7 +1176,7 @@
   </div>
 
   <div class="site-footer">
-    <div>© 2026 PonudaPro — Operated by Nikola Ivanovic — Contact: nivanovic505@gmail.com</div>
+    <div>© 2026 PonudaPro — Contact: support@ponuda-pro.com</div>
     <div>
       <a onclick="showPage('pricing')">Pricing</a>
       <a onclick="showPolicy('terms')">Terms / Uslovi</a>
@@ -1411,75 +1541,75 @@ el('userStatusBox').innerHTML = statusHtml;
       }
     }
 
-    function showPage(page) {
-      el('policyPage').style.display = 'none';
-
-      if (page === 'pricing') {
-        el('generatorPage').style.display = 'none';
-        el('pricingPage').style.display = 'block';
-        el('generatorNav').classList.remove('active');
-        el('pricingNav').classList.add('active');
-        if (window.location.pathname !== '/pricing') history.pushState(null, '', '/pricing');
-      } else {
-        el('generatorPage').style.display = 'grid';
-        el('pricingPage').style.display = 'none';
-        el('pricingNav').classList.remove('active');
-        el('generatorNav').classList.add('active');
-        if (window.location.pathname !== '/') history.pushState(null, '', '/');
-      }
-
-      window.scrollTo(0, 0);
-    }
+   function showPage(page) {
 
     function showPolicy(type) {
       var content = '';
 
       if (type === 'terms') {
-        content = '<h1>Terms of Service / Uslovi korišćenja</h1>' +
-          '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
-          '<h2>English</h2>' +
-          '<p>PonudaPro is a web-based SaaS tool for creating professional PDF offers, quotes, and business documents.</p>' +
-          '<p>Users may use PonudaPro to create offers for their own business or client work. Users are responsible for the accuracy of all information entered into the generator.</p>' +
-          '<p>Paid plans give access to the features described on the pricing page. PonudaPro does not provide legal, tax, accounting, or financial advice.</p>' +
-          '<h2>Srpski</h2>' +
-          '<p>PonudaPro je web SaaS platforma za kreiranje profesionalnih PDF ponuda, komercijalnih dokumenata i poslovne dokumentacije.</p>' +
-          '<p>Korisnik je odgovoran za tačnost svih podataka koje unese u generator, uključujući cene, poreze, podatke o klijentu, uslove plaćanja i podatke firme.</p>' +
-          '<p>PonudaPro ne pruža pravne, poreske, računovodstvene ili finansijske savete.</p>' +
-          '<h2>Contact / Kontakt</h2>' +
-          '<p>For support / Za podršku: nivanovic505@gmail.com</p>';
-        history.pushState(null, '', '/terms');
-      }
+  content = '<h1>Terms of Service / Uslovi korišćenja</h1>' +
+    '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
+
+    '<h2>English</h2>' +
+    '<p>PonudaPro is a web-based SaaS platform for creating professional PDF offers, quotes, commercial documents and business documentation.</p>' +
+    '<p>The platform allows users to enter company information, client information, itemized services, prices, payment terms, logo, stamp and signature, and export the document as a PDF.</p>' +
+    '<p>Users may use PonudaPro to create documents for their own business or client work. Users are responsible for the accuracy of all information entered into the platform.</p>' +
+    '<p>Paid plans provide access to the features described on the pricing page. PonudaPro does not provide legal, tax, accounting, or financial advice.</p>' +
+
+    '<h2>Srpski</h2>' +
+    '<p>PonudaPro je web SaaS platforma za kreiranje profesionalnih PDF ponuda, predračuna, komercijalnih dokumenata i poslovne dokumentacije.</p>' +
+    '<p>Platforma omogućava korisnicima da unesu podatke firme, podatke klijenta, stavke usluga, cene, uslove plaćanja, logo, pečat i potpis, i da dokument izvezu kao PDF.</p>' +
+    '<p>Korisnik je odgovoran za tačnost svih podataka koje unese u platformu, uključujući cene, poreze, podatke o klijentu, uslove plaćanja i podatke firme.</p>' +
+    '<p>PonudaPro ne pruža pravne, poreske, računovodstvene ili finansijske savete.</p>' +
+
+    '<h2>Contact / Kontakt</h2>' +
+    '<p>For support / Za podršku: support@ponuda-pro.com</p>';
+  history.pushState(null, '', '/terms');
+}
 
       if (type === 'privacy') {
-        content = '<h1>Privacy Policy / Politika privatnosti</h1>' +
-          '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
-          '<h2>English</h2>' +
-          '<p>PonudaPro collects only the information needed to provide the service, such as account email, subscription status, and offer data created by the user.</p>' +
-          '<p>Payments are processed by third-party payment providers. PonudaPro does not store full card details.</p>' +
-          '<h2>Srpski</h2>' +
-          '<p>PonudaPro prikuplja samo podatke koji su potrebni da servis radi, kao što su email naloga, status pretplate i podaci ponuda koje korisnik napravi.</p>' +
-          '<p>Plaćanja obrađuju nezavisni payment provajderi. PonudaPro ne čuva pune podatke platnih kartica.</p>' +
-          '<h2>Contact / Kontakt</h2>' +
-          '<p>For privacy questions / Za pitanja o privatnosti: nivanovic505@gmail.com</p>';
-        history.pushState(null, '', '/privacy');
-      }
+  content = '<h1>Privacy Policy / Politika privatnosti</h1>' +
+    '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
 
-      if (type === 'refund') {
-        content = '<h1>Refund Policy / Politika povraćaja novca</h1>' +
-          '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
-          '<h2>English</h2>' +
-          '<p>PonudaPro sells access to a digital SaaS tool. Refunds are handled fairly and depend on the type of plan purchased.</p>' +
-          '<p>If a one-time offer credit has not been used, a refund may be requested within 7 days of purchase.</p>' +
-          '<p>Monthly plans can be cancelled before the next billing period. Refund requests may be reviewed if the service was not used after purchase.</p>' +
-          '<h2>Srpski</h2>' +
-          '<p>PonudaPro prodaje pristup digitalnom SaaS alatu. Zahtevi za povraćaj novca razmatraju se fer i zavise od vrste kupljenog paketa.</p>' +
-          '<p>Za paket “Jedna ponuda”, povraćaj se može zatražiti u roku od 7 dana ako kredit za ponudu nije iskorišćen.</p>' +
-          '<p>Mesečni paket može se otkazati pre sledećeg obračunskog perioda.</p>' +
-          '<h2>How to request a refund / Kako zatražiti povraćaj</h2>' +
-          '<p>Contact / Kontakt: nivanovic505@gmail.com with your account email and purchase details.</p>';
-        history.pushState(null, '', '/refund');
-      }
+    '<h2>English</h2>' +
+    '<p>PonudaPro collects only the information needed to provide the service, such as account email, subscription status, payment status and offer data created by the user.</p>' +
+    '<p>Offer data may include company information, client information, document items, prices, payment terms, notes and uploaded visual elements such as logo, stamp or signature.</p>' +
+    '<p>Payments are processed by third-party payment providers. PonudaPro does not store full card details.</p>' +
 
+    '<h2>Srpski</h2>' +
+    '<p>PonudaPro prikuplja samo podatke koji su potrebni da servis radi, kao što su email naloga, status pretplate, status plaćanja i podaci dokumenata koje korisnik napravi.</p>' +
+    '<p>Podaci dokumenta mogu uključivati podatke firme, podatke klijenta, stavke dokumenta, cene, uslove plaćanja, napomene i otpremljene vizuelne elemente kao što su logo, pečat ili potpis.</p>' +
+    '<p>Plaćanja obrađuju nezavisni payment provajderi. PonudaPro ne čuva pune podatke platnih kartica.</p>' +
+
+    '<h2>Contact / Kontakt</h2>' +
+    '<p>For privacy questions / Za pitanja o privatnosti: support@ponuda-pro.com</p>';
+  history.pushState(null, '', '/privacy');
+}
+
+     if (type === 'refund') {
+  content = '<h1>Refund Policy / Politika povraćaja novca</h1>' +
+    '<p><strong>Last updated / Poslednje ažuriranje:</strong> 2026</p>' +
+
+    '<h2>English</h2>' +
+    '<p>PonudaPro provides access to a digital SaaS platform for creating professional PDF offers, quotes and business documents.</p>' +
+    '<p>Customers may request a refund within 14 days of purchase if they are not satisfied with the service.</p>' +
+    '<p>For one-time document access, a refund may be requested if the PDF document credit has not been used.</p>' +
+    '<p>Monthly access can be cancelled before the next billing period. Refund requests are reviewed based on account activity and service usage.</p>' +
+    '<p>Refunds are processed according to Paddle policies and applicable consumer protection laws.</p>' +
+
+    '<h2>Srpski</h2>' +
+    '<p>PonudaPro omogućava pristup digitalnoj SaaS platformi za izradu profesionalnih PDF ponuda, predračuna i poslovnih dokumenata.</p>' +
+    '<p>Korisnik može zatražiti povraćaj novca u roku od 14 dana od kupovine ukoliko nije zadovoljan uslugom.</p>' +
+    '<p>Za jednokratni pristup dokumentu, povraćaj se može zatražiti ukoliko PDF kredit nije iskorišćen.</p>' +
+    '<p>Mesečni pristup može se otkazati pre sledećeg obračunskog perioda. Zahtevi za povraćaj se razmatraju u odnosu na aktivnost naloga i korišćenje usluge.</p>' +
+    '<p>Povraćaj novca se obrađuje u skladu sa Paddle pravilima i važećim propisima o zaštiti potrošača.</p>' +
+
+    '<h2>How to request a refund / Kako zatražiti povraćaj</h2>' +
+    '<p>Contact / Kontakt: support@ponuda-pro.com with your account email and purchase details.</p>';
+  history.pushState(null, '', '/refund');
+}
+
+      el('landingSection').style.display = 'none';
       el('generatorPage').style.display = 'none';
       el('pricingPage').style.display = 'none';
       el('policyPage').style.display = 'block';
@@ -1489,22 +1619,31 @@ el('userStatusBox').innerHTML = statusHtml;
       window.scrollTo(0, 0);
     }
 
-    function routePage() {
-      var path = window.location.pathname;
-      if (path === '/pricing') {
-        el('generatorPage').style.display = 'none';
-        el('pricingPage').style.display = 'block';
-        el('policyPage').style.display = 'none';
-        el('generatorNav').classList.remove('active');
-        el('pricingNav').classList.add('active');
-      } else if (path === '/terms') {
-        showPolicy('terms');
-      } else if (path === '/privacy') {
-        showPolicy('privacy');
-      } else if (path === '/refund') {
-        showPolicy('refund');
-      }
-    }
+   function routePage() {
+  var path = window.location.pathname;
+
+  if (path === '/pricing') {
+    el('landingSection').style.display = 'none';
+    el('generatorPage').style.display = 'none';
+    el('pricingPage').style.display = 'block';
+    el('policyPage').style.display = 'none';
+    el('generatorNav').classList.remove('active');
+    el('pricingNav').classList.add('active');
+  } else if (path === '/terms') {
+    showPolicy('terms');
+  } else if (path === '/privacy') {
+    showPolicy('privacy');
+  } else if (path === '/refund') {
+    showPolicy('refund');
+  } else {
+    el('landingSection').style.display = 'block';
+    el('generatorPage').style.display = 'grid';
+    el('pricingPage').style.display = 'none';
+    el('policyPage').style.display = 'none';
+    el('pricingNav').classList.remove('active');
+    el('generatorNav').classList.add('active');
+  }
+}
 
     window.addEventListener('popstate', routePage);
 
