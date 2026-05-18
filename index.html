@@ -564,6 +564,25 @@ body::after {
         overflow-x: hidden;
       }
 
+        body::before,
+  body::after {
+    width: 260px;
+    height: 260px;
+    filter: blur(55px);
+    opacity: 0.18;
+  }
+
+  .header,
+  .page,
+  .pricing-page,
+  .policy-page,
+  .site-footer {
+    max-width: 100%;
+  }
+
+  .header {
+    padding: 16px 14px 12px;  
+
       .header {
         padding: 16px 14px 12px;
         flex-direction: column;
@@ -914,15 +933,56 @@ body::after {
         font-size: 14px;
       }
          .landing-section {
+  width: 100%;
+  max-width: 100%;
   padding: 0 14px;
-  margin-top: 14px;
+  margin: 14px auto 0;
+  overflow: hidden;
 }
 
 .landing-card {
+  width: 100%;
+  max-width: 100%;
   grid-template-columns: 1fr;
   padding: 22px;
   border-radius: 20px;
   gap: 20px;
+  overflow: hidden;
+}
+
+.landing-card > div {
+  min-width: 0;
+}
+
+.landing-card h1 {
+  font-size: 30px;
+  line-height: 1.08;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.landing-card p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.landing-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+}
+
+.landing-actions button {
+  width: 100%;
+}
+
+.landing-points {
+  width: 100%;
+}
+
+.landing-point {
+  width: 100%;
+  overflow-wrap: break-word;
 }
 
 .landing-card h1 {
