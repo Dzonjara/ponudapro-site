@@ -1019,8 +1019,146 @@ body::after {
   width: 100%;
 }
     }
+@media (max-width: 800px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
 
+  * {
+    max-width: 100%;
+  }
+
+  .header {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 18px 14px;
+    display: block !important;
+  }
+
+  .brand-with-logo {
+    justify-content: flex-start;
+  }
+
+  .subtitle {
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .nav {
+    margin-top: 14px;
+    width: 100%;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .nav button {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 12px 10px;
+    font-size: 13px;
+  }
+
+  #languageToggle {
+    grid-column: 1 / 2;
+  }
+
+  #logoutBtn {
+    grid-column: 2 / 3;
+  }
+
+  .landing-section,
+  .page,
+  .pricing-page,
+  .policy-page {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .landing-card {
+    width: 100%;
+    max-width: 100%;
+    display: block !important;
+    padding: 22px !important;
+    border-radius: 22px;
+  }
+
+  .landing-card h1 {
+    font-size: 34px !important;
+    line-height: 1.08 !important;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .landing-card p {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .landing-actions {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .landing-actions button {
+    width: 100% !important;
+  }
+
+  .landing-points {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .landing-point {
+    width: 100%;
+  }
+
+  .pricing-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .price-card {
+    width: 100%;
+  }
+}
     @media print {
+      body.printing-offer .header,
+body.printing-offer .landing-section,
+body.printing-offer .form-card,
+body.printing-offer .print-button,
+body.printing-offer .pricing-page,
+body.printing-offer .policy-page,
+body.printing-offer .login-overlay,
+body.printing-offer .site-footer {
+  display: none !important;
+}
+
+body.printing-offer .page {
+  display: block !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.printing-offer .offer {
+  display: block !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
       @page { size: A4; margin: 8mm; }
       body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
      .header, .landing-section, .form-card, .print-button, .pricing-page, .policy-page, .login-overlay, .site-footer { display: none !important; }
@@ -1943,7 +2081,13 @@ function showPolicy(type) {
       if (!currentUser && isFreeTrialAvailable && !hasUsedFreeTrial()) {
         markFreeTrialUsed();
         alert('Ovo je vaš jedan besplatan probni PDF dokument. Nakon toga je potrebno da se prijavite i izaberete paket.');
-        setTimeout(function() { window.print(); }, 200);
+        setTimeout(function() {
+  document.body.classList.add('printing-offer');
+  window.print();
+  setTimeout(function() {
+    document.body.classList.remove('printing-offer');
+  }, 700);
+}, 200);
         return;
       }
 
@@ -1969,7 +2113,13 @@ if (!canPrint) {
 }
 
 await saveOfferToDatabase();
-setTimeout(function() { window.print(); }, 200);
+setTimeout(function() {
+  document.body.classList.add('printing-offer');
+  window.print();
+  setTimeout(function() {
+    document.body.classList.remove('printing-offer');
+  }, 700);
+}, 200);
 }
     async function saveOfferToDatabase() {
       if (!currentUser) return;
