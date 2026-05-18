@@ -14,12 +14,18 @@
   <style>
     * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #f8fafc, #eef2ff);
-      color: #0f172a;
-    }
+   body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.16), transparent 28%),
+    radial-gradient(circle at 90% 20%, rgba(124, 58, 237, 0.14), transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(14, 165, 233, 0.12), transparent 34%),
+    linear-gradient(180deg, #f8fafc, #eef2ff);
+  color: #0f172a;
+  overflow-x: hidden;
+  position: relative;
+}
 
     .header {
       max-width: 1320px;
@@ -439,6 +445,52 @@
 .landing-point strong {
   color: #0f172a;
 }
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.28;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  top: 90px;
+  left: -120px;
+  background: #2563eb;
+  animation: blobMoveOne 12s ease-in-out infinite alternate;
+}
+
+body::after {
+  right: -140px;
+  bottom: 80px;
+  background: #7c3aed;
+  animation: blobMoveTwo 14s ease-in-out infinite alternate;
+}
+
+@keyframes blobMoveOne {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(80px, 70px) scale(1.12);
+  }
+}
+
+@keyframes blobMoveTwo {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-90px, -60px) scale(1.1);
+  }
+}
+    
     html {
       scroll-behavior: smooth;
     }
@@ -454,7 +506,54 @@
     .nav button:active {
       transform: scale(0.98);
     }
+    .price-card,
+.landing-card,
+.card,
+.explain-box {
+  animation: softFadeUp 0.45s ease both;
+}
 
+@keyframes softFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.price-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.16);
+}
+
+.price-card.featured {
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+}
+
+.trust-row {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.trust-pill {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  color: #334155;
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
     @media (max-width: 980px) {
       .page, .pricing-grid, .explain-grid { grid-template-columns: 1fr; }
     }
@@ -1115,7 +1214,14 @@
   <div class="pricing-page" id="pricingPage">
   <div class="pricing-hero">
   <h1 id="pricingTitle">Paketi i pristup</h1>
-<p id="pricingDescription">Izaberite paket koji odgovara obimu vašeg poslovanja i načinu korišćenja. Svi plaćeni paketi omogućavaju izradu profesionalnih PDF dokumenata bez PonudaPro oznake.</p>
+<p id="pricingDescription">Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.</p>
+
+<div class="trust-row">
+  <div class="trust-pill">Branded PDF export</div>
+  <div class="trust-pill">Logo, pečat i potpis</div>
+  <div class="trust-pill">Više valuta</div>
+  <div class="trust-pill">Bez PonudaPro oznake</div>
+</div>
 
 <div class="pricing-grid">
   <div class="price-card">
@@ -1124,10 +1230,12 @@
     <div class="price">990 RSD</div>
     <div class="price-small">naplaćuje se oko 8.49 € preko Paddle-a</div>
     <ul class="features">
-      <li>1 PDF dokument</li>
-      <li>Dokument bez PonudaPro oznake</li>
-      <li>Logo, pečat, potpis i poslovni podaci</li>
-    </ul>
+  <li>1 profesionalni PDF dokument</li>
+  <li>Brendiranje dokumenta bez PonudaPro oznake</li>
+  <li>Logo, pečat, potpis i poslovni podaci</li>
+  <li>Više valuta: RSD, EUR, USD, GBP, CHF</li>
+  <li>Spreman dokument za slanje klijentu</li>
+</ul>
     <button onclick="buyPlan('one_offer')">Aktiviraj paket</button>
   </div>
 
@@ -1138,10 +1246,14 @@
     <div class="price">4.999 RSD</div>
     <div class="price-small">naplaćuje se oko 42.99 € mesečno preko Paddle-a</div>
     <ul class="features">
-      <li>Neograničen broj PDF dokumenata tokom 30 dana</li>
-      <li>Dokumenti bez PonudaPro oznake</li>
-      <li>Kompletan pristup svim funkcijama</li>
-    </ul>
+  <li>Neograničen broj PDF dokumenata tokom 30 dana</li>
+  <li>Dokumenti bez PonudaPro oznake</li>
+  <li>Profesionalni layout za prodajne ponude</li>
+  <li>Logo, pečat, potpis i podaci firme</li>
+  <li>Stavke, popust, PDV i obračun ukupne cene</li>
+  <li>Više valuta za domaće i strane klijente</li>
+  <li>Brži workflow za timove koji često šalju ponude</li>
+</ul>
     <button onclick="buyPlan('monthly')">Aktiviraj paket</button>
   </div>
 
@@ -1151,10 +1263,14 @@
     <div class="price">24.990 RSD</div>
     <div class="price-small">naplaćuje se oko 212.99 € preko Paddle-a</div>
     <ul class="features">
-      <li>Trajni pristup platformi</li>
-      <li>Dokumenti bez PonudaPro oznake</li>
-      <li>Kompletan pristup svim funkcijama</li>
-    </ul>
+  <li>Trajni pristup platformi</li>
+  <li>Sve funkcije iz Business Monthly paketa</li>
+  <li>Neograničen broj PDF dokumenata</li>
+  <li>Profesionalni branded dokumenti bez oznake</li>
+  <li>Pristup budućim unapređenjima platforme</li>
+  <li>Premium poslovni workflow bez mesečne pretplate</li>
+  <li>Najbolja opcija za dugoročno korišćenje</li>
+</ul>
     <button onclick="buyPlan('lifetime')">Aktiviraj paket</button>
   </div>
 </div>
