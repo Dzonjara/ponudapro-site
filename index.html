@@ -1269,6 +1269,24 @@ function toggleLanguage() {
   currentLanguage = currentLanguage === 'sr' ? 'en' : 'sr';
   localStorage.setItem('ponudapro_language', currentLanguage);
   applyLanguage();
+
+  var oldItems = [];
+  document.querySelectorAll('.item-box').forEach(function(box) {
+    oldItems.push({
+      name: box.querySelector('.item-name').value,
+      quantity: box.querySelector('.item-quantity').value,
+      unit: box.querySelector('.item-unit').value,
+      price: box.querySelector('.item-price').value
+    });
+  });
+
+  el('itemsContainer').innerHTML = '';
+
+  oldItems.forEach(function(item) {
+    addItem(item.name, item.quantity, item.unit, item.price);
+  });
+
+  updateOffer();
 }
 
 function applyLanguage() {
@@ -1324,6 +1342,78 @@ function applyLanguage() {
   var buttons = document.querySelectorAll('.price-card button');
   buttons.forEach(function(btn) {
     btn.textContent = isEn ? 'Activate plan' : 'Aktiviraj paket';
+      var trust = document.querySelectorAll('.trust-pill');
+  if (trust.length >= 4) {
+    trust[0].textContent = isEn ? 'Branded PDF export' : 'Branded PDF export';
+    trust[1].textContent = isEn ? 'Logo, stamp and signature' : 'Logo, pečat i potpis';
+    trust[2].textContent = isEn ? 'Multiple currencies' : 'Više valuta';
+    trust[3].textContent = isEn ? 'No PonudaPro mark' : 'Bez PonudaPro oznake';
+  }
+
+  var landingPoints = document.querySelectorAll('.landing-point');
+  if (landingPoints.length >= 3) {
+    landingPoints[0].innerHTML = isEn ? '<strong>Purpose:</strong><br>Creating professional offers, quotes, commercial documents and business PDF files.' : '<strong>Namena:</strong><br>Izrada profesionalnih ponuda, predračuna, komercijalnih dokumenata i poslovnih PDF fajlova.';
+    landingPoints[1].innerHTML = isEn ? '<strong>For users:</strong><br>Companies, agencies, service providers, sales teams and users who regularly send business offers.' : '<strong>Za korisnike:</strong><br>Firme, agencije, pružaoce usluga, timove prodaje i sve korisnike koji redovno šalju poslovne ponude.';
+    landingPoints[2].innerHTML = isEn ? '<strong>Support:</strong><br>For questions, support and refund requests contact support@ponuda-pro.com.' : '<strong>Podrška:</strong><br>Za pitanja, podršku i refund zahteve kontaktirajte support@ponuda-pro.com.';
+  }
+
+  var featureLists = document.querySelectorAll('.features');
+
+  if (featureLists.length >= 3) {
+    var singleFeatures = isEn
+      ? ['1 professional PDF document', 'Document branding without PonudaPro mark', 'Logo, stamp, signature and business details', 'Multiple currencies: RSD, EUR, USD, GBP, CHF', 'Ready-to-send client document']
+      : ['1 profesionalni PDF dokument', 'Brendiranje dokumenta bez PonudaPro oznake', 'Logo, pečat, potpis i poslovni podaci', 'Više valuta: RSD, EUR, USD, GBP, CHF', 'Spreman dokument za slanje klijentu'];
+
+    var monthlyFeatures = isEn
+      ? ['Unlimited PDF documents during 30 days', 'Documents without PonudaPro mark', 'Professional layout for sales offers', 'Logo, stamp, signature and company details', 'Items, discount, VAT and total price calculation', 'Multiple currencies for local and international clients', 'Faster workflow for teams that often send offers']
+      : ['Neograničen broj PDF dokumenata tokom 30 dana', 'Dokumenti bez PonudaPro oznake', 'Profesionalni layout za prodajne ponude', 'Logo, pečat, potpis i podaci firme', 'Stavke, popust, PDV i obračun ukupne cene', 'Više valuta za domaće i strane klijente', 'Brži workflow za timove koji često šalju ponude'];
+
+    var lifetimeFeatures = isEn
+      ? ['Permanent platform access', 'All features from Business Monthly plan', 'Unlimited PDF documents', 'Professional branded documents without mark', 'Access to future platform improvements', 'Premium business workflow without monthly subscription', 'Best option for long-term use']
+      : ['Trajni pristup platformi', 'Sve funkcije iz Business Monthly paketa', 'Neograničen broj PDF dokumenata', 'Profesionalni branded dokumenti bez oznake', 'Pristup budućim unapređenjima platforme', 'Premium poslovni workflow bez mesečne pretplate', 'Najbolja opcija za dugoročno korišćenje'];
+
+    function fillFeatures(list, items) {
+      list.innerHTML = items.map(function(item) {
+        return '<li>' + item + '</li>';
+      }).join('');
+    }
+
+    fillFeatures(featureLists[0], singleFeatures);
+    fillFeatures(featureLists[1], monthlyFeatures);
+    fillFeatures(featureLists[2], lifetimeFeatures);
+  }
+
+  var tableHeads = document.querySelectorAll('thead th');
+  if (tableHeads.length >= 5) {
+    tableHeads[0].textContent = isEn ? 'Item description' : 'Opis stavke';
+    tableHeads[1].textContent = isEn ? 'Quantity' : 'Količina';
+    tableHeads[2].textContent = isEn ? 'Unit' : 'Jedinica';
+    tableHeads[3].textContent = isEn ? 'Price' : 'Cena';
+    tableHeads[4].textContent = isEn ? 'Total' : 'Ukupno';
+  }
+
+  var sumRows = document.querySelectorAll('.summary .sum-row span:first-child');
+  if (sumRows.length >= 4) {
+    sumRows[0].textContent = isEn ? 'Subtotal' : 'Međuzbir';
+    sumRows[1].textContent = isEn ? 'Discount' : 'Popust';
+    sumRows[2].textContent = isEn ? 'VAT' : 'PDV';
+    sumRows[3].textContent = isEn ? 'Total due' : 'Ukupno za plaćanje';
+  }
+
+  var paymentTitles = document.querySelectorAll('.payment-card strong');
+  if (paymentTitles.length >= 2) {
+    paymentTitles[0].textContent = isEn ? 'Payment method' : 'Način plaćanja';
+    paymentTitles[1].textContent = isEn ? 'Payment instructions' : 'Instrukcije za uplatu';
+  }
+
+  var signatureBoxes = document.querySelectorAll('.signature-box');
+  if (signatureBoxes.length >= 2) {
+    signatureBoxes[0].childNodes[1].textContent = isEn ? 'Company stamp' : 'Pečat firme';
+    signatureBoxes[1].querySelector('.signature-line').textContent = isEn ? 'Responsible person signature' : 'Potpis odgovornog lica';
+  }
+
+  var printBtn = document.querySelector('.print-button');
+  if (printBtn) printBtn.textContent = isEn ? 'Download as PDF' : 'Preuzmi kao PDF';
   });
 }
 
@@ -1755,13 +1845,58 @@ function showPolicy(type) {
     }
 
     function addItem(name, quantity, unit, price) {
-      var box = document.createElement('div');
-      box.className = 'item-box';
-      box.innerHTML = '<label>Opis stavke</label><input class="item-name" value="' + (name || '') + '" oninput="updateOffer()"><div class="three"><div><label>Količina</label><input class="item-quantity" type="number" value="' + (quantity || 1) + '" oninput="updateOffer()"></div><div><label>Jedinica mere</label><select class="item-unit" onchange="updateOffer()"><option value="kom">kom</option><option value="m²">m²</option><option value="m">m</option><option value="sat">sat</option><option value="dan">dan</option><option value="kg">kg</option><option value="l">l</option><option value="paket">paket</option></select></div><div><label>Cena po jedinici</label><input class="item-price" type="number" value="' + (price || 0) + '" oninput="updateOffer()"></div></div><button class="danger" onclick="this.parentElement.remove(); updateOffer();">Obriši stavku</button>';
-      el('itemsContainer').appendChild(box);
-      if (unit) box.querySelector('.item-unit').value = unit;
-      updateOffer();
-    }
+  var isEn = currentLanguage === 'en';
+
+  var units = isEn
+    ? [
+        ['pcs', 'pcs'],
+        ['m²', 'm²'],
+        ['m', 'm'],
+        ['hour', 'hour'],
+        ['day', 'day'],
+        ['kg', 'kg'],
+        ['l', 'l'],
+        ['package', 'package']
+      ]
+    : [
+        ['kom', 'kom'],
+        ['m²', 'm²'],
+        ['m', 'm'],
+        ['sat', 'sat'],
+        ['dan', 'dan'],
+        ['kg', 'kg'],
+        ['l', 'l'],
+        ['paket', 'paket']
+      ];
+
+  var options = units.map(function(u) {
+    return '<option value="' + u[0] + '">' + u[1] + '</option>';
+  }).join('');
+
+  var box = document.createElement('div');
+  box.className = 'item-box';
+  box.innerHTML =
+    '<label>' + (isEn ? 'Item description' : 'Opis stavke') + '</label>' +
+    '<input class="item-name" value="' + (name || '') + '" oninput="updateOffer()">' +
+    '<div class="three">' +
+      '<div><label>' + (isEn ? 'Quantity' : 'Količina') + '</label><input class="item-quantity" type="number" value="' + (quantity || 1) + '" oninput="updateOffer()"></div>' +
+      '<div><label>' + (isEn ? 'Unit' : 'Jedinica mere') + '</label><select class="item-unit" onchange="updateOffer()">' + options + '</select></div>' +
+      '<div><label>' + (isEn ? 'Unit price' : 'Cena po jedinici') + '</label><input class="item-price" type="number" value="' + (price || 0) + '" oninput="updateOffer()"></div>' +
+    '</div>' +
+    '<button class="danger" onclick="this.parentElement.remove(); updateOffer();">' + (isEn ? 'Delete item' : 'Obriši stavku') + '</button>';
+
+  el('itemsContainer').appendChild(box);
+
+  if (unit) {
+    if (isEn && unit === 'kom') unit = 'pcs';
+    if (isEn && unit === 'sat') unit = 'hour';
+    if (isEn && unit === 'dan') unit = 'day';
+    if (isEn && unit === 'paket') unit = 'package';
+    box.querySelector('.item-unit').value = unit;
+  }
+
+  updateOffer();
+}
 
     function formatNumber(n) {
       return Number(n).toLocaleString('sr-RS', { maximumFractionDigits: 2 });
