@@ -1414,6 +1414,105 @@ function applyLanguage() {
 
   var printBtn = document.querySelector('.print-button');
   if (printBtn) printBtn.textContent = isEn ? 'Download as PDF' : 'Preuzmi kao PDF';
+    var textMap = isEn ? {
+  'Logo, pečat i potpis': 'Logo, stamp and signature',
+  'Logo firme': 'Company logo',
+  'Pečat': 'Stamp',
+  'Potpis': 'Signature',
+  'Izaberi logo': 'Choose logo',
+  'Izaberi pečat': 'Choose stamp',
+  'Izaberi potpis': 'Choose signature',
+  'Nema loga': 'No logo',
+  'Nema pečata': 'No stamp',
+  'Nema potpisa': 'No signature',
+  'Podaci firme': 'Company details',
+  'Naziv firme / tvoje ime': 'Company name / your name',
+  'Adresa firme': 'Company address',
+  'Telefon': 'Phone',
+  'PIB': 'Tax ID',
+  'Matični broj': 'Registration number',
+  'Instrukcije za uplatu': 'Payment instructions',
+  'Način plaćanja': 'Payment method',
+  'Podaci dokumenta': 'Document details',
+  'Broj ponude': 'Offer number',
+  'Valuta': 'Currency',
+  'Naziv ponude': 'Offer title',
+  'Rok izrade': 'Delivery time',
+  'Ponuda važi do': 'Valid until',
+  'Podaci klijenta': 'Client details',
+  'Ime / naziv klijenta': 'Client name',
+  'Adresa klijenta': 'Client address',
+  'Telefon klijenta': 'Client phone',
+  'Email klijenta': 'Client email',
+  'Stavke ponude': 'Offer items',
+  '+ Dodaj stavku': '+ Add item',
+  'Obračun': 'Calculation',
+  'Popust (%)': 'Discount (%)',
+  'PDV (%)': 'VAT (%)',
+  'Sakrij popust i PDV ako su 0': 'Hide discount and VAT if they are 0',
+  'Napomena / uslovi': 'Note / terms',
+  'Osveži ponudu': 'Update offer',
+  'Vrati primer': 'Load example'
+} : {
+  'Logo, stamp and signature': 'Logo, pečat i potpis',
+  'Company logo': 'Logo firme',
+  'Stamp': 'Pečat',
+  'Signature': 'Potpis',
+  'Choose logo': 'Izaberi logo',
+  'Choose stamp': 'Izaberi pečat',
+  'Choose signature': 'Izaberi potpis',
+  'No logo': 'Nema loga',
+  'No stamp': 'Nema pečata',
+  'No signature': 'Nema potpisa',
+  'Company details': 'Podaci firme',
+  'Company name / your name': 'Naziv firme / tvoje ime',
+  'Company address': 'Adresa firme',
+  'Phone': 'Telefon',
+  'Tax ID': 'PIB',
+  'Registration number': 'Matični broj',
+  'Payment instructions': 'Instrukcije za uplatu',
+  'Payment method': 'Način plaćanja',
+  'Document details': 'Podaci dokumenta',
+  'Offer number': 'Broj ponude',
+  'Currency': 'Valuta',
+  'Offer title': 'Naziv ponude',
+  'Delivery time': 'Rok izrade',
+  'Valid until': 'Ponuda važi do',
+  'Client details': 'Podaci klijenta',
+  'Client name': 'Ime / naziv klijenta',
+  'Client address': 'Adresa klijenta',
+  'Client phone': 'Telefon klijenta',
+  'Client email': 'Email klijenta',
+  'Offer items': 'Stavke ponude',
+  '+ Add item': '+ Dodaj stavku',
+  'Calculation': 'Obračun',
+  'Discount (%)': 'Popust (%)',
+  'VAT (%)': 'PDV (%)',
+  'Hide discount and VAT if they are 0': 'Sakrij popust i PDV ako su 0',
+  'Note / terms': 'Napomena / uslovi',
+  'Update offer': 'Osveži ponudu',
+  'Load example': 'Vrati primer'
+};
+
+document.querySelectorAll('h2, label, button, .upload-preview, .checkbox-row span').forEach(function(node) {
+  var txt = node.textContent.trim();
+  if (textMap[txt]) node.textContent = textMap[txt];
+});
+
+el('company').placeholder = isEn ? 'Enter company name' : 'Unesite naziv firme';
+el('companyAddress').placeholder = isEn ? 'Enter company address' : 'Unesite adresu firme';
+el('companyPhone').placeholder = isEn ? 'Enter company phone' : 'Unesite telefon firme';
+el('companyEmail').placeholder = isEn ? 'Enter company email' : 'Unesite email firme';
+el('companyPib').placeholder = isEn ? 'Enter tax ID' : 'Unesite PIB';
+el('companyMb').placeholder = isEn ? 'Enter registration number' : 'Unesite matični broj';
+el('bankAccount').placeholder = isEn ? 'Enter payment instructions' : 'Unesite instrukcije za uplatu';
+el('offerNumber').placeholder = isEn ? 'Enter offer number' : 'Unesite broj ponude';
+el('title').placeholder = isEn ? 'Enter offer title' : 'Unesite naziv ponude';
+el('deadline').placeholder = isEn ? 'Enter delivery time' : 'Unesite rok izrade';
+el('validUntil').placeholder = isEn ? 'Enter offer valid date' : 'Unesite datum važenja ponude';
+el('client').placeholder = isEn ? 'Enter client name' : 'Unesite ime ili naziv klijenta';
+el('clientAddress').placeholder = isEn ? 'Enter client address' : 'Unesite adresu klijenta';
+el('note').placeholder = isEn ? 'Enter note or offer terms' : 'Unesite napomenu ili uslove ponude';
   });
 }
 
@@ -1480,7 +1579,9 @@ function applyLanguage() {
   await checkSession();
   updateOffer();
   routePage();
-
+  if (el('itemsContainer').children.length === 0) {
+  addItem('', 1, currentLanguage === 'en' ? 'pcs' : 'kom', 0);
+}
   if (window.location.search.includes('checkout=success')) {
     setTimeout(async function() {
       await checkSession();
