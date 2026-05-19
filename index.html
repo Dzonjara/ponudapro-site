@@ -153,6 +153,12 @@
       background: white;
     }
 
+    input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
     textarea { min-height: 84px; resize: vertical; }
 
     button,
@@ -1003,24 +1009,24 @@ body.printing-offer .offer {
         </div>
 
         <h2>Podaci firme</h2>
-        <label>Naziv firme / tvoje ime</label><input id="company" value="Moj Biznis" oninput="updateOffer()" />
-        <label>Adresa firme</label><input id="companyAddress" value="Bulevar primer 12, Beograd" oninput="updateOffer()" />
+        <label>Naziv firme / tvoje ime</label><input id="company" placeholder="Unesite naziv firme" oninput="updateOffer()" />
+        <label>Adresa firme</label><input id="companyAddress" placeholder="Unesite adresu firme" oninput="updateOffer()" />
         <div class="two">
-          <div><label>Telefon</label><input id="companyPhone" value="0603445446" oninput="updateOffer()" /></div>
-          <div><label>Email</label><input id="companyEmail" value="info@mojbiznis.rs" oninput="updateOffer()" /></div>
+          <div><label>Telefon</label><input id="companyPhone" placeholder="Unesite telefon firme" oninput="updateOffer()" /></div>
+<div><label>Email</label><input id="companyEmail" placeholder="Unesite email firme" oninput="updateOffer()" /></div>
         </div>
         <div class="two">
-          <div><label>PIB</label><input id="companyPib" value="123456789" oninput="updateOffer()" /></div>
-          <div><label>Matični broj</label><input id="companyMb" value="98765432" oninput="updateOffer()" /></div>
+          <div><label>PIB</label><input id="companyPib" placeholder="Unesite PIB" oninput="updateOffer()" /></div>
+          <div><label>Matični broj</label><input id="companyMb" placeholder="Unesite matični broj" oninput="updateOffer()" /></div>
         </div>
         <div class="two">
-          <div><label>Instrukcije za uplatu</label><input id="bankAccount" value="160-0000000000000-00" oninput="updateOffer()" /></div>
+          <div><label>Instrukcije za uplatu</label><input id="bankAccount" placeholder="Unesite instrukcije za uplatu" oninput="updateOffer()" /></div>
           <div><label>Način plaćanja</label><select id="paymentMethod" onchange="updateOffer()"><option>Po dogovoru</option><option>Gotovina</option><option>Bankarski transfer</option><option>Avans 50% / ostatak po završetku</option></select></div>
         </div>
 
         <h2>Podaci dokumenta</h2>
         <div class="two">
-          <div><label>Broj ponude</label><input id="offerNumber" value="001/2026" oninput="updateOffer()" /></div>
+          <div><label>Broj ponude</label><input id="offerNumber" placeholder="Unesite broj ponude" oninput="updateOffer()" /></div>
           <div>
   <label id="currencyInputLabel">Valuta</label>
   <select id="currency" onchange="updateOffer()">
@@ -1034,15 +1040,15 @@ body.printing-offer .offer {
   </select>
 </div>
         </div>
-        <label>Naziv ponude</label><input id="title" value="Ponuda za renoviranje kupatila" oninput="updateOffer()" />
+        <label>Naziv ponude</label><input id="title" placeholder="Unesite naziv ponude" oninput="updateOffer()" />
         <div class="two">
-          <div><label>Rok izrade</label><input id="deadline" value="5 dana" oninput="updateOffer()" /></div>
-          <div><label>Ponuda važi do</label><input id="validUntil" value="10.05.2026." oninput="updateOffer()" /></div>
+          <div><label>Rok izrade</label><input id="deadline" placeholder="Unesite rok izrade" oninput="updateOffer()" /></div>
+          <div><label>Ponuda važi do</label><input id="validUntil" placeholder="Unesite datum važenja ponude" oninput="updateOffer()" /></div>
         </div>
 
         <h2>Podaci klijenta</h2>
-        <label>Ime / naziv klijenta</label><input id="client" value="Petar Petrović" oninput="updateOffer()" />
-        <label>Adresa klijenta</label><input id="clientAddress" value="Primer ulica 5, Beograd" oninput="updateOffer()" />
+        <label>Ime / naziv klijenta</label><input id="client" placeholder="Unesite ime ili naziv klijenta" oninput="updateOffer()" />
+        <label>Adresa klijenta</label><input id="clientAddress" placeholder="Unesite adresu klijenta" oninput="updateOffer()" />
         <div class="two">
           <div><label>Telefon klijenta</label><input id="clientPhone" oninput="updateOffer()" /></div>
           <div><label>Email klijenta</label><input id="clientEmail" oninput="updateOffer()" /></div>
@@ -1058,7 +1064,7 @@ body.printing-offer .offer {
           <div><label>PDV (%)</label><input id="tax" type="number" value="0" min="0" oninput="updateOffer()" /></div>
         </div>
         <div class="checkbox-row"><input id="hideZeroRows" type="checkbox" checked onchange="updateOffer()" /><span>Sakrij popust i PDV ako su 0</span></div>
-        <label>Napomena / uslovi</label><textarea id="note" oninput="updateOffer()">Ponuda važi do navedenog datuma. Cena može varirati ukoliko se obim posla promeni. Plaćanje se vrši po dogovoru.</textarea>
+        <label>Napomena / uslovi</label><textarea id="note" placeholder="Unesite napomenu ili uslove ponude" oninput="updateOffer()"></textarea>
         <button onclick="updateOffer()">Osveži ponudu</button>
         <button class="ghost" onclick="resetExample()">Vrati primer</button>
       </div>
@@ -1142,8 +1148,8 @@ body.printing-offer .offer {
   <div class="price-card">
     <div class="price-name">Single Document</div>
     <div class="price-desc">Jednokratni pristup za izradu jednog profesionalnog PDF dokumenta.</div>
-    <div class="price">990 RSD</div>
-    <div class="price-small">naplaćuje se oko 8.49 € preko Paddle-a</div>
+    <div class="price">0.10 €</div>
+    <div class="price-small">test cena preko Paddle-a</div>
     <ul class="features">
   <li>1 profesionalni PDF dokument</li>
   <li>Brendiranje dokumenta bez PonudaPro oznake</li>
@@ -1158,8 +1164,8 @@ body.printing-offer .offer {
     <div class="tag">Najčešći izbor</div>
     <div class="price-name">Business Monthly</div>
     <div class="price-desc">Mesečni pristup za firme koje redovno pripremaju i šalju poslovne ponude.</div>
-    <div class="price">4.999 RSD</div>
-    <div class="price-small">naplaćuje se oko 42.99 € mesečno preko Paddle-a</div>
+    <div class="price">0.10 €</div>
+    <div class="price-small">test cena mesečno preko Paddle-a</div>
     <ul class="features">
   <li>Neograničen broj PDF dokumenata tokom 30 dana</li>
   <li>Dokumenti bez PonudaPro oznake</li>
@@ -1175,8 +1181,8 @@ body.printing-offer .offer {
   <div class="price-card">
     <div class="price-name">Lifetime Access</div>
     <div class="price-desc">Trajni pristup za korisnike koji žele dugoročno rešenje bez mesečne pretplate.</div>
-    <div class="price">24.990 RSD</div>
-    <div class="price-small">naplaćuje se oko 212.99 € preko Paddle-a</div>
+    <div class="price">0.10 €</div>
+    <div class="price-small">test cena preko Paddle-a</div>
     <ul class="features">
   <li>Trajni pristup platformi</li>
   <li>Sve funkcije iz Business Monthly paketa</li>
@@ -1259,7 +1265,7 @@ function applyLanguage() {
   if (currentLanguage === 'en') {
     document.documentElement.lang = 'en';
 
-    setText('siteSubtitle', 'Professional platform for creating offers, quotes and business documentation.');
+    setText('siteSubtitle', 'Professional platform for creating offers, quotes and business documents.');
     setText('generatorNav', 'Generator');
     setText('pricingNav', 'Pricing');
     setText('logoutBtn', 'Log out');
@@ -1268,6 +1274,9 @@ function applyLanguage() {
     setText('mainTitle', 'Create a business offer');
     setText('mainDescription', 'Create a clean, branded and ready-to-send PDF document for clients or internal records.');
 
+    setText('pricingTitle', 'Plans and access');
+    setText('pricingDescription', 'Professional PDF documents for sales teams, agencies, consultants and companies that want faster, cleaner and more serious business offers.');
+
     setText('clientBoxTitle', 'Client information');
     setText('termsBoxTitle', 'Offer terms');
     setText('deadlineLabel', 'Delivery time:');
@@ -1275,8 +1284,15 @@ function applyLanguage() {
     setText('statusLabel', 'Status:');
     setText('statusText', 'informational offer');
 
-    setText('pricingTitle', 'Plans and access');
-    setText('pricingDescription', 'Choose a plan that matches your business volume and usage needs. All paid plans allow you to create professional PDF documents without the PonudaPro mark.');
+    document.querySelector('.landing-kicker').textContent = 'PonudaPro SaaS platform';
+    document.querySelector('.landing-card h1').textContent = 'Professional PDF offers and business documents';
+    document.querySelectorAll('.landing-card p')[0].textContent = 'PonudaPro is a web platform for creating clean, branded and ready-to-send PDF documents for business communication with clients.';
+    document.querySelectorAll('.landing-card p')[1].textContent = 'Users can enter company details, client details, service items, prices, deadlines, payment terms, logo, stamp and signature, then export the document as a PDF.';
+    document.querySelectorAll('.landing-card p')[2].textContent = 'Paid plans allow users to create documents without the PonudaPro mark and access features based on the selected plan.';
+
+    document.querySelectorAll('.landing-actions button')[0].textContent = 'Open generator';
+    document.querySelectorAll('.landing-actions button')[1].textContent = 'View plans';
+
   } else {
     document.documentElement.lang = 'sr';
 
@@ -1289,6 +1305,9 @@ function applyLanguage() {
     setText('mainTitle', 'Izrada poslovne ponude');
     setText('mainDescription', 'Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.');
 
+    setText('pricingTitle', 'Paketi i pristup');
+    setText('pricingDescription', 'Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.');
+
     setText('clientBoxTitle', 'Podaci o klijentu');
     setText('termsBoxTitle', 'Uslovi ponude');
     setText('deadlineLabel', 'Rok izrade:');
@@ -1296,8 +1315,14 @@ function applyLanguage() {
     setText('statusLabel', 'Status:');
     setText('statusText', 'informativna ponuda');
 
-    setText('pricingTitle', 'Paketi i pristup');
-    setText('pricingDescription', 'Izaberite paket koji odgovara obimu vašeg poslovanja i načinu korišćenja. Svi plaćeni paketi omogućavaju izradu profesionalnih PDF dokumenata bez PonudaPro oznake.');
+    document.querySelector('.landing-kicker').textContent = 'PonudaPro SaaS platforma';
+    document.querySelector('.landing-card h1').textContent = 'Profesionalna izrada PDF ponuda i poslovnih dokumenata';
+    document.querySelectorAll('.landing-card p')[0].textContent = 'PonudaPro je web platforma za kreiranje urednih, brendiranih i spremnih PDF dokumenata za poslovnu komunikaciju sa klijentima.';
+    document.querySelectorAll('.landing-card p')[1].textContent = 'Korisnici mogu da unesu podatke firme, podatke klijenta, stavke usluge, cene, rokove, uslove plaćanja, logo, pečat i potpis, a zatim da dokument preuzmu kao PDF.';
+    document.querySelectorAll('.landing-card p')[2].textContent = 'Plaćeni paketi omogućavaju izradu dokumenata bez PonudaPro oznake i pristup funkcijama prema izabranom paketu.';
+
+    document.querySelectorAll('.landing-actions button')[0].textContent = 'Otvori generator';
+    document.querySelectorAll('.landing-actions button')[1].textContent = 'Pogledaj pakete';
   }
 }
 
@@ -1360,11 +1385,18 @@ function applyLanguage() {
     async function initApp() {
   el('outDate').textContent = new Date().toLocaleDateString('sr-RS');
   initPaddleCheckout();
-  resetExample();
   applyLanguage();
   await checkSession();
   updateOffer();
   routePage();
+
+  if (window.location.search.includes('checkout=success')) {
+    setTimeout(async function() {
+      await checkSession();
+      showPage('generator');
+      alert('Plaćanje je uspešno. Ako se paket još ne vidi, sačekajte 10-20 sekundi i osvežite stranicu.');
+    }, 1500);
+  }
 
   if (window.innerWidth <= 700) {
     document.body.classList.add('mobile-menu-collapsed');
