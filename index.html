@@ -399,13 +399,51 @@ button:hover,
     .offer-title { font-size: 29px; margin-bottom: 22px; font-weight: 900; }
     .preview-status {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 7px 12px;
   border-radius: 999px;
-  background: #eef2ff;
-  color: #1d4ed8;
   font-size: 12px;
   font-weight: 900;
   margin: -10px 0 22px;
+}
+    .save-indicator {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.save-indicator.saved {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.save-indicator.unsaved {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.status-draft {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.status-sent {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-pending {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.status-paid {
+  background: #dcfce7;
+  color: #15803d;
 }
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
     .info-box, .payment-card { background: #f8fafc; line-height: 1.6; font-size: 14px; }
@@ -1723,7 +1761,9 @@ body.printing-offer .offer {
     <div class="card form-card">
      <h1 id="mainTitle">Izrada poslovne ponude</h1>
 <p class="muted" id="mainDescription">Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.</p>
-
+<div id="saveIndicator" class="save-indicator saved">
+  Sačuvano upravo sada
+</div>
       <div class="status-box" id="userStatusBox" style="display:none;"></div>
      <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
 
@@ -3346,7 +3386,28 @@ function loadLocalDraft() {
       el('outOfferNumber').textContent = el('offerNumber').value;
       el('outValidUntil').textContent = el('validUntil').value;
       el('outTitle').textContent = el('title').value;
-      el('outStatus').textContent = el('offerStatus').value;
+      var status = el('offerStatus').value;
+var statusBox = el('outStatus');
+
+statusBox.textContent = status;
+
+statusBox.className = 'preview-status';
+
+if (status === 'Draft') {
+  statusBox.classList.add('status-draft');
+}
+
+if (status === 'Spremno za slanje') {
+  statusBox.classList.add('status-sent');
+}
+
+if (status === 'Na čekanju') {
+  statusBox.classList.add('status-pending');
+}
+
+if (status === 'Plaćeno') {
+  statusBox.classList.add('status-paid');
+}
       el('outDeadline').textContent = el('deadline').value;
       el('outCurrencyInfo').textContent = el('currency').value;
       el('outClient').textContent = el('client').value;
@@ -3468,7 +3529,7 @@ setTimeout(function() {
       document.querySelectorAll('.item-box').forEach(function(box) {
         items.push({ name: box.querySelector('.item-name').value, quantity: box.querySelector('.item-quantity').value, unit: box.querySelector('.item-unit').value, price: box.querySelector('.item-price').value });
       });
-      return { company: el('company').value, companyAddress: el('companyAddress').value, companyPhone: el('companyPhone').value, companyEmail: el('companyEmail').value, companyPib: el('companyPib').value, companyMb: el('companyMb').value, bankAccount: el('bankAccount').value, paymentMethod: el('paymentMethod').value, offerNumber: el('offerNumber').value, title: el('title').value, deadline: el('deadline').value, validUntil: el('validUntil').value, client: el('client').value, clientAddress: el('clientAddress').value, currency: el('currency').value, items: items };
+      return { company: el('company').value, companyAddress: el('companyAddress').value, companyPhone: el('companyPhone').value, companyEmail: el('companyEmail').value, companyPib: el('companyPib').value, companyMb: el('companyMb').value, bankAccount: el('bankAccount').value, paymentMethod: el('paymentMethod').value, offerNumber: el('offerNumber').value, title: el('title').value,offerStatus: el('offerStatus').value, deadline: el('deadline').value, validUntil: el('validUntil').value, client: el('client').value, clientAddress: el('clientAddress').value, currency: el('currency').value, items: items };
     }
 
     function resetExample() {
