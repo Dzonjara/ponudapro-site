@@ -389,18 +389,39 @@ button:hover,
     .login-overlay.show { display: flex; }
 
     .login-modal {
-      width: 100%;
-      max-width: 460px;
-      background: rgba(255, 255, 255, 0.97);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.28);
-      border-radius: 24px;
-      padding: 28px;
-      transform: translateY(30px) scale(0.96);
-      opacity: 0;
-      animation: loginPop 0.35s ease forwards;
-    }
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.28);
+  border-radius: 24px;
+  padding: 28px;
+  transform: translateY(30px) scale(0.96);
+  opacity: 0;
+  animation: loginPop 0.35s ease forwards;
+}
+.login-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  font-size: 22px;
+  line-height: 1;
+}
 
+.login-close:hover {
+  background: #eef2ff;
+  color: #1d4ed8;
+}
     @keyframes loginPop { to { transform: translateY(0) scale(1); opacity: 1; } }
 
     .login-modal h2 { margin: 0 0 8px; font-size: 28px; font-weight: 900; color: #0f172a; border-top: none; padding-top: 0; }
@@ -868,7 +889,68 @@ th {
   color: #64748b;
   font-size: 13px;
 }
-    
+    .hero-live-card {
+  max-width: 420px;
+  margin-left: auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.82));
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  border-radius: 28px;
+  padding: 22px;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.14);
+}
+
+.hero-live-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.hero-live-top strong {
+  color: #0f172a;
+}
+
+.hero-rotator {
+  height: 116px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.hero-rotator-track {
+  animation: heroSlide 8s infinite;
+}
+
+.hero-step {
+  height: 116px;
+  padding: 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-step strong {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.hero-step span {
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0.92;
+}
+
+@keyframes heroSlide {
+  0%, 20% { transform: translateY(0); }
+  25%, 45% { transform: translateY(-116px); }
+  50%, 70% { transform: translateY(-232px); }
+  75%, 95% { transform: translateY(-348px); }
+  100% { transform: translateY(0); }
+}
     @media (max-width: 980px) {
       .page, .pricing-grid, .explain-grid { grid-template-columns: 1fr; }
     }
@@ -1187,7 +1269,8 @@ body.printing-offer .offer {
 <body onload="initApp()">
   <div id="loginOverlay" class="login-overlay">
     <div class="login-modal">
-      <div class="login-badge">Korisnički pristup</div>
+  <button class="login-close" onclick="hideLoginModal()" type="button">×</button>
+  <div class="login-badge">Korisnički pristup</div>
 
       <div id="loginMode">
         <h2>Prijavi se</h2>
@@ -1236,8 +1319,9 @@ body.printing-offer .offer {
     <div class="nav">
   <button id="generatorNav" class="active" onclick="showPage('generator')">Generator</button>
   <button id="pricingNav" onclick="showPage('pricing')">Cenovnik</button>
-  <button id="languageToggle" class="ghost language-btn" onclick="toggleLanguage()">SR / EN</button>
-  <button id="logoutBtn" onclick="logoutUser()" style="display:none;">Odjavi se</button>
+ <button id="languageToggle" class="ghost language-btn" onclick="toggleLanguage()">SR / EN</button>
+<button id="loginBtn" onclick="showLoginMode(); showLoginModal('Prijavite se da biste proverili paket i koristili generator.');">Prijavi se</button>
+<button id="logoutBtn" onclick="logoutUser()" style="display:none;">Odjavi se</button>
 </div>
   </div>
   
@@ -1265,11 +1349,36 @@ body.printing-offer .offer {
   </div>
 </div>
 
-      <div class="landing-points">
-        <div class="landing-point"><strong>Namena:</strong><br>Izrada profesionalnih ponuda, predračuna, komercijalnih dokumenata i poslovnih PDF fajlova.</div>
-        <div class="landing-point"><strong>Za korisnike:</strong><br>Firme, agencije, pružaoce usluga, timove prodaje i sve korisnike koji redovno šalju poslovne ponude.</div>
-        <div class="landing-point"><strong>Podrška:</strong><br>Za pitanja, podršku i refund zahteve kontaktirajte support@ponuda-pro.com.</div>
+     <div class="hero-live-card">
+  <div class="hero-live-top">
+    <span>Live workflow</span>
+    <strong>PonudaPro</strong>
+  </div>
+
+  <div class="hero-rotator">
+    <div class="hero-rotator-track">
+      <div class="hero-step">
+        <strong>1. Unesite podatke</strong>
+        <span>Firma, klijent, stavke, cena i rokovi.</span>
       </div>
+
+      <div class="hero-step">
+        <strong>2. Dodajte brending</strong>
+        <span>Logo, pečat i potpis za ozbiljniji dokument.</span>
+      </div>
+
+      <div class="hero-step">
+        <strong>3. Preuzmite PDF</strong>
+        <span>Spreman dokument za slanje klijentu.</span>
+      </div>
+
+      <div class="hero-step">
+        <strong>4. Izgledajte profesionalno</strong>
+        <span>Bez Word template-a i ručnog sređivanja.</span>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
   </section>
     <section class="trust-strip">
@@ -1902,11 +2011,13 @@ el('note').placeholder = isEn ? 'Enter note or offer terms' : 'Unesite napomenu 
       const { data } = await supabaseClient.auth.getSession();
       currentUser = data.session ? data.session.user : null;
 
-      if (currentUser) {
-        el('logoutBtn').style.display = 'inline-block';
-        await checkSubscription();
-      } else {
-        el('logoutBtn').style.display = 'none';
+     if (currentUser) {
+  el('loginBtn').style.display = 'none';
+  el('logoutBtn').style.display = 'inline-block';
+  await checkSubscription();
+} else {
+  el('loginBtn').style.display = 'inline-block';
+  el('logoutBtn').style.display = 'none';
         activeSubscription = null;
         isSubscriptionActive = false;
 
