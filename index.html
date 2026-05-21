@@ -442,14 +442,19 @@ button:hover,
 }
 
 .landing-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.10);
-  border-radius: 24px;
-  padding: 34px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(37, 99, 235, 0.13), transparent 32%),
+    radial-gradient(circle at 95% 18%, rgba(124, 58, 237, 0.11), transparent 30%),
+    rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 32px 90px rgba(15, 23, 42, 0.14);
+  border-radius: 30px;
+  padding: 46px;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 28px;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 42px;
   align-items: center;
 }
 
@@ -465,9 +470,11 @@ button:hover,
 }
 
 .landing-card h1 {
-  font-size: 42px;
-  line-height: 1.05;
-  margin: 0 0 14px;
+  max-width: 620px;
+  font-size: 48px;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  margin: 0 0 18px;
 }
 
 .landing-card p {
@@ -496,13 +503,14 @@ button:hover,
 }
 
 .landing-point {
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(203, 213, 225, 0.75);
+  border-radius: 20px;
+  padding: 18px;
   color: #334155;
   line-height: 1.55;
   font-size: 14px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
 }
 
 .landing-point strong {
@@ -617,6 +625,214 @@ body::after {
   font-size: 13px;
   font-weight: 800;
 }
+
+/* PREMIUM UI POLISH */
+
+.header {
+  padding-top: 22px;
+}
+
+.brand {
+  letter-spacing: -0.035em;
+}
+
+.nav button {
+  font-weight: 850;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+.nav button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.10);
+}
+
+.landing-kicker,
+.login-badge,
+.tag {
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.14);
+}
+
+.landing-card p {
+  max-width: 640px;
+  font-size: 16px;
+}
+
+.landing-actions button:first-child,
+.price-card button,
+.print-button {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 55%, #1e40af 100%);
+}
+
+.landing-actions button:first-child:hover,
+.price-card button:hover,
+.print-button:hover {
+  box-shadow: 0 18px 44px rgba(37, 99, 235, 0.34);
+}
+
+.card.form-card {
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.12);
+}
+
+.form-card h1,
+.pricing-hero h1,
+.policy-card h1 {
+  letter-spacing: -0.04em;
+}
+
+.form-card h2 {
+  color: #0f172a;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+.status-box,
+.locked-message {
+  position: relative;
+  padding: 16px 16px 16px 18px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.status-box {
+  background: linear-gradient(135deg, #eff6ff, #f8fbff);
+}
+
+.locked-message {
+  background: linear-gradient(135deg, #fff7ed, #fffaf5);
+}
+
+.upload-card {
+  background: rgba(248, 250, 252, 0.82);
+  border-color: #dbe3ef;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.upload-card:hover {
+  transform: translateY(-2px);
+  border-color: #bfdbfe;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+}
+
+.upload-preview {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.item-box {
+  background: rgba(248, 250, 252, 0.78);
+  border-color: #dbe3ef;
+}
+
+.offer {
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.14);
+}
+
+.top-line {
+  height: 7px;
+  background: linear-gradient(90deg, #0f172a, #2563eb, #60a5fa);
+}
+
+.info-box,
+.payment-card,
+.note {
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+  border-color: #dbe3ef;
+}
+
+th {
+  background: linear-gradient(135deg, #0f172a, #111827);
+}
+
+.summary {
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+}
+
+.sum-total {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+}
+
+.price-card {
+  overflow: hidden;
+}
+
+.price-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.price-card:hover::before,
+.price-card.featured::before {
+  opacity: 1;
+}
+
+.price-card.featured {
+  box-shadow: 0 34px 90px rgba(37, 99, 235, 0.17);
+}
+
+.price-name {
+  letter-spacing: -0.035em;
+}
+
+.features li {
+  line-height: 1.45;
+}
+
+.simple-box {
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
+}
+
+.login-modal {
+  box-shadow: 0 36px 100px rgba(15, 23, 42, 0.35);
+}
+
+.login-error {
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+}
+
+.policy-card {
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+}
+
+.site-footer {
+  opacity: 0.95;
+}
+
+.trust-strip {
+  max-width: 1320px;
+  margin: 18px auto 0;
+  padding: 0 20px;
+}
+
+.trust-strip-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.trust-strip-inner div {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+}
+
+.trust-strip-inner strong {
+  display: block;
+  color: #0f172a;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.trust-strip-inner span {
+  color: #64748b;
+  font-size: 13px;
+}
+    
     @media (max-width: 980px) {
       .page, .pricing-grid, .explain-grid { grid-template-columns: 1fr; }
     }
@@ -861,6 +1077,14 @@ body.mobile-menu-collapsed .header {
 body.mobile-menu-collapsed .mobile-menu-toggle {
   margin-top: 8px;
 }
+
+.trust-strip {
+  padding: 0 14px;
+}
+
+.trust-strip-inner {
+  grid-template-columns: 1fr;
+}
 }
 
 
@@ -1009,7 +1233,22 @@ body.printing-offer .offer {
       </div>
     </div>
   </section>
-  
+    <section class="trust-strip">
+    <div class="trust-strip-inner">
+      <div>
+        <strong>Brz PDF export</strong>
+        <span>Spreman dokument za slanje klijentu</span>
+      </div>
+      <div>
+        <strong>Logo, pečat i potpis</strong>
+        <span>Dokument izgleda kao pravi poslovni fajl</span>
+      </div>
+      <div>
+        <strong>Sigurno plaćanje</strong>
+        <span>Obrada preko Paddle platforme</span>
+      </div>
+    </div>
+  </section>
   <div class="page" id="generatorPage">
     <div class="card form-card">
      <h1 id="mainTitle">Izrada poslovne ponude</h1>
@@ -1167,7 +1406,7 @@ body.printing-offer .offer {
 
   <div class="pricing-page" id="pricingPage">
   <div class="pricing-hero">
-  <h1 id="pricingTitle">Paketi i pristup</h1>
+  <h1 id="pricingTitle">Izaberite paket za profesionalne PDF ponude</h1>
 <p id="pricingDescription">Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.</p>
 
 <div class="trust-row">
@@ -1325,7 +1564,7 @@ function applyLanguage() {
   setText('mainTitle', isEn ? 'Create a business offer' : 'Izrada poslovne ponude');
   setText('mainDescription', isEn ? 'Create a clean, branded and ready-to-send PDF document for clients or internal records.' : 'Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.');
 
-  setText('pricingTitle', isEn ? 'Plans and access' : 'Paketi i pristup');
+  setText('pricingTitle', isEn ? 'Choose a plan for professional PDF offers' : 'Izaberite paket za profesionalne PDF ponude');
   setText('pricingDescription', isEn ? 'Professional PDF documents for sales teams, agencies, consultants and companies that want faster, cleaner and more serious business offers.' : 'Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.');
 
   setText('clientBoxTitle', isEn ? 'Client information' : 'Podaci o klijentu');
@@ -1358,8 +1597,8 @@ function applyLanguage() {
   cards[1].querySelector('.price-desc').textContent = isEn ? 'Monthly access for companies that regularly prepare and send business offers.' : 'Mesečni pristup za firme koje redovno pripremaju i šalju poslovne ponude.';
   cards[1].querySelector('.price-small').textContent = isEn ? 'test monthly price via Paddle' : 'test cena mesečno preko Paddle-a';
 
-  cards[2].querySelector('.price-name').textContent = isEn ? 'Lifetime Access' : 'Doživotni pristup';
-  cards[2].querySelector('.price-desc').textContent = isEn ? 'Permanent access for users who want a long-term solution without a monthly subscription.' : 'Trajni pristup za korisnike koji žele dugoročno rešenje bez mesečne pretplate.';
+  cards[2].querySelector('.price-name').textContent = isEn ? 'Annual Access' : 'Godišnji pristup';
+  cards[2].querySelector('.price-desc').textContent = isEn ? '365 days of access for users who want a long-term solution without a monthly subscription.' : '365 dana pristupa za korisnike koji žele dugoročno rešenje bez mesečne pretplate.';
   cards[2].querySelector('.price-small').textContent = isEn ? 'test price via Paddle' : 'test cena preko Paddle-a';
 
   var buttons = document.querySelectorAll('.price-card button');
