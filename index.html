@@ -891,14 +891,17 @@ th {
 }
     .hero-live-card {
   width: 100%;
-  max-width: 460px;
+  max-width: 520px;
   margin-left: auto;
-  margin-top: 40px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.82));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,250,252,0.86));
   border: 1px solid rgba(203, 213, 225, 0.9);
-  border-radius: 28px;
-  padding: 22px;
-  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.14);
+  border-radius: 34px;
+  padding: 28px;
+  box-shadow:
+    0 40px 100px rgba(15, 23, 42, 0.16),
+    0 10px 30px rgba(37, 99, 235, 0.08);
+  transform: rotate(2deg);
 }
 
 .hero-live-top {
@@ -915,9 +918,9 @@ th {
 }
 
 .hero-rotator {
-  height: 116px;
+  height: 180px;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 26px;
 }
 
 .hero-rotator-track {
@@ -925,10 +928,11 @@ th {
 }
 
 .hero-step {
-  height: 116px;
-  padding: 20px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  height: 180px;
+  padding: 28px;
+  border-radius: 26px;
+  background:
+    linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
   color: white;
   display: flex;
   flex-direction: column;
@@ -936,14 +940,16 @@ th {
 }
 
 .hero-step strong {
-  font-size: 20px;
-  margin-bottom: 8px;
+  font-size: 30px;
+  line-height: 1.05;
+  margin-bottom: 14px;
 }
 
 .hero-step span {
-  font-size: 14px;
-  line-height: 1.45;
-  opacity: 0.92;
+  font-size: 17px;
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 320px;
 }
 
 @keyframes heroSlide {
