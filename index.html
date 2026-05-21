@@ -237,6 +237,19 @@ button:hover,
     .locked-content { opacity: 0.45; pointer-events: none; filter: grayscale(0.2); }
 
     .upload-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.template-btn {
+  margin-top: 0;
+  padding: 13px 14px;
+  text-align: center;
+  font-size: 13px;
+}
     .hidden-file { display: none; }
 
     .upload-preview {
@@ -264,7 +277,81 @@ button:hover,
     }
 
     .small-btn { padding: 10px 12px; font-size: 12px; margin-top: 8px; }
-    .item-box { margin-top: 14px; }
+    .item-box {
+  margin-top: 14px;
+}
+
+.saved-offers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.saved-offers-header strong {
+  display: block;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.saved-offers-header span {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  color: #64748b;
+}
+    
+.saved-offer-card {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid #dbe3ef;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.07);
+}
+
+.saved-offer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.saved-offer-title {
+  font-size: 17px;
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.saved-offer-client {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.saved-offer-total {
+  font-size: 24px;
+  font-weight: 900;
+  color: #2563eb;
+  white-space: nowrap;
+}
+
+.saved-offer-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.saved-offer-pill {
+  background: #eef2ff;
+  color: #1d4ed8;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
 
     .checkbox-row {
       display: flex;
@@ -310,7 +397,16 @@ button:hover,
     .brand-name { font-size: 26px; font-weight: 900; margin-bottom: 5px; }
     .offer-meta { text-align: right; line-height: 1.8; font-size: 14px; color: #374151; }
     .offer-title { font-size: 29px; margin-bottom: 22px; font-weight: 900; }
-
+    .preview-status {
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 900;
+  margin: -10px 0 22px;
+}
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
     .info-box, .payment-card { background: #f8fafc; line-height: 1.6; font-size: 14px; }
 
@@ -1654,7 +1750,16 @@ body.printing-offer .offer {
           </div>
         </div>
 
-        <h2>Podaci firme</h2>
+        <h2>Šabloni ponude</h2>
+
+<div class="template-grid">
+  <button class="ghost template-btn" onclick="applyTemplate('agency')">Marketing agencija</button>
+  <button class="ghost template-btn" onclick="applyTemplate('services')">Majstor / usluge</button>
+  <button class="ghost template-btn" onclick="applyTemplate('auto')">Auto servis</button>
+  <button class="ghost template-btn" onclick="applyTemplate('web')">IT / web dizajn</button>
+</div>
+
+<h2>Podaci firme</h2>
         <label>Naziv firme / tvoje ime</label><input id="company" placeholder="Unesite naziv firme" oninput="updateOffer()" />
         <label>Adresa firme</label><input id="companyAddress" placeholder="Unesite adresu firme" oninput="updateOffer()" />
         <div class="two">
@@ -1672,7 +1777,11 @@ body.printing-offer .offer {
 
         <h2>Podaci dokumenta</h2>
         <div class="two">
-          <div><label>Broj ponude</label><input id="offerNumber" placeholder="Unesite broj ponude" oninput="updateOffer()" /></div>
+          <div>
+  <label>Broj ponude</label>
+  <input id="offerNumber" placeholder="Automatski broj ponude" oninput="updateOffer()" />
+  <button class="ghost small-btn" onclick="generateOfferNumber()">Generiši broj</button>
+</div>
           <div>
   <label id="currencyInputLabel">Valuta</label>
   <select id="currency" onchange="updateOffer()">
@@ -1687,9 +1796,21 @@ body.printing-offer .offer {
 </div>
         </div>
         <label>Naziv ponude</label><input id="title" placeholder="Unesite naziv ponude" oninput="updateOffer()" />
+
+<label>Status ponude</label>
+<select id="offerStatus" onchange="updateOffer()">
+  <option value="Draft">Draft</option>
+  <option value="Spremno za slanje">Spremno za slanje</option>
+  <option value="Na čekanju">Na čekanju</option>
+  <option value="Plaćeno">Plaćeno</option>
+</select>
         <div class="two">
           <div><label>Rok izrade</label><input id="deadline" placeholder="Unesite rok izrade" oninput="updateOffer()" /></div>
-          <div><label>Ponuda važi do</label><input id="validUntil" placeholder="Unesite datum važenja ponude" oninput="updateOffer()" /></div>
+          <div>
+  <label>Ponuda važi do</label>
+  <input id="validUntil" placeholder="Unesite datum važenja ponude" oninput="updateOffer()" />
+  <button class="ghost small-btn" onclick="setValidUntilDays(7)">+7 dana</button>
+</div>
         </div>
 
         <h2>Podaci klijenta</h2>
@@ -1712,7 +1833,58 @@ body.printing-offer .offer {
         <div class="checkbox-row"><input id="hideZeroRows" type="checkbox" checked onchange="updateOffer()" /><span>Sakrij popust i PDV ako su 0</span></div>
         <label>Napomena / uslovi</label><textarea id="note" placeholder="Unesite napomenu ili uslove ponude" oninput="updateOffer()"></textarea>
         <button onclick="updateOffer()">Osveži ponudu</button>
-        <button class="ghost" onclick="resetExample()">Vrati primer</button>
+
+<div class="two">
+  <button class="secondary" onclick="saveOffer()">
+    Sačuvaj ponudu
+  </button>
+
+  <button class="ghost" onclick="resetExample()">
+    Vrati primer
+  </button>
+</div>
+
+<div class="two">
+  <button class="ghost" onclick="toggleSavedOffers()">
+    Moje sačuvane ponude
+  </button>
+
+  <button class="danger" onclick="clearDraft()">
+    Obriši draft
+  </button>
+</div>
+
+<div class="two">
+  <button class="secondary" onclick="exportOfferJson()">
+    Export JSON
+  </button>
+
+  <label class="btn ghost" for="importOfferInput" style="margin-top:16px;">
+    Import JSON
+  </label>
+  <input id="importOfferInput" class="hidden-file" type="file" accept=".json" onchange="importOfferJson(event)" />
+</div>
+
+<div id="savedOffersBox" style="display:none; margin-top:16px;">
+
+  <div class="saved-offers-header">
+    <div>
+      <strong>Moje ponude</strong>
+      <span id="savedOffersCount">0 sačuvanih ponuda</span>
+    </div>
+  </div>
+
+  <input
+    id="savedOffersSearch"
+    type="text"
+    placeholder="Pretraži ponude..."
+    oninput="filterSavedOffers()"
+    style="margin-bottom:14px;"
+  />
+
+  <div id="savedOffersList"></div>
+
+</div>
       </div>
     </div>
 
@@ -1729,7 +1901,8 @@ body.printing-offer .offer {
         <div class="offer-meta"><strong>PONUDA</strong><br>Broj: <span id="outOfferNumber"></span><br>Datum: <span id="outDate"></span><br>Važi do: <span id="outValidUntil"></span></div>
       </div>
 
-      <div class="offer-title" id="outTitle"></div>
+     <div class="offer-title" id="outTitle"></div>
+<div id="outStatus" class="preview-status">Draft</div>
       <div class="info-grid">
         <div class="info-box">
   <strong id="clientBoxTitle">Podaci o klijentu</strong><br>
@@ -1843,7 +2016,7 @@ body.printing-offer .offer {
 </div>
 
  <div class="explain-box">
-    <h2>Kako funkcioniše aktivacija?</h2>
+    <h2 id="activationTitle">Kako funkcioniše aktivacija?</h2>
     <div class="explain-grid">
       <div class="simple-box"><strong>1. Prijava na nalog</strong><br>Prijavite se email adresom ili putem Google naloga.</div>
       <div class="simple-box"><strong>2. Izbor paketa</strong><br>Izaberite paket koji odgovara vašem načinu korišćenja.</div>
@@ -1958,6 +2131,27 @@ setText('heroStep3Title', isEn ? '3. Download PDF' : '3. Preuzmite PDF');
 setText('heroStep3Text', isEn ? 'Ready-to-send document for your client.' : 'Spreman dokument za slanje klijentu.');
 setText('heroStep4Title', isEn ? '4. Look professional' : '4. Izgledajte profesionalno');
 setText('heroStep4Text', isEn ? 'No Word templates or manual formatting.' : 'Bez Word template-a i ručnog sređivanja.');
+var trustBoxes = document.querySelectorAll('.trust-strip-inner div');
+if (trustBoxes.length >= 3) {
+  trustBoxes[0].querySelector('strong').textContent = isEn ? 'Fast PDF export' : 'Brz PDF export';
+  trustBoxes[0].querySelector('span').textContent = isEn ? 'Ready document for sending to a client' : 'Spreman dokument za slanje klijentu';
+
+  trustBoxes[1].querySelector('strong').textContent = isEn ? 'Logo, stamp and signature' : 'Logo, pečat i potpis';
+  trustBoxes[1].querySelector('span').textContent = isEn ? 'Document looks like a real business file' : 'Dokument izgleda kao pravi poslovni fajl';
+
+  trustBoxes[2].querySelector('strong').textContent = isEn ? 'Secure payment' : 'Sigurno plaćanje';
+  trustBoxes[2].querySelector('span').textContent = isEn ? 'Processed through Paddle platform' : 'Obrada preko Paddle platforme';
+}
+
+setText('activationTitle', isEn ? 'How does activation work?' : 'Kako funkcioniše aktivacija?');
+
+var activationBoxes = document.querySelectorAll('.simple-box');
+if (activationBoxes.length >= 4) {
+  activationBoxes[0].innerHTML = isEn ? '<strong>1. Account login</strong><br>Log in with email or Google account.' : '<strong>1. Prijava na nalog</strong><br>Prijavite se email adresom ili putem Google naloga.';
+  activationBoxes[1].innerHTML = isEn ? '<strong>2. Choose a plan</strong><br>Select the package that fits your usage.' : '<strong>2. Izbor paketa</strong><br>Izaberite paket koji odgovara vašem načinu korišćenja.';
+  activationBoxes[2].innerHTML = isEn ? '<strong>3. Secure payment processing</strong><br>Payment is processed through Paddle. Card details are not stored on PonudaPro.' : '<strong>3. Sigurna obrada plaćanja</strong><br>Plaćanje se obrađuje preko Paddle platforme. Podaci platne kartice se ne čuvaju na PonudaPro sajtu.';
+  activationBoxes[3].innerHTML = isEn ? '<strong>4. Automatic activation</strong><br>After successful payment, access is connected to your account email.' : '<strong>4. Automatska aktivacija</strong><br>Nakon uspešnog plaćanja, pristup se povezuje sa email adresom vašeg naloga.';
+}
 
   document.querySelector('.landing-kicker').textContent = isEn ? 'Professional PDF workflow' : 'Profesionalni PDF workflow';
 document.querySelector('.landing-card h1').textContent = isEn ? 'Create professional PDF offers in under 2 minutes' : 'Kreirajte profesionalne PDF ponude za manje od 2 minuta';
@@ -2215,9 +2409,10 @@ el('note').placeholder = isEn ? 'Enter note or offer terms' : 'Unesite napomenu 
   el('outDate').textContent = new Date().toLocaleDateString('sr-RS');
   initPaddleCheckout();
   applyLanguage();
-  await checkSession();
-  updateOffer();
-  routePage();
+await checkSession();
+loadLocalDraft();
+updateOffer();
+routePage();
   if (el('itemsContainer').children.length === 0) {
   addItem('', 1, currentLanguage === 'en' ? 'pcs' : 'kom', 0);
 }
@@ -2391,35 +2586,36 @@ el('note').placeholder = isEn ? 'Enter note or offer terms' : 'Unesite napomenu 
       unlockGenerator(data);
     }
 
-    function unlockGenerator(subscription) {
-      var expires = new Date(subscription.expires_at);
-      var daysLeft = Math.ceil((expires - new Date()) / 86400000);
-      var planText = 'Aktivni paket';
+function unlockGenerator(subscription) {
+  var isEn = currentLanguage === 'en';
+  var expires = new Date(subscription.expires_at);
+  var daysLeft = Math.ceil((expires - new Date()) / 86400000);
+  var planText = isEn ? 'Active plan' : 'Aktivni paket';
 
-if (subscription.plan === 'one_offer') {
-  planText = 'Jedna PDF ponuda';
-} else if (subscription.plan === 'monthly') {
-  planText = 'Mesečni paket';
-} else if (subscription.plan === 'lifetime') {
-  planText = 'Doživotni paket';
-}
+  if (subscription.plan === 'one_offer') {
+    planText = isEn ? 'Single PDF offer' : 'Jedna PDF ponuda';
+  } else if (subscription.plan === 'monthly') {
+    planText = isEn ? 'Monthly plan' : 'Mesečni paket';
+  } else if (subscription.plan === 'lifetime') {
+    planText = isEn ? 'Annual plan' : 'Godišnji paket';
+  }
 
-      el('userStatusBox').style.display = 'block';
-      var statusHtml = '<strong>Prijavljeni ste:</strong> ' + currentUser.email;
+  el('userStatusBox').style.display = 'block';
+  var statusHtml = '<strong>' + (isEn ? 'Logged in:' : 'Prijavljeni ste:') + '</strong> ' + currentUser.email;
 
-if (activeSubscription.plan === 'one_offer') {
-  var usedPrints = Number(activeSubscription.used_prints || 0);
-  var maxPrints = Number(activeSubscription.max_prints || 1);
-  var remainingPrints = Math.max(maxPrints - usedPrints, 0);
+  if (activeSubscription.plan === 'one_offer') {
+    var usedPrints = Number(activeSubscription.used_prints || 0);
+    var maxPrints = Number(activeSubscription.max_prints || 1);
+    var remainingPrints = Math.max(maxPrints - usedPrints, 0);
 
-  statusHtml += '<br><strong>Paket:</strong> Jedna PDF ponuda';
-  statusHtml += '<br><strong>Preostalo PDF skidanja:</strong> ' + remainingPrints + ' od ' + maxPrints;
-} else {
-  statusHtml += '<br><strong>Paket:</strong> ' + planText;
-  statusHtml += '<br><strong>Važi još:</strong> ' + daysLeft + ' dana';
-}
+    statusHtml += '<br><strong>' + (isEn ? 'Plan:' : 'Paket:') + '</strong> ' + (isEn ? 'Single PDF offer' : 'Jedna PDF ponuda');
+    statusHtml += '<br><strong>' + (isEn ? 'Remaining PDF downloads:' : 'Preostalo PDF skidanja:') + '</strong> ' + remainingPrints + ' od ' + maxPrints;
+  } else {
+    statusHtml += '<br><strong>' + (isEn ? 'Plan:' : 'Paket:') + '</strong> ' + planText;
+    statusHtml += '<br><strong>' + (isEn ? 'Valid for:' : 'Važi još:') + '</strong> ' + daysLeft + ' ' + (isEn ? 'days' : 'dana');
+  }
 
-el('userStatusBox').innerHTML = statusHtml;
+  el('userStatusBox').innerHTML = statusHtml;
       el('lockedMessage').style.display = 'none';
       el('lockedContent').classList.remove('locked-content');
       el('freeWatermark').style.display = 'none';
@@ -2655,6 +2851,489 @@ function showPolicy(type) {
       return Number(n).toLocaleString('sr-RS', { maximumFractionDigits: 2 });
     }
 
+async function saveOffer() {
+  if (!currentUser) {
+    showLoginModal('Prijavite se da biste sačuvali ponudu.');
+    return;
+  }
+
+  var offerData = {
+    company: el('company').value,
+    companyAddress: el('companyAddress').value,
+    companyPhone: el('companyPhone').value,
+    companyEmail: el('companyEmail').value,
+    companyPib: el('companyPib').value,
+    companyMb: el('companyMb').value,
+    bankAccount: el('bankAccount').value,
+    paymentMethod: el('paymentMethod').value,
+    offerNumber: el('offerNumber').value,
+    currency: el('currency').value,
+    title: el('title').value,
+    deadline: el('deadline').value,
+    validUntil: el('validUntil').value,
+    client: el('client').value,
+    clientAddress: el('clientAddress').value,
+    clientPhone: el('clientPhone').value,
+    clientEmail: el('clientEmail').value,
+    discount: el('discount').value,
+    tax: el('tax').value,
+    note: el('note').value,
+    hideZeroRows: el('hideZeroRows').checked,
+    items: []
+  };
+
+  document.querySelectorAll('.item-box').forEach(function(box) {
+  offerData.items.push({
+    name: box.querySelector('.item-name').value,
+    quantity: box.querySelector('.item-quantity').value,
+    unit: box.querySelector('.item-unit').value,
+    price: box.querySelector('.item-price').value
+  });
+});
+  
+  const { error } = await supabaseClient
+    .from('saved_offers')
+    .insert([
+      {
+        user_email: currentUser.email,
+        offer_name: offerData.title || 'Bez naziva',
+        offer_data: offerData
+      }
+    ]);
+
+  if (error) {
+    alert('Greška pri čuvanju.');
+    return;
+  }
+
+  alert('Ponuda je sačuvana.');
+  loadSavedOffers();
+}
+
+async function toggleSavedOffers() {
+  var box = el('savedOffersBox');
+
+  if (box.style.display === 'none') {
+    box.style.display = 'block';
+    await loadSavedOffers();
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+async function loadSavedOffers() {
+  if (!currentUser) return;
+
+  const { data, error } = await supabaseClient
+    .from('saved_offers')
+    .select('*')
+    .eq('user_email', currentUser.email)
+    .order('created_at', { ascending: false });
+
+  if (error) return;
+
+  var box = el('savedOffersList');
+
+  setText('savedOffersCount', data.length + ' sačuvanih ponuda');
+
+if (!data.length) {
+  box.innerHTML = `
+  <div class="saved-offer-card">
+    <div class="saved-offer-title">Još nemate sačuvanih ponuda</div>
+    <div class="saved-offer-client">
+      Kada sačuvate ponudu, pojaviće se ovde sa nazivom, klijentom, datumom i ukupnim iznosom.
+    </div>
+  </div>
+`;
+  return;
+}
+
+  box.innerHTML = '';
+
+  data.forEach(function(offer) {
+box.innerHTML += `
+  <div class="saved-offer-card">
+
+    <div class="saved-offer-top">
+
+      <div>
+        <div class="saved-offer-title">
+          ${offer.offer_name}
+        </div>
+
+        <div class="saved-offer-client">
+          ${offer.offer_data.clientName || 'Bez klijenta'}
+        </div>
+      </div>
+
+      <div class="saved-offer-total">
+        ${offer.offer_data.total || '0'} ${offer.offer_data.currencySymbol || ''}
+      </div>
+
+    </div>
+
+    <div class="saved-offer-meta">
+
+      <div class="saved-offer-pill">
+        ${new Date(offer.created_at).toLocaleDateString()}
+      </div>
+
+      <div class="saved-offer-pill">
+        ${offer.offer_data.items?.length || 0} stavki
+      </div>
+
+    </div>
+
+    <div class="two">
+
+      <button class="secondary" onclick='loadOffer(${JSON.stringify(JSON.stringify(offer.offer_data))})'>
+        Učitaj
+      </button>
+
+      <button class="ghost" onclick='duplicateOffer(${JSON.stringify(JSON.stringify(offer.offer_data))})'>
+  Dupliraj
+</button>
+
+<button class="danger" onclick="deleteOffer('${offer.id}')">
+  Obriši
+</button>
+
+    </div>
+
+  </div>
+`;
+  });
+}
+
+function applyTemplate(type) {
+
+  el('itemsContainer').innerHTML = '';
+
+  if (type === 'agency') {
+
+    el('title').value = 'Marketing usluge';
+    el('deadline').value = '5 radnih dana';
+    el('note').value = 'Ponuda uključuje kompletnu realizaciju i komunikaciju tokom projekta.';
+    el('paymentMethod').value = 'Bankarski transfer';
+
+    addItem('Vođenje društvenih mreža', 1, 'mesec', 300);
+    addItem('Dizajn objava', 12, 'kom', 25);
+    addItem('Meta Ads kampanja', 1, 'kom', 150);
+
+  }
+
+  if (type === 'services') {
+
+    el('title').value = 'Usluge izvođenja radova';
+    el('deadline').value = '7 radnih dana';
+    el('note').value = 'Cena uključuje rad i osnovni materijal.';
+    el('paymentMethod').value = 'Gotovina';
+
+    addItem('Demontaža', 1, 'kom', 80);
+    addItem('Montaža', 1, 'kom', 140);
+    addItem('Izlazak na teren', 1, 'kom', 40);
+
+  }
+
+  if (type === 'auto') {
+
+    el('title').value = 'Servis vozila';
+    el('deadline').value = '1 radni dan';
+    el('note').value = 'Garancija na ugrađene delove i izvršene usluge.';
+    el('paymentMethod').value = 'Gotovina';
+
+    addItem('Mali servis', 1, 'kom', 120);
+    addItem('Ulje i filteri', 1, 'set', 90);
+    addItem('Dijagnostika', 1, 'kom', 35);
+
+  }
+
+  if (type === 'web') {
+
+    el('title').value = 'Izrada web sajta';
+    el('deadline').value = '14 radnih dana';
+    el('note').value = 'Ponuda uključuje dizajn, development i osnovni SEO.';
+    el('paymentMethod').value = 'Avans 50% / ostatak po završetku';
+
+    addItem('UI/UX dizajn', 1, 'projekat', 400);
+    addItem('Frontend development', 1, 'projekat', 700);
+    addItem('SEO optimizacija', 1, 'kom', 180);
+
+  }
+
+  updateOffer();
+}
+    
+function loadOffer(dataString) {
+  var data = JSON.parse(dataString);
+
+  Object.keys(data).forEach(function(key) {
+  if (key !== 'items' && key !== 'hideZeroRows' && el(key)) {
+    el(key).value = data[key];
+  }
+});
+
+if (typeof data.hideZeroRows !== 'undefined') {
+  el('hideZeroRows').checked = data.hideZeroRows;
+}
+
+if (Array.isArray(data.items)) {
+  el('itemsContainer').innerHTML = '';
+
+  data.items.forEach(function(item) {
+    addItem(item.name, item.quantity, item.unit, item.price);
+  });
+}
+
+updateOffer();
+}
+
+    function filterSavedOffers() {
+
+  var value = el('savedOffersSearch').value.toLowerCase();
+
+  document.querySelectorAll('.saved-offer-card').forEach(function(card) {
+
+    var text = card.textContent.toLowerCase();
+
+    if (text.includes(value)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+
+  });
+
+}
+
+function duplicateOffer(dataString) {
+  loadOffer(dataString);
+
+  el('client').value = '';
+  el('clientAddress').value = '';
+  el('clientPhone').value = '';
+  el('clientEmail').value = '';
+
+  var currentTitle = el('title').value || 'Ponuda';
+  el('title').value = currentTitle + ' - kopija';
+
+  updateOffer();
+
+  document.getElementById('generatorPage').scrollIntoView({
+    behavior: 'smooth'
+  });
+}
+
+function setValidUntilDays(days) {
+  var date = new Date();
+  date.setDate(date.getDate() + days);
+
+  el('validUntil').value = date.toLocaleDateString('sr-RS');
+  updateOffer();
+}
+    
+function generateOfferNumber() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = String(now.getMonth() + 1).padStart(2, '0');
+  var day = String(now.getDate()).padStart(2, '0');
+  var random = Math.floor(1000 + Math.random() * 9000);
+
+  el('offerNumber').value = 'PP-' + year + month + day + '-' + random;
+  updateOffer();
+}
+    
+function getCurrentOfferData() {
+  var data = {
+    company: el('company').value,
+    companyAddress: el('companyAddress').value,
+    companyPhone: el('companyPhone').value,
+    companyEmail: el('companyEmail').value,
+    companyPib: el('companyPib').value,
+    companyMb: el('companyMb').value,
+    bankAccount: el('bankAccount').value,
+    paymentMethod: el('paymentMethod').value,
+    offerNumber: el('offerNumber').value,
+    currency: el('currency').value,
+    title: el('title').value,
+    deadline: el('deadline').value,
+    validUntil: el('validUntil').value,
+    client: el('client').value,
+    clientAddress: el('clientAddress').value,
+    clientPhone: el('clientPhone').value,
+    clientEmail: el('clientEmail').value,
+    discount: el('discount').value,
+    tax: el('tax').value,
+    note: el('note').value,
+    hideZeroRows: el('hideZeroRows').checked,
+    clientName: el('client').value || 'Bez klijenta',
+    total: el('outTotal').textContent,
+    currencySymbol: el('currency').value,
+    offerStatus: el('offerStatus').value,
+    items: []
+  };
+
+  document.querySelectorAll('.item-box').forEach(function(box) {
+    data.items.push({
+      name: box.querySelector('.item-name').value,
+      quantity: box.querySelector('.item-quantity').value,
+      unit: box.querySelector('.item-unit').value,
+      price: box.querySelector('.item-price').value
+    });
+  });
+
+  return data;
+}
+
+function applyOfferData(data) {
+  Object.keys(data).forEach(function(key) {
+    if (key !== 'items' && key !== 'hideZeroRows' && el(key)) {
+      el(key).value = data[key];
+    }
+  });
+
+  if (typeof data.hideZeroRows !== 'undefined') {
+    el('hideZeroRows').checked = data.hideZeroRows;
+  }
+
+  if (Array.isArray(data.items)) {
+    el('itemsContainer').innerHTML = '';
+
+    data.items.forEach(function(item) {
+      addItem(item.name, item.quantity, item.unit, item.price);
+    });
+  }
+
+  updateOffer();
+}
+
+function exportOfferJson() {
+  var data = getCurrentOfferData();
+  var fileName = (data.title || 'ponuda').toLowerCase().replace(/[^a-z0-9čćžšđ]+/gi, '-');
+
+  var blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: 'application/json'
+  });
+
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+
+  a.href = url;
+  a.download = fileName + '.json';
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function importOfferJson(event) {
+  var file = event.target.files[0];
+
+  if (!file) return;
+
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      applyOfferData(data);
+      alert('Ponuda je uspešno importovana.');
+    } catch (err) {
+      alert('JSON fajl nije ispravan.');
+    }
+  };
+
+  reader.readAsText(file);
+}
+    
+function clearDraft() {
+  localStorage.removeItem('ponudapro_draft');
+  resetExample();
+  alert('Draft je obrisan.');
+}
+    
+async function deleteOffer(id) {
+  await supabaseClient
+    .from('saved_offers')
+    .delete()
+    .eq('id', id);
+
+  loadSavedOffers();
+}
+
+function saveDraftLocally() {
+  var draft = {
+    company: el('company').value,
+    companyAddress: el('companyAddress').value,
+    companyPhone: el('companyPhone').value,
+    companyEmail: el('companyEmail').value,
+    companyPib: el('companyPib').value,
+    companyMb: el('companyMb').value,
+    bankAccount: el('bankAccount').value,
+    paymentMethod: el('paymentMethod').value,
+    offerNumber: el('offerNumber').value,
+    currency: el('currency').value,
+    title: el('title').value,
+    deadline: el('deadline').value,
+    validUntil: el('validUntil').value,
+    client: el('client').value,
+    clientAddress: el('clientAddress').value,
+    clientPhone: el('clientPhone').value,
+    clientEmail: el('clientEmail').value,
+    discount: el('discount').value,
+    tax: el('tax').value,
+    note: el('note').value,
+hideZeroRows: el('hideZeroRows').checked,
+clientName: el('client').value || 'Bez klijenta',
+total: el('outTotal').textContent,
+currencySymbol: el('currency').value,
+items: []
+  };
+
+  document.querySelectorAll('.item-box').forEach(function(box) {
+    draft.items.push({
+      name: box.querySelector('.item-name').value,
+      quantity: box.querySelector('.item-quantity').value,
+      unit: box.querySelector('.item-unit').value,
+      price: box.querySelector('.item-price').value
+    });
+  });
+
+  localStorage.setItem('ponudapro_draft', JSON.stringify(draft));
+}
+
+function loadLocalDraft() {
+  var saved = localStorage.getItem('ponudapro_draft');
+
+  if (!saved) return;
+
+  try {
+    var data = JSON.parse(saved);
+
+    Object.keys(data).forEach(function(key) {
+      if (key !== 'items' && key !== 'hideZeroRows' && el(key)) {
+        el(key).value = data[key];
+      }
+    });
+
+    if (typeof data.hideZeroRows !== 'undefined') {
+      el('hideZeroRows').checked = data.hideZeroRows;
+    }
+
+    if (Array.isArray(data.items)) {
+      el('itemsContainer').innerHTML = '';
+
+      data.items.forEach(function(item) {
+        addItem(item.name, item.quantity, item.unit, item.price);
+      });
+    }
+
+    updateOffer();
+
+  } catch(e) {
+    console.log(e);
+  }
+}
+    
     function updateOffer() {
       el('outCompany').textContent = el('company').value;
       el('outCompanyAddress').textContent = el('companyAddress').value;
@@ -2667,6 +3346,7 @@ function showPolicy(type) {
       el('outOfferNumber').textContent = el('offerNumber').value;
       el('outValidUntil').textContent = el('validUntil').value;
       el('outTitle').textContent = el('title').value;
+      el('outStatus').textContent = el('offerStatus').value;
       el('outDeadline').textContent = el('deadline').value;
       el('outCurrencyInfo').textContent = el('currency').value;
       el('outClient').textContent = el('client').value;
@@ -2704,7 +3384,12 @@ function showPolicy(type) {
       el('outTaxAmount').textContent = formatNumber(tax);
       el('outTotal').textContent = formatNumber(finalTotal);
       el('discountRow').style.display = el('hideZeroRows').checked && discount === 0 ? 'none' : 'flex';
-      el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 'flex';
+el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 'flex';
+
+saveDraftLocally();
+}
+      
+      saveDraftLocally();
     }
 
     async function printOffer() {
@@ -2795,7 +3480,7 @@ setTimeout(function() {
       el('companyMb').value = '98765432';
       el('bankAccount').value = '160-0000000000000-00';
       el('paymentMethod').value = 'Po dogovoru';
-      el('offerNumber').value = '001/2026';
+      generateOfferNumber();
       el('currency').value = '€';
       el('title').value = 'Ponuda za poslovne usluge';
       el('deadline').value = '5 dana';
