@@ -444,10 +444,12 @@ button:hover,
 .landing-card {
   position: relative;
   overflow: hidden;
+  min-height: 520px;
   background:
-    radial-gradient(circle at 8% 0%, rgba(37, 99, 235, 0.13), transparent 32%),
-    radial-gradient(circle at 95% 18%, rgba(124, 58, 237, 0.11), transparent 30%),
-    rgba(255, 255, 255, 0.94);
+  radial-gradient(circle at 8% 0%, rgba(37, 99, 235, 0.22), transparent 34%),
+  radial-gradient(circle at 92% 10%, rgba(168, 85, 247, 0.18), transparent 32%),
+  radial-gradient(circle at 75% 85%, rgba(14, 165, 233, 0.13), transparent 30%),
+  rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: 0 32px 90px rgba(15, 23, 42, 0.14);
   border-radius: 30px;
@@ -460,35 +462,69 @@ button:hover,
 
 .landing-kicker {
   display: inline-block;
-  background: #dbeafe;
+  background: linear-gradient(135deg, #dbeafe, #ede9fe);
   color: #1d4ed8;
-  padding: 7px 12px;
+  padding: 8px 13px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 900;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .landing-card h1 {
-  max-width: 620px;
-  font-size: 48px;
-  line-height: 1.02;
-  letter-spacing: -0.045em;
-  margin: 0 0 18px;
+  max-width: 700px;
+  font-size: 58px;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  margin: 0 0 22px;
+  color: #0f172a;
 }
 
-.landing-card p {
+.landing-main-text {
+  max-width: 620px;
+  font-size: 18px;
+  line-height: 1.7;
   color: #475569;
-  line-height: 1.65;
+  margin: 0 0 28px;
+}
+  .landing-features {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.landing-feature {
+  display: flex;
+  align-items: center;
+  color: #0f172a;
   font-size: 15px;
-  margin: 0 0 14px;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(219, 227, 239, 0.9);
+  border-radius: 14px;
+  padding: 12px 14px;
 }
 
 .landing-actions {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
-  margin-top: 18px;
+  margin-top: 8px;
+}
+
+.landing-actions button {
+  width: auto;
+  min-width: 210px;
+  padding: 16px 22px;
+  border-radius: 16px;
+  font-size: 15px;
+}
+
+.landing-actions .secondary {
+  background: rgba(255,255,255,0.72);
+  color: #0f172a;
+  border: 1px solid #dbe3ef;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
 }
 
 .landing-actions button {
@@ -1208,23 +1244,26 @@ body.printing-offer .offer {
    <section class="landing-section" id="landingSection">
     <div class="landing-card">
       <div>
-        <div class="landing-kicker">PonudaPro SaaS platforma</div>
-        <h1>Profesionalna izrada PDF ponuda i poslovnih dokumenata</h1>
-        <p>
-          PonudaPro je web platforma za kreiranje urednih, brendiranih i spremnih PDF dokumenata za poslovnu komunikaciju sa klijentima.
-        </p>
-        <p>
-          Korisnici mogu da unesu podatke firme, podatke klijenta, stavke usluge, cene, rokove, uslove plaćanja, logo, pečat i potpis, a zatim da dokument preuzmu kao PDF.
-        </p>
-        <p>
-          Plaćeni paketi omogućavaju izradu dokumenata bez PonudaPro oznake i pristup funkcijama prema izabranom paketu.
-        </p>
+        <div class="landing-left">
+  <div class="landing-kicker">Profesionalni PDF workflow</div>
 
-        <div class="landing-actions">
-          <button onclick="showPage('generator')">Otvori generator</button>
-          <button class="secondary" onclick="showPage('pricing')">Pogledaj pakete</button>
-        </div>
-      </div>
+  <h1>Kreirajte profesionalne PDF ponude za manje od 2 minuta</h1>
+
+  <p class="landing-main-text">
+    Napravite urednu poslovnu ponudu sa logom, pečatom, potpisom, stavkama, cenama i ukupnim iznosom — spremnu za slanje klijentu odmah.
+  </p>
+
+  <div class="landing-features">
+    <div class="landing-feature">✓ Brz PDF export</div>
+    <div class="landing-feature">✓ Logo, pečat i potpis</div>
+    <div class="landing-feature">✓ Više valuta i profesionalan izgled</div>
+  </div>
+
+  <div class="landing-actions">
+    <button onclick="showPage('generator')">Otvori generator</button>
+    <button class="secondary" onclick="showPage('pricing')">Pogledaj pakete</button>
+  </div>
+</div>
 
       <div class="landing-points">
         <div class="landing-point"><strong>Namena:</strong><br>Izrada profesionalnih ponuda, predračuna, komercijalnih dokumenata i poslovnih PDF fajlova.</div>
@@ -2075,14 +2114,18 @@ el('userStatusBox').innerHTML = statusHtml;
   function showPage(page) {
   el('policyPage').style.display = 'none';
 
+  var trustStrip = document.querySelector('.trust-strip');
+
   if (page === 'pricing') {
+    if (trustStrip) trustStrip.style.display = 'none';
     el('landingSection').style.display = 'none';
     el('generatorPage').style.display = 'none';
     el('pricingPage').style.display = 'block';
     el('generatorNav').classList.remove('active');
     el('pricingNav').classList.add('active');
     if (window.location.pathname !== '/pricing') history.pushState(null, '', '/pricing');
-  } else {
+    } else {
+    if (trustStrip) trustStrip.style.display = 'block';
     el('landingSection').style.display = 'block';
     el('generatorPage').style.display = 'grid';
     el('pricingPage').style.display = 'none';
@@ -2157,6 +2200,9 @@ function showPolicy(type) {
   history.pushState(null, '', '/refund');
 }
 
+            var trustStrip = document.querySelector('.trust-strip');
+      if (trustStrip) trustStrip.style.display = 'none';
+
       el('landingSection').style.display = 'none';
       el('generatorPage').style.display = 'none';
       el('pricingPage').style.display = 'none';
@@ -2170,7 +2216,10 @@ function showPolicy(type) {
    function routePage() {
   var path = window.location.pathname;
 
+ var trustStrip = document.querySelector('.trust-strip');
+
   if (path === '/pricing') {
+    if (trustStrip) trustStrip.style.display = 'none';
     el('landingSection').style.display = 'none';
     el('generatorPage').style.display = 'none';
     el('pricingPage').style.display = 'block';
@@ -2183,7 +2232,8 @@ function showPolicy(type) {
     showPolicy('privacy');
   } else if (path === '/refund') {
     showPolicy('refund');
-  } else {
+    } else {
+    if (trustStrip) trustStrip.style.display = 'block';
     el('landingSection').style.display = 'block';
     el('generatorPage').style.display = 'grid';
     el('pricingPage').style.display = 'none';
