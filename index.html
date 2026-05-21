@@ -20,7 +20,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
@@ -29,7 +31,7 @@
 
    body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   background:
     radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.16), transparent 28%),
     radial-gradient(circle at 90% 20%, rgba(124, 58, 237, 0.14), transparent 30%),
@@ -110,14 +112,17 @@
       display: none;
     }
 
-    .card,
-    .price-card,
-    .explain-box,
-    .policy-card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.10);
-    }
+   .card,
+.price-card,
+.explain-box,
+.policy-card,
+.landing-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.11);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
 
     .card {
       border-radius: 22px;
@@ -142,16 +147,27 @@
       color: #374151;
     }
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
-      font-size: 14px;
-      background: white;
-    }
+   input,
+select,
+textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  background: #ffffff;
+}
 
     input::placeholder,
 textarea::placeholder {
@@ -162,19 +178,26 @@ textarea::placeholder {
     textarea { min-height: 84px; resize: vertical; }
 
     button,
-    .btn {
-      margin-top: 16px;
-      width: 100%;
-      border: none;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white;
-      padding: 14px 16px;
-      border-radius: 14px;
-      font-size: 15px;
-      cursor: pointer;
-      font-weight: 800;
-      text-align: center;
-    }
+.btn {
+  margin-top: 16px;
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  padding: 14px 18px;
+  border-radius: 15px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 850;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.24);
+}
+
+button:hover,
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 36px rgba(37, 99, 235, 0.30);
+}
 
     .secondary { background: #eef2ff; color: #1d4ed8; border: 1px solid #c7d2fe; }
     .danger { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; padding: 10px; font-size: 13px; }
