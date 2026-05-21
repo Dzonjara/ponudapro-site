@@ -90,7 +90,7 @@
 }
     .page {
       max-width: 1320px;
-      margin: 0 auto;
+      margin: 22px auto 0;
       padding: 20px;
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
@@ -494,7 +494,7 @@ button:hover,
 
 .landing-card h1 {
   max-width: 700px;
-  font-size: 58px;
+  font-size: 54px;
   line-height: 0.98;
   letter-spacing: -0.06em;
   margin: 0 0 22px;
@@ -539,6 +539,7 @@ button:hover,
   padding: 16px 22px;
   border-radius: 16px;
   font-size: 15px;
+  margin-top: 0;
 }
 
 .landing-actions .secondary {
@@ -546,12 +547,6 @@ button:hover,
   color: #0f172a;
   border: 1px solid #dbe3ef;
   box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
-}
-
-.landing-actions button {
-  width: auto;
-  margin-top: 0;
-  padding: 13px 18px;
 }
 
 .landing-points {
@@ -891,7 +886,8 @@ th {
 }
     .hero-live-card {
   width: 100%;
-  max-width: 520px;
+  max-width: 500px;
+  margin-top: 0;
   margin-left: auto;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,250,252,0.86));
@@ -902,8 +898,18 @@ th {
     0 40px 100px rgba(15, 23, 42, 0.16),
     0 10px 30px rgba(37, 99, 235, 0.08);
   transform: rotate(2deg);
+  animation: heroFloat 5s ease-in-out infinite;
 }
 
+@keyframes heroFloat {
+  0%, 100% {
+    transform: rotate(2deg) translateY(0);
+  }
+  50% {
+    transform: rotate(2deg) translateY(-10px);
+  }
+}
+    
 .hero-live-top {
   display: flex;
   justify-content: space-between;
@@ -954,9 +960,9 @@ th {
 
 @keyframes heroSlide {
   0%, 20% { transform: translateY(0); }
-  25%, 45% { transform: translateY(-116px); }
-  50%, 70% { transform: translateY(-232px); }
-  75%, 95% { transform: translateY(-348px); }
+  25%, 45% { transform: translateY(-180px); }
+  50%, 70% { transform: translateY(-360px); }
+  75%, 95% { transform: translateY(-540px); }
   100% { transform: translateY(0); }
 }
 
@@ -964,6 +970,146 @@ th {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+    .hero-live-card {
+  animation: heroFloat 5s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% {
+    transform: rotate(2deg) translateY(0);
+  }
+  50% {
+    transform: rotate(2deg) translateY(-10px);
+  }
+}
+
+.landing-card::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  top: -120px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.18), transparent 65%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.landing-left,
+.landing-right {
+  position: relative;
+  z-index: 2;
+}
+
+.nav button,
+.landing-actions button,
+.price-card button,
+.print-button {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.nav button:hover,
+.landing-actions button:hover,
+.price-card button:hover,
+.print-button:hover {
+  transform: translateY(-2px);
+}
+
+.form-card,
+.offer,
+.price-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-card:hover,
+.offer:hover {
+  box-shadow: 0 34px 100px rgba(15, 23, 42, 0.16);
+}
+
+#loginBtn {
+  background: #0f172a;
+  color: white;
+  border-color: #0f172a;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+}
+
+#loginBtn:hover {
+  background: #1e293b;
+}
+
+.status-box strong,
+.locked-message strong {
+  font-weight: 900;
+}
+
+.offer {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.trust-strip-inner div {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.trust-strip-inner div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+}
+
+.price-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,250,252,0.9));
+}
+
+.price-card.featured {
+  transform: translateY(-10px);
+}
+
+.price-card.featured:hover {
+  transform: translateY(-14px);
+}
+
+.price-card button {
+  margin-top: 22px;
+}
+
+.form-card h1,
+.offer .brand-name {
+  letter-spacing: -0.04em;
+}
+
+.form-card {
+  background: rgba(255,255,255,0.94);
+}
+
+.locked-content {
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.upload-card label {
+  color: #475569;
+}
+
+.small-btn {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+}
+
+.locked-message {
+  border-left: 5px solid #f97316;
+}
+
+.status-box {
+  border-left: 5px solid #2563eb;
+}
+
+    .login-modal {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(37, 99, 235, 0.10), transparent 32%),
+    rgba(255,255,255,0.97);
+}
+
+.google-login-btn {
+  border-radius: 14px;
 }
     
     @media (max-width: 980px) {
@@ -987,17 +1133,21 @@ th {
   }
 
   .header {
-    max-width: 100%;
-    padding: 16px 14px 12px;
-    display: block;
-    background: rgba(248, 250, 252, 0.96);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid #e5e7eb;
-  }
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 22px 20px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(248, 250, 252, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.65);
+}
 
   .brand {
     font-size: 25px;
@@ -1031,6 +1181,7 @@ th {
     border-radius: 12px;
   }
 
+  #loginBtn,
   #logoutBtn {
     grid-column: span 2;
   }
@@ -1213,10 +1364,45 @@ body.mobile-menu-collapsed .mobile-menu-toggle {
 
 .trust-strip {
   padding: 0 14px;
+  display: none;
 }
 
 .trust-strip-inner {
   grid-template-columns: 1fr;
+}
+
+.hero-live-card {
+  max-width: 100%;
+  margin-top: 24px;
+  transform: none;
+  animation: none;
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.hero-rotator {
+  height: 140px;
+}
+
+.hero-step {
+  height: 140px;
+  padding: 20px;
+}
+
+.hero-step strong {
+  font-size: 22px;
+}
+
+.hero-step span {
+  font-size: 14px;
+}
+
+@keyframes heroSlide {
+  0%, 20% { transform: translateY(0); }
+  25%, 45% { transform: translateY(-140px); }
+  50%, 70% { transform: translateY(-280px); }
+  75%, 95% { transform: translateY(-420px); }
+  100% { transform: translateY(0); }
 }
 }
 
@@ -1341,7 +1527,88 @@ body.printing-offer .offer {
   </div>
   
    <section class="landing-section" id="landingSection">
-    <div class="trust-strip-inner">
+   <div class="landing-card">
+
+    <div class="landing-left">
+
+      <div class="landing-kicker">
+        PonudaPro SaaS platforma
+      </div>
+
+      <h1>
+        Profesionalna izrada
+        PDF ponuda i poslovnih
+        dokumenata
+      </h1>
+
+      <p class="landing-main-text">
+        PonudaPro je web platforma za kreiranje urednih,
+        brendiranih i spremnih PDF dokumenata za poslovnu
+        komunikaciju sa klijentima.
+      </p>
+
+      <div class="landing-features">
+        <div class="landing-feature">✓ Brz PDF export</div>
+        <div class="landing-feature">✓ Logo, pečat i potpis</div>
+        <div class="landing-feature">✓ Više valuta i profesionalan izgled</div>
+      </div>
+
+      <div class="landing-actions">
+        <button onclick="document.getElementById('generatorPage').scrollIntoView({ behavior: 'smooth' });">
+  Otvori generator
+</button>
+
+        <button class="secondary" onclick="showPage('pricing')">
+          Pogledaj pakete
+        </button>
+      </div>
+
+    </div>
+
+    <div class="landing-right">
+
+      <div class="hero-live-card">
+
+        <div class="hero-live-top">
+          <span id="heroLiveLabel">Live workflow</span>
+         <strong id="heroLiveBrand">PonudaPro</strong>
+        </div>
+
+        <div class="hero-rotator">
+
+          <div class="hero-rotator-track">
+
+            <div class="hero-step">
+              <strong id="heroStep1Title">1. Unesite podatke</strong>
+            <span id="heroStep1Text">Firma, klijent, stavke, cena i rokovi.</span>
+            </div>
+
+            <div class="hero-step">
+              <strong id="heroStep2Title">2. Dodajte brending</strong>
+            <span id="heroStep2Text">Logo, pečat i potpis za ozbiljniji dokument.</span>
+            </div>
+
+            <div class="hero-step">
+              <strong id="heroStep3Title">3. Preuzmite PDF</strong>
+            <span id="heroStep3Text">Spreman dokument za slanje klijentu.</span>
+            </div>
+
+            <div class="hero-step">
+              <strong id="heroStep4Title">4. Izgledajte profesionalno</strong>
+            <span id="heroStep4Text">Bez Word template-a i ručnog sređivanja.</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="trust-strip-inner">
       <div>
         <strong>Brz PDF export</strong>
         <span>Spreman dokument za slanje klijentu</span>
@@ -1513,7 +1780,7 @@ body.printing-offer .offer {
 
   <div class="pricing-page" id="pricingPage">
   <div class="pricing-hero">
-  <h1 id="pricingTitle">Izaberite paket za profesionalne PDF ponude</h1>
+  <h1 id="pricingTitle">Profesionalne PDF ponude bez komplikacije</h1>
 <p id="pricingDescription">Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.</p>
 
 <div class="trust-row">
@@ -1558,8 +1825,8 @@ body.printing-offer .offer {
   </div>
 
   <div class="price-card">
-    <div class="price-name">Lifetime Access</div>
-    <div class="price-desc">Trajni pristup za korisnike koji žele dugoročno rešenje bez mesečne pretplate.</div>
+   <div class="price-name">Godišnji pristup</div>
+    <div class="price-desc">365 dana pristupa za korisnike koji žele dugoročno rešenje bez mesečne pretplate.</div>
     <div class="price">1.00 €</div>
     <div class="price-small">test cena preko Paddle-a</div>
     <ul class="features">
@@ -1665,13 +1932,14 @@ function applyLanguage() {
   setText('siteSubtitle', isEn ? 'Professional platform for creating offers, quotes and business documents.' : 'Profesionalna platforma za izradu ponuda, predračuna i poslovne dokumentacije.');
   setText('generatorNav', 'Generator');
   setText('pricingNav', isEn ? 'Pricing' : 'Cenovnik');
-  setText('logoutBtn', isEn ? 'Log out' : 'Odjavi se');
+  setText('loginBtn', isEn ? 'Log in' : 'Prijavi se');
+  setText('logoutBtn', isEn ? 'Log out' : 'Odjavi se');;
   setText('languageToggle', isEn ? 'EN / SR' : 'SR / EN');
 
   setText('mainTitle', isEn ? 'Create a business offer' : 'Izrada poslovne ponude');
   setText('mainDescription', isEn ? 'Create a clean, branded and ready-to-send PDF document for clients or internal records.' : 'Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.');
 
-  setText('pricingTitle', isEn ? 'Choose a plan for professional PDF offers' : 'Izaberite paket za profesionalne PDF ponude');
+  setText('pricingTitle', isEn ? 'Professional PDF offers without complications' : 'Profesionalne PDF ponude bez komplikacije');
   setText('pricingDescription', isEn ? 'Professional PDF documents for sales teams, agencies, consultants and companies that want faster, cleaner and more serious business offers.' : 'Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.');
 
   setText('clientBoxTitle', isEn ? 'Client information' : 'Podaci o klijentu');
@@ -1681,13 +1949,22 @@ function applyLanguage() {
   setText('statusLabel', 'Status:');
   setText('statusText', isEn ? 'informational offer' : 'informativna ponuda');
 
-  document.querySelector('.landing-kicker').textContent = isEn ? 'PonudaPro SaaS platform' : 'PonudaPro SaaS platforma';
-  document.querySelector('.landing-card h1').textContent = isEn ? 'Professional PDF offers and business documents' : 'Profesionalna izrada PDF ponuda i poslovnih dokumenata';
+setText('heroLiveLabel', isEn ? 'Live workflow' : 'Tok izrade');
+setText('heroStep1Title', isEn ? '1. Enter details' : '1. Unesite podatke');
+setText('heroStep1Text', isEn ? 'Company, client, items, prices and deadlines.' : 'Firma, klijent, stavke, cena i rokovi.');
+setText('heroStep2Title', isEn ? '2. Add branding' : '2. Dodajte brending');
+setText('heroStep2Text', isEn ? 'Logo, stamp and signature for a more serious document.' : 'Logo, pečat i potpis za ozbiljniji dokument.');
+setText('heroStep3Title', isEn ? '3. Download PDF' : '3. Preuzmite PDF');
+setText('heroStep3Text', isEn ? 'Ready-to-send document for your client.' : 'Spreman dokument za slanje klijentu.');
+setText('heroStep4Title', isEn ? '4. Look professional' : '4. Izgledajte profesionalno');
+setText('heroStep4Text', isEn ? 'No Word templates or manual formatting.' : 'Bez Word template-a i ručnog sređivanja.');
+
+  document.querySelector('.landing-kicker').textContent = isEn ? 'Professional PDF workflow' : 'Profesionalni PDF workflow';
+document.querySelector('.landing-card h1').textContent = isEn ? 'Create professional PDF offers in under 2 minutes' : 'Kreirajte profesionalne PDF ponude za manje od 2 minuta';
 
   var lp = document.querySelectorAll('.landing-card p');
-  lp[0].textContent = isEn ? 'PonudaPro is a web platform for creating clean, branded and ready-to-send PDF documents for business communication with clients.' : 'PonudaPro je web platforma za kreiranje urednih, brendiranih i spremnih PDF dokumenata za poslovnu komunikaciju sa klijentima.';
-  lp[1].textContent = isEn ? 'Users can enter company details, client details, service items, prices, deadlines, payment terms, logo, stamp and signature, then export the document as a PDF.' : 'Korisnici mogu da unesu podatke firme, podatke klijenta, stavke usluge, cene, rokove, uslove plaćanja, logo, pečat i potpis, a zatim da dokument preuzmu kao PDF.';
-  lp[2].textContent = isEn ? 'Paid plans allow users to create documents without the PonudaPro mark and access features based on the selected plan.' : 'Plaćeni paketi omogućavaju izradu dokumenata bez PonudaPro oznake i pristup funkcijama prema izabranom paketu.';
+  lp[0].textContent = isEn ? 'Create a clean business offer with logo, stamp, signature, items, prices and total amount — ready to send to your client.' : 'Napravite urednu poslovnu ponudu sa logom, pečatom, potpisom, stavkama, cenama i ukupnim iznosom — spremnu za slanje klijentu odmah.';
+  
 
   var landingBtns = document.querySelectorAll('.landing-actions button');
   landingBtns[0].textContent = isEn ? 'Open generator' : 'Otvori generator';
@@ -1717,13 +1994,6 @@ function applyLanguage() {
     trust[1].textContent = isEn ? 'Logo, stamp and signature' : 'Logo, pečat i potpis';
     trust[2].textContent = isEn ? 'Multiple currencies' : 'Više valuta';
     trust[3].textContent = isEn ? 'No PonudaPro mark' : 'Bez PonudaPro oznake';
-  }
-
-  var landingPoints = document.querySelectorAll('.landing-point');
-  if (landingPoints.length >= 3) {
-    landingPoints[0].innerHTML = isEn ? '<strong>Purpose:</strong><br>Creating professional offers, quotes, commercial documents and business PDF files.' : '<strong>Namena:</strong><br>Izrada profesionalnih ponuda, predračuna, komercijalnih dokumenata i poslovnih PDF fajlova.';
-    landingPoints[1].innerHTML = isEn ? '<strong>For users:</strong><br>Companies, agencies, service providers, sales teams and users who regularly send business offers.' : '<strong>Za korisnike:</strong><br>Firme, agencije, pružaoce usluga, timove prodaje i sve korisnike koji redovno šalju poslovne ponude.';
-    landingPoints[2].innerHTML = isEn ? '<strong>Support:</strong><br>For questions, support and refund requests contact support@ponuda-pro.com.' : '<strong>Podrška:</strong><br>Za pitanja, podršku i refund zahteve kontaktirajte support@ponuda-pro.com.';
   }
 
   var featureLists = document.querySelectorAll('.features');
