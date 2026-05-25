@@ -227,6 +227,31 @@ button:hover,
       margin-top: 14px;
     }
 
+    .quick-actions-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 18px;
+  position: sticky;
+  top: 88px;
+  z-index: 50;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(14px);
+  padding: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(226,232,240,0.9);
+}
+
+.quick-action-btn {
+  margin: 0;
+  width: auto;
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
     .locked-message {
       background: #fff7ed;
       border-color: #fed7aa;
@@ -353,6 +378,27 @@ button:hover,
   font-weight: 800;
 }
 
+    .empty-state {
+  margin-top: 14px;
+  padding: 22px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  text-align: center;
+}
+
+.empty-state strong {
+  display: block;
+  font-size: 16px;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.empty-state span {
+  color: #64748b;
+  font-size: 13px;
+}
+
     .checkbox-row {
       display: flex;
       align-items: center;
@@ -365,11 +411,37 @@ button:hover,
 
     .checkbox-row input { width: auto; }
 
-    .offer { min-height: 900px; }
+    .offer {
+  min-height: 900px;
+  position: relative;
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    border 0.35s ease;
+}
+
+.offer.draft-watermark::after {
+  content: "DRAFT";
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  font-size: 90px;
+  font-weight: 900;
+  color: rgba(15, 23, 42, 0.06);
+  letter-spacing: 8px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.offer > * {
+  position: relative;
+  z-index: 2;
+}
 
     .top-line {
       height: 8px;
-      background: linear-gradient(90deg, #0f172a, #2563eb);
+      background: linear-gradient(90deg, #0f172a, var(--brand-color, #2563eb));
       border-radius: 14px 14px 0 0;
       margin: -28px -28px 24px;
     }
@@ -397,6 +469,149 @@ button:hover,
     .brand-name { font-size: 26px; font-weight: 900; margin-bottom: 5px; }
     .offer-meta { text-align: right; line-height: 1.8; font-size: 14px; color: #374151; }
     .offer-title { font-size: 29px; margin-bottom: 22px; font-weight: 900; }
+
+    .theme-classic {
+  background: rgba(255,255,255,0.96);
+}
+
+.theme-modern {
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+}
+
+.theme-modern .top-line {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+.theme-modern .summary {
+  border: none;
+  box-shadow: 0 18px 42px rgba(37, 99, 235, 0.12);
+}
+
+.theme-modern .offer-header {
+  border-bottom: 3px solid #dbeafe;
+}
+
+.theme-modern .info-box,
+.theme-modern .payment-card,
+.theme-modern .note {
+  border-radius: 22px;
+}
+
+.theme-modern table {
+  border-spacing: 0 8px;
+  border-collapse: separate;
+}
+
+.theme-modern td {
+  background: #ffffff;
+}
+    
+.theme-executive {
+  background: #ffffff;
+}
+
+.theme-executive .top-line {
+  background: linear-gradient(90deg, #111827, #374151);
+}
+
+.theme-executive th {
+  background: #111827;
+}
+
+.theme-executive .summary {
+  border: 2px solid #111827;
+}
+
+.theme-executive .offer-title {
+  letter-spacing: -0.04em;
+}
+
+.theme-executive .offer-header {
+  border-bottom: 3px solid #111827;
+}
+
+.theme-executive .summary {
+  background: #f9fafb;
+}
+
+.theme-executive th {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.theme-executive .preview-theme-badge {
+  background: #111827;
+  color: white;
+}
+    
+    .theme-custom {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+}
+
+.theme-custom .top-line {
+  background: linear-gradient(90deg, #0f172a, #7c3aed, #2563eb);
+}
+
+.theme-custom .summary {
+  border: 2px dashed #7c3aed;
+}
+
+.cover-page {
+  min-height: 520px;
+  margin-bottom: 34px;
+  padding: 54px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.22), transparent 30%),
+    linear-gradient(135deg, #0f172a, var(--brand-color, #2563eb));
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cover-logo {
+  width: 120px;
+  height: 82px;
+  margin-bottom: auto;
+}
+
+.cover-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.cover-kicker {
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  opacity: 0.82;
+  margin-bottom: 14px;
+}
+
+.cover-title {
+  font-size: 46px;
+  line-height: 1.02;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  max-width: 620px;
+}
+
+.cover-company {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 800;
+  opacity: 0.92;
+}
+
+.cover-date {
+  margin-top: 8px;
+  font-size: 14px;
+  opacity: 0.78;
+}
+    
     .preview-status {
   display: inline-flex;
   align-items: center;
@@ -426,6 +641,18 @@ button:hover,
   color: #c2410c;
 }
 
+.business-badge {
+  display: inline-flex;
+  margin-left: 6px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #6d28d9;
+  font-size: 10px;
+  font-weight: 900;
+  vertical-align: middle;
+}
+    
 .status-draft {
   background: #f1f5f9;
   color: #475569;
@@ -445,6 +672,20 @@ button:hover,
   background: #dcfce7;
   color: #15803d;
 }
+
+.preview-theme-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #6d28d9;
+  font-size: 12px;
+  font-weight: 900;
+  margin-left: 8px;
+}
+    
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
     .info-box, .payment-card { background: #f8fafc; line-height: 1.6; font-size: 14px; }
 
@@ -454,6 +695,41 @@ button:hover,
     tr:nth-child(even) td { background: #f9fafb; }
     .right { text-align: right; }
 
+    .live-total-card {
+  margin-top: 18px;
+  margin-bottom: 20px;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid #dbe3ef;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.06);
+}
+
+.live-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eef2f7;
+  font-size: 14px;
+}
+
+.live-total-row strong {
+  color: #0f172a;
+}
+
+.live-total-final {
+  border-bottom: none;
+  padding-top: 14px;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.live-total-final strong {
+  color: #2563eb;
+  font-size: 22px;
+}
+    
     .summary {
       margin-top: 18px;
       margin-left: auto;
@@ -461,10 +737,11 @@ button:hover,
       border: 1px solid #e5e7eb;
       border-radius: 16px;
       overflow: hidden;
+      transition: all 0.35s ease;
     }
 
     .sum-row { display: flex; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
-    .sum-total { background: #dbeafe; color: #1e3a8a; font-size: 20px; font-weight: 900; }
+    .sum-total { background: #dbeafe; color: var(--brand-color, #2563eb); font-size: 20px; font-weight: 900; }
 
     .payment-box { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .note { margin-top: 18px; background: #f9fafb; line-height: 1.6; white-space: pre-wrap; }
@@ -914,6 +1191,7 @@ body::after {
 .top-line {
   height: 7px;
   background: linear-gradient(90deg, #0f172a, #2563eb, #60a5fa);
+  transition: background 0.35s ease;
 }
 
 .info-box,
@@ -925,6 +1203,7 @@ body::after {
 
 th {
   background: linear-gradient(135deg, #0f172a, #111827);
+  transition: background 0.35s ease;
 }
 
 .summary {
@@ -1531,6 +1810,11 @@ body.mobile-menu-collapsed .mobile-menu-toggle {
   font-size: 14px;
 }
 
+.quick-actions-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 @keyframes heroSlide {
   0%, 20% { transform: translateY(0); }
   25%, 45% { transform: translateY(-140px); }
@@ -1765,6 +2049,25 @@ body.printing-offer .offer {
   Sačuvano upravo sada
 </div>
       <div class="status-box" id="userStatusBox" style="display:none;"></div>
+      <div class="quick-actions-bar">
+
+  <button class="quick-action-btn" onclick="saveOffer()">
+    💾 Sačuvaj
+  </button>
+
+  <button class="quick-action-btn" onclick="printOffer()">
+    📄 PDF
+  </button>
+
+  <button class="quick-action-btn" onclick="toggleSavedOffers()">
+    📂 Ponude
+  </button>
+
+  <button class="quick-action-btn" onclick="resetExample()">
+    ♻ Reset
+  </button>
+
+</div>
      <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
 
       <div id="lockedContent" class="locked-content">
@@ -1839,6 +2142,37 @@ body.printing-offer .offer {
 
 <label>Status ponude</label>
 <select id="offerStatus" onchange="updateOffer()">
+  <label>Tema dokumenta</label>
+
+<label>Boja brenda <span class="business-badge">Business</span></label>
+
+<input
+  type="color"
+  id="brandColor"
+  value="#2563eb"
+  onchange="handleBrandColorChange()"
+/>
+
+<label>Naslovna strana <span class="business-badge">Business</span></label>
+<select id="coverPageEnabled" onchange="handleCoverPageChange()">
+  <option value="no">Bez naslovne strane</option>
+  <option value="yes">Naslovna strana · Business</option>
+</select>
+  
+<label>Tema dokumenta</label>
+<select id="documentTheme" onchange="handleThemeChange()">
+  <option value="classic">Classic</option>
+  <option value="modern">Modern · Premium</option>
+  <option value="executive">Executive · Premium</option>
+  <option value="custom">Custom branding · Business</option>
+</select>
+
+<div class="theme-hint">
+  Premium teme menjaju izgled PDF dokumenta. Custom branding je namenjen firmama koje žele dokument u svom vizuelnom identitetu.
+</div>
+
+<label>Status ponude</label>
+<select id="offerStatus" onchange="updateOffer()">
   <option value="Draft">Draft</option>
   <option value="Spremno za slanje">Spremno za slanje</option>
   <option value="Na čekanju">Na čekanju</option>
@@ -1865,6 +2199,25 @@ body.printing-offer .offer {
         <div id="itemsContainer"></div>
         <button class="secondary" onclick="addItem('',1,'kom',0)">+ Dodaj stavku</button>
 
+        <div class="live-total-card">
+
+  <div class="live-total-row">
+    <span>Subtotal</span>
+    <strong id="liveSubtotal">0.00</strong>
+  </div>
+
+  <div class="live-total-row">
+    <span>PDV</span>
+    <strong id="liveTax">0.00</strong>
+  </div>
+
+  <div class="live-total-row live-total-final">
+    <span>Ukupno</span>
+    <strong id="liveGrandTotal">0.00</strong>
+  </div>
+
+</div>
+        
         <h2>Obračun</h2>
         <div class="two">
           <div><label>Popust (%)</label><input id="discount" type="number" value="0" min="0" oninput="updateOffer()" /></div>
@@ -1914,6 +2267,28 @@ body.printing-offer .offer {
     </div>
   </div>
 
+  <div class="two">
+  <select id="savedOffersSort" onchange="loadSavedOffers()" style="margin-bottom:14px;">
+    <option value="newest">Najnovije prvo</option>
+    <option value="oldest">Najstarije prvo</option>
+    <option value="highest">Najveći iznos</option>
+    <option value="lowest">Najmanji iznos</option>
+  </select>
+
+  <select id="savedOffersStatusFilter" onchange="loadSavedOffers()" style="margin-bottom:14px;">
+    <option value="all">Svi statusi</option>
+    <option value="Draft">Draft</option>
+    <option value="Spremno za slanje">Spremno za slanje</option>
+    <option value="Na čekanju">Na čekanju</option>
+    <option value="Plaćeno">Plaćeno</option>
+  </select>
+</div>
+  <option value="newest">Najnovije prvo</option>
+  <option value="oldest">Najstarije prvo</option>
+  <option value="highest">Najveći iznos</option>
+  <option value="lowest">Najmanji iznos</option>
+</select>
+  
   <input
     id="savedOffersSearch"
     type="text"
@@ -1928,7 +2303,14 @@ body.printing-offer .offer {
       </div>
     </div>
 
-    <div class="card offer">
+    <div class="card offer theme-classic" id="offerPreview">
+      <div id="coverPage" class="cover-page" style="display:none;">
+  <div class="cover-logo" id="coverLogo"></div>
+  <div class="cover-kicker">Poslovna ponuda</div>
+  <div class="cover-title" id="coverTitle">Naziv ponude</div>
+  <div class="cover-company" id="coverCompany">Naziv firme</div>
+  <div class="cover-date" id="coverDate"></div>
+</div>
       <div class="top-line"></div>
       <div class="offer-header">
         <div class="company-block">
@@ -1943,6 +2325,9 @@ body.printing-offer .offer {
 
      <div class="offer-title" id="outTitle"></div>
 <div id="outStatus" class="preview-status">Draft</div>
+      <div id="outThemeBadge" class="preview-theme-badge">
+  Classic Theme
+</div>
       <div class="info-grid">
         <div class="info-box">
   <strong id="clientBoxTitle">Podaci o klijentu</strong><br>
@@ -2031,6 +2416,7 @@ body.printing-offer .offer {
   <li>Profesionalni layout za prodajne ponude</li>
   <li>Logo, pečat, potpis i podaci firme</li>
   <li>Stavke, popust, PDV i obračun ukupne cene</li>
+  <li>Više profesionalnih PDF tema</li>
   <li>Više valuta za domaće i strane klijente</li>
   <li>Brži workflow za timove koji često šalju ponude</li>
 </ul>
@@ -2048,6 +2434,10 @@ body.printing-offer .offer {
   <li>Neograničen broj PDF dokumenata</li>
   <li>Profesionalni branded dokumenti bez oznake</li>
   <li>Pristup budućim unapređenjima platforme</li>
+  <li>Više profesionalnih PDF tema</li>
+  <li>Custom branding za izgled dokumenata</li>
+  <li>Premium naslovna strana za PDF</li>
+  <li>Boja brenda na dokumentima</li>
   <li>Premium poslovni workflow bez mesečne pretplate</li>
   <li>Najbolja opcija za dugoročno korišćenje</li>
 </ul>
@@ -2972,19 +3362,50 @@ async function loadSavedOffers() {
 
   if (error) return;
 
+var sortValue = el('savedOffersSort') ? el('savedOffersSort').value : 'newest';
+
+var statusFilter = el('savedOffersStatusFilter')
+  ? el('savedOffersStatusFilter').value
+  : 'all';
+
+if (statusFilter !== 'all') {
+  data = data.filter(function(offer) {
+    return (offer.offer_data.offerStatus || 'Draft') === statusFilter;
+  });
+}
+  
+data.sort(function(a, b) {
+  if (sortValue === 'newest') {
+    return new Date(b.created_at) - new Date(a.created_at);
+  }
+
+  if (sortValue === 'oldest') {
+    return new Date(a.created_at) - new Date(b.created_at);
+  }
+
+  if (sortValue === 'highest') {
+    return calculateOfferTotal(b.offer_data) - calculateOfferTotal(a.offer_data);
+  }
+
+  if (sortValue === 'lowest') {
+    return calculateOfferTotal(a.offer_data) - calculateOfferTotal(b.offer_data);
+  }
+
+  return 0;
+});
+  
   var box = el('savedOffersList');
 
   setText('savedOffersCount', data.length + ' sačuvanih ponuda');
 
 if (!data.length) {
   box.innerHTML = `
-  <div class="saved-offer-card">
-    <div class="saved-offer-title">Još nemate sačuvanih ponuda</div>
-    <div class="saved-offer-client">
-      Kada sačuvate ponudu, pojaviće se ovde sa nazivom, klijentom, datumom i ukupnim iznosom.
+    <div class="empty-state">
+      <strong>Još nema sačuvanih ponuda</strong>
+      <span>Sačuvajte prvu ponudu i ona će se pojaviti ovde.</span>
     </div>
-  </div>
-`;
+  `;
+  el('savedOffersCount').textContent = '0 sačuvanih ponuda';
   return;
 }
 
@@ -3021,6 +3442,14 @@ box.innerHTML += `
       <div class="saved-offer-pill">
         ${offer.offer_data.items?.length || 0} stavki
       </div>
+
+      <div class="saved-offer-pill">
+    ${offer.offer_data.currency || 'RSD'} ${calculateOfferTotal(offer.offer_data)}
+  </div>
+
+  <div class="saved-offer-pill">
+    ${offer.offer_data.offerStatus || 'Draft'}
+  </div>
 
     </div>
 
@@ -3128,6 +3557,41 @@ if (Array.isArray(data.items)) {
 updateOffer();
 }
 
+    function duplicateOffer(dataString) {
+  var data = JSON.parse(dataString);
+
+  data.title = (data.title || 'Ponuda') + ' - kopija';
+  data.offerNumber = '';
+  data.offerStatus = 'Draft';
+
+  applyOfferData(data);
+  updateOffer();
+  markUnsaved();
+}
+
+    function calculateOfferTotal(data) {
+  if (!data || !data.items) return '0';
+
+  var subtotal = 0;
+
+  data.items.forEach(function(item) {
+    subtotal += (Number(item.qty) || 0) * (Number(item.price) || 0);
+  });
+
+  var discount = Number(data.discount || 0);
+  var tax = Number(data.tax || 0);
+
+  if (discount > 0) {
+    subtotal -= subtotal * (discount / 100);
+  }
+
+  if (tax > 0) {
+    subtotal += subtotal * (tax / 100);
+  }
+
+  return subtotal.toFixed(2);
+}
+
     function filterSavedOffers() {
 
   var value = el('savedOffersSearch').value.toLowerCase();
@@ -3210,6 +3674,12 @@ function getCurrentOfferData() {
     total: el('outTotal').textContent,
     currencySymbol: el('currency').value,
     offerStatus: el('offerStatus').value,
+    title: el('title').value,
+offerStatus: el('offerStatus').value,
+documentTheme: el('documentTheme').value,
+    brandColor: el('brandColor').value,
+    coverPageEnabled: el('coverPageEnabled').value,
+deadline: el('deadline').value,
     items: []
   };
 
@@ -3373,7 +3843,43 @@ function loadLocalDraft() {
     console.log(e);
   }
 }
-    
+
+function handleThemeChange() {
+  var theme = el('documentTheme').value;
+
+  if (theme === 'custom') {
+    el('documentTheme').value = 'classic';
+    showLoginModal('Custom branding je dostupan za Business paket.');
+    updateOffer();
+    return;
+  }
+
+  if (theme !== 'classic' && !hasAccess) {
+    el('documentTheme').value = 'classic';
+    showLoginModal('Premium teme su dostupne uz aktivan paket.');
+  }
+
+  updateOffer();
+}
+
+function handleBrandColorChange() {
+  if (!hasAccess) {
+    el('brandColor').value = '#2563eb';
+    showLoginModal('Boja brenda je dostupna uz aktivan Business paket.');
+  }
+
+  updateOffer();
+}
+
+function handleCoverPageChange() {
+  if (el('coverPageEnabled').value === 'yes' && !hasAccess) {
+    el('coverPageEnabled').value = 'no';
+    showLoginModal('Naslovna strana je dostupna uz Business paket.');
+  }
+
+  updateOffer();
+}
+  
     function updateOffer() {
       el('outCompany').textContent = el('company').value;
       el('outCompanyAddress').textContent = el('companyAddress').value;
@@ -3408,6 +3914,61 @@ if (status === 'Na čekanju') {
 if (status === 'Plaćeno') {
   statusBox.classList.add('status-paid');
 }
+
+      var preview = el('offerPreview');
+
+      var brandColor = el('brandColor').value;
+
+preview.style.setProperty('--brand-color', brandColor);
+
+      var coverEnabled = el('coverPageEnabled').value === 'yes';
+
+el('coverPage').style.display = coverEnabled ? 'flex' : 'none';
+el('coverTitle').textContent = el('title').value || 'Naziv ponude';
+el('coverCompany').textContent = el('company').value || 'Naziv firme';
+el('coverDate').textContent = 'Datum: ' + new Date().toLocaleDateString();
+
+el('coverLogo').innerHTML = el('outLogo').innerHTML;
+
+      var theme = el('documentTheme').value;
+
+var themeBadge = el('outThemeBadge');
+
+if (themeBadge) {
+  var themeName = 'Classic Theme';
+
+  if (theme === 'modern') {
+    themeName = 'Modern Theme';
+  }
+
+  if (theme === 'executive') {
+    themeName = 'Executive Theme';
+  }
+
+  if (theme === 'custom') {
+    themeName = 'Custom Branding';
+  }
+
+  themeBadge.textContent = themeName;
+}
+      
+preview.classList.remove(
+  'theme-classic',
+  'theme-modern',
+  'theme-executive',
+  'theme-custom'
+);
+
+preview.classList.add('theme-' + theme);
+
+if (preview) {
+  if (status === 'Draft') {
+    preview.classList.add('draft-watermark');
+  } else {
+    preview.classList.remove('draft-watermark');
+  }
+}
+      
       el('outDeadline').textContent = el('deadline').value;
       el('outCurrencyInfo').textContent = el('currency').value;
       el('outClient').textContent = el('client').value;
@@ -3438,7 +3999,9 @@ if (status === 'Plaćeno') {
       var afterDiscount = subtotal - discount;
       var tax = afterDiscount * ((Number(el('tax').value) || 0) / 100);
       var finalTotal = afterDiscount + tax;
-
+      el('liveSubtotal').textContent = formatNumber(subtotal) + ' ' + currency;
+el('liveTax').textContent = formatNumber(tax) + ' ' + currency;
+el('liveGrandTotal').textContent = formatNumber(finalTotal) + ' ' + currency;
       el('outItems').innerHTML = rows;
       el('outSubtotal').textContent = formatNumber(subtotal);
       el('outDiscountAmount').textContent = formatNumber(discount);
