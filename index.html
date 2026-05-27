@@ -4284,12 +4284,6 @@ function handleThemeChange() {
     theme = 'classic';
   }
 
-  if (theme !== 'classic' && !hasAccess) {
-    el('documentTheme').value = 'classic';
-    showLoginModal('Premium teme su dostupne uz aktivan paket.');
-    theme = 'classic';
-  }
-
   updateThemePreview(theme);
   updateOffer();
 }
@@ -4355,27 +4349,7 @@ if (status === 'Na čekanju') {
 if (status === 'Plaćeno') {
   statusEl.classList.add('status-paid');
 }
-var statusBox = el('outStatus');
 
-statusBox.textContent = status;
-
-statusBox.className = 'preview-status';
-
-if (status === 'Draft') {
-  statusBox.classList.add('status-draft');
-}
-
-if (status === 'Spremno za slanje') {
-  statusBox.classList.add('status-sent');
-}
-
-if (status === 'Na čekanju') {
-  statusBox.classList.add('status-pending');
-}
-
-if (status === 'Plaćeno') {
-  statusBox.classList.add('status-paid');
-}
 
       var preview = el('offerPreview');
 
@@ -4394,26 +4368,10 @@ el('coverDate').textContent = 'Datum: ' + new Date().toLocaleDateString();
 el('coverLogo').innerHTML = el('outLogo').innerHTML;
 
       var theme = el('documentTheme').value;
+      
+      updateThemePreview(theme);
+      
 
-var themeBadge = el('outThemeBadge');
-
-if (themeBadge) {
-  var themeName = 'Classic Theme';
-
-  if (theme === 'modern') {
-    themeName = 'Modern Theme';
-  }
-
-  if (theme === 'executive') {
-    themeName = 'Executive Theme';
-  }
-
-  if (theme === 'custom') {
-    themeName = 'Custom Branding';
-  }
-
-  themeBadge.textContent = themeName;
-}
       
 preview.classList.remove(
   'theme-classic',
