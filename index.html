@@ -125,33 +125,31 @@
 }
 
     .card {
-      border-radius: 22px;
-      padding: 28px;
-    }
+  border-radius: 26px;
+  padding: 32px;
+}
 
     h1 { margin: 0 0 8px; font-size: 30px; }
 
     h2 {
-      margin: 24px 0 10px;
-      padding-top: 18px;
-      border-top: 1px solid #e5e7eb;
-      font-size: 18px;
-    }
+  margin: 34px 0 14px;
+  padding-top: 22px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 19px;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
 
-    label {
-      display: block;
-      margin-top: 12px;
-      margin-bottom: 6px;
-      font-weight: 700;
-      font-size: 13px;
-      color: #374151;
-    }
+   label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 8px;
 
    input,
 select,
 textarea {
   width: 100%;
-  padding: 13px 14px;
+  padding: 14px 15px;
   border: 1px solid #dbe3ef;
   border-radius: 14px;
   font-size: 14px;
@@ -227,14 +225,41 @@ button:hover,
       margin-top: 14px;
     }
 
-    .quick-actions-bar {
+    .business-dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 18px 0 18px;
+}
+
+.dashboard-box {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid #dbe3ef;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-box span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.dashboard-box strong {
+  display: block;
+  font-size: 18px;
+  color: #0f172a;
+  font-weight: 900;
+}
+    
+   .quick-actions-bar {
   display: flex;
   gap: 10px;
   margin-top: 16px;
   margin-bottom: 18px;
-  position: sticky;
-  top: 88px;
-  z-index: 50;
   background: rgba(255,255,255,0.72);
   backdrop-filter: blur(14px);
   padding: 10px;
@@ -246,12 +271,50 @@ button:hover,
   margin: 0;
   width: auto;
   flex: 1;
-  padding: 12px;
-  border-radius: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
   font-size: 13px;
   font-weight: 900;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.16);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)),
+    linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow:
+    0 14px 30px rgba(37, 99, 235, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
+.quick-action-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 20%,
+    rgba(255,255,255,0.18) 50%,
+    transparent 80%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.5s ease;
+}
+
+.quick-action-btn:hover::before {
+  transform: translateX(120%);
+}
+
+.quick-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 20px 40px rgba(37, 99, 235, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+.quick-action-btn:active {
+  transform: scale(0.98);
+}
+    
     .locked-message {
       background: #fff7ed;
       border-color: #fed7aa;
@@ -475,7 +538,9 @@ button:hover,
 }
 
 .theme-modern {
-  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  background:
+    radial-gradient(circle at top right, rgba(96,165,250,0.14), transparent 26%),
+    linear-gradient(180deg, #ffffff, #eff6ff);
 }
 
 .theme-modern .top-line {
@@ -483,10 +548,10 @@ button:hover,
 }
 
 .theme-modern .summary {
-  border: none;
-  box-shadow: 0 18px 42px rgba(37, 99, 235, 0.12);
+  border: 2px solid #bfdbfe;
+  background: linear-gradient(180deg, #ffffff, #eff6ff);
+  box-shadow: 0 24px 60px rgba(37, 99, 235, 0.16);
 }
-
 .theme-modern .offer-header {
   border-bottom: 3px solid #dbeafe;
 }
@@ -507,7 +572,7 @@ button:hover,
 }
     
 .theme-executive {
-  background: #ffffff;
+  background: linear-gradient(180deg, #ffffff, #f3f4f6);
 }
 
 .theme-executive .top-line {
@@ -515,7 +580,7 @@ button:hover,
 }
 
 .theme-executive th {
-  background: #111827;
+  background: linear-gradient(135deg, #111827, #1f2937);
 }
 
 .theme-executive .summary {
@@ -531,7 +596,7 @@ button:hover,
 }
 
 .theme-executive .summary {
-  background: #f9fafb;
+  background: linear-gradient(180deg, #ffffff, #f3f4f6);
 }
 
 .theme-executive th {
@@ -557,6 +622,7 @@ button:hover,
 }
 
 .cover-page {
+  position: relative;
   min-height: 520px;
   margin-bottom: 34px;
   padding: 54px;
@@ -570,6 +636,20 @@ button:hover,
   justify-content: flex-end;
 }
 
+.cover-badge {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+}
+    
 .cover-logo {
   width: 120px;
   height: 82px;
@@ -673,6 +753,17 @@ button:hover,
   color: #15803d;
 }
 
+.preview-status {
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    transform 0.18s ease;
+}
+
+.preview-status:hover {
+  transform: translateY(-1px);
+}
+    
 .preview-theme-badge {
   display: inline-flex;
   align-items: center;
@@ -759,8 +850,20 @@ button:hover,
     .pricing-hero p { max-width: 720px; margin: 0 auto; color: #64748b; line-height: 1.6; }
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; }
 
-    .price-card { border-radius: 22px; padding: 24px; position: relative; }
-    .price-card.featured { border: 2px solid #2563eb; }
+    .price-card {
+  border-radius: 28px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+}
+    .price-card.featured {
+  border: 2px solid #2563eb;
+  transform: translateY(-10px);
+  box-shadow:
+    0 34px 90px rgba(37, 99, 235, 0.20),
+    0 10px 30px rgba(37, 99, 235, 0.10);
+}
     .tag {
   position: static;
   display: inline-block;
@@ -772,12 +875,24 @@ button:hover,
   font-size: 12px;
   font-weight: 900;
 }
-    .price-name { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+    .price-name {
+  font-size: 26px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  letter-spacing: -0.04em;
+  color: #0f172a;
+}
     .price-desc { color: #64748b; font-size: 14px; line-height: 1.5; min-height: 42px; }
-    .price { font-size: 34px; font-weight: 900; margin: 18px 0 4px; }
+    .price {
+  font-size: 42px;
+  font-weight: 900;
+  margin: 22px 0 6px;
+  letter-spacing: -0.05em;
+  color: #0f172a;
+}
     .price-small { color: #64748b; font-size: 13px; }
     .features { padding: 0; margin: 18px 0; list-style: none; }
-    .features li { padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #334155; }
+    .features li { padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #334155; }
     .features li::before { content: '✓'; color: #2563eb; font-weight: 900; margin-right: 8px; }
 
     .explain-box { margin-top: 24px; border-radius: 22px; padding: 24px; }
@@ -1164,9 +1279,10 @@ body::after {
 }
 
 .upload-card {
-  background: rgba(248, 250, 252, 0.82);
-  border-color: #dbe3ef;
+  background: linear-gradient(180deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.10);
 }
 
 .upload-card:hover {
@@ -1276,6 +1392,7 @@ th {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
+  margin-top: 18px;
 }
 
 .trust-strip-inner div {
@@ -1500,13 +1617,19 @@ th {
 }
 
 .upload-card label {
-  color: #475569;
+  color: #1e3a8a;
+  font-weight: 800;
 }
 
 .small-btn {
   background: linear-gradient(135deg, #2563eb, #4f46e5);
 }
 
+.small-btn {
+  color: white;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.24);
+}
+    
 .locked-message {
   border-left: 5px solid #f97316;
 }
@@ -1523,6 +1646,88 @@ th {
 
 .google-login-btn {
   border-radius: 14px;
+}
+
+.custom-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+  z-index: 5000;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: all 0.28s ease;
+}
+
+.custom-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.theme-preview-box {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid #dbe3ef;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+  transition: all 0.25s ease;
+}
+
+.theme-preview-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.theme-preview-top span {
+  color: #0f172a;
+  font-weight: 900;
+}
+
+.theme-preview-line {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0f172a, #2563eb);
+  margin-bottom: 14px;
+}
+
+.theme-preview-row {
+  height: 10px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  margin-top: 8px;
+}
+
+.theme-preview-row.short {
+  width: 62%;
+}
+
+    .theme-preview-modern {
+  background: linear-gradient(180deg, #ffffff, #eff6ff);
+  border-color: #bfdbfe;
+}
+
+.theme-preview-modern .theme-preview-line {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+
+.theme-preview-executive {
+  background: linear-gradient(180deg, #ffffff, #f3f4f6);
+  border-color: #111827;
+}
+
+.theme-preview-executive .theme-preview-line {
+  background: linear-gradient(90deg, #111827, #374151);
 }
     
     @media (max-width: 980px) {
@@ -1815,6 +2020,10 @@ body.mobile-menu-collapsed .mobile-menu-toggle {
   grid-template-columns: 1fr 1fr;
 }
 
+ .business-dashboard {
+  grid-template-columns: 1fr 1fr;
+}        
+
 @keyframes heroSlide {
   0%, 20% { transform: translateY(0); }
   25%, 45% { transform: translateY(-140px); }
@@ -1829,6 +2038,28 @@ body.mobile-menu-collapsed .mobile-menu-toggle {
       body::before,
 body::after {
   display: none !important;
+}
+
+.cover-page {
+  page-break-after: always;
+  min-height: 260mm;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.offer {
+  page-break-inside: avoid;
+}
+
+table,
+.summary,
+.payment-box,
+.signature-area {
+  page-break-inside: avoid;
+}
+
+tr {
+  page-break-inside: avoid;
 }
       body.printing-offer .header,
 body.printing-offer .landing-section,
@@ -1949,26 +2180,22 @@ body.printing-offer .offer {
 
     <div class="landing-left">
 
-      <div class="landing-kicker">
-        PonudaPro SaaS platforma
+     <div class="landing-kicker">
+        Pametniji način za izradu poslovnih ponuda
       </div>
 
       <h1>
-        Profesionalna izrada
-        PDF ponuda i poslovnih
-        dokumenata
+        Kreirajte profesionalne PDF ponude za manje od 5 minuta
       </h1>
 
       <p class="landing-main-text">
-        PonudaPro je web platforma za kreiranje urednih,
-        brendiranih i spremnih PDF dokumenata za poslovnu
-        komunikaciju sa klijentima.
+        PonudaPro pomaže firmama, agencijama i prodajnim timovima da brzo naprave uredne, brendirane i spremne ponude za klijente — bez Word template-a, ručnog formatiranja i izgubljenog vremena.
       </p>
 
       <div class="landing-features">
-        <div class="landing-feature">✓ Brz PDF export</div>
-        <div class="landing-feature">✓ Logo, pečat i potpis</div>
-        <div class="landing-feature">✓ Više valuta i profesionalan izgled</div>
+       <div class="landing-feature" id="landingFeature1">✓ Profesionalan PDF izgled</div>
+<div class="landing-feature" id="landingFeature2">✓ Logo, pečat, potpis i naslovna strana</div>
+<div class="landing-feature" id="landingFeature3">✓ Sačuvane ponude, teme i brzi export</div>
       </div>
 
       <div class="landing-actions">
@@ -1988,8 +2215,8 @@ body.printing-offer .offer {
       <div class="hero-live-card">
 
         <div class="hero-live-top">
-          <span id="heroLiveLabel">Live workflow</span>
-         <strong id="heroLiveBrand">PonudaPro</strong>
+          <span id="heroLiveLabel">Proces izrade</span>
+          <strong id="heroLiveBrand">PonudaPro</strong>
         </div>
 
         <div class="hero-rotator">
@@ -2012,8 +2239,8 @@ body.printing-offer .offer {
             </div>
 
             <div class="hero-step">
-              <strong id="heroStep4Title">4. Izgledajte profesionalno</strong>
-            <span id="heroStep4Text">Bez Word template-a i ručnog sređivanja.</span>
+              <strong id="heroStep4Title">4. Pošaljite klijentu</strong>
+<span id="heroStep4Text">Dokument izgleda uredno, ozbiljno i spremno za prodaju.</span>
             </div>
 
           </div>
@@ -2028,16 +2255,16 @@ body.printing-offer .offer {
 
   <div class="trust-strip-inner">
       <div>
-        <strong>Brz PDF export</strong>
-        <span>Spreman dokument za slanje klijentu</span>
+        <strong>Za firme i prodajne timove</strong>
+<span>Ponude izgledaju uredno, jasno i profesionalno</span>
       </div>
       <div>
-        <strong>Logo, pečat i potpis</strong>
-        <span>Dokument izgleda kao pravi poslovni fajl</span>
+        <strong>Brendirani dokumenti</strong>
+<span>Logo, pečat, potpis, teme i naslovna strana</span>
       </div>
       <div>
-        <strong>Sigurno plaćanje</strong>
-        <span>Obrada preko Paddle platforme</span>
+        <strong>Brza priprema ponude</strong>
+<span>Manje ručnog formatiranja, više vremena za klijente</span>
       </div>
     </div>
   </section>
@@ -2049,23 +2276,35 @@ body.printing-offer .offer {
   Sačuvano upravo sada
 </div>
       <div class="status-box" id="userStatusBox" style="display:none;"></div>
+
+      <div class="business-dashboard">
+  <div class="dashboard-box">
+    <span>Ukupno ponuda</span>
+    <strong id="dashTotalOffers">0</strong>
+  </div>
+
+  <div class="dashboard-box">
+    <span>Ukupna vrednost</span>
+    <strong id="dashTotalValue">0 RSD</strong>
+  </div>
+
+  <div class="dashboard-box">
+    <span>Plaćeno</span>
+    <strong id="dashPaidOffers">0</strong>
+  </div>
+
+  <div class="dashboard-box">
+    <span>Draft</span>
+    <strong id="dashDraftOffers">0</strong>
+  </div>
+</div>
+      
       <div class="quick-actions-bar">
 
-  <button class="quick-action-btn" onclick="saveOffer()">
-    💾 Sačuvaj
-  </button>
-
-  <button class="quick-action-btn" onclick="printOffer()">
-    📄 PDF
-  </button>
-
-  <button class="quick-action-btn" onclick="toggleSavedOffers()">
-    📂 Ponude
-  </button>
-
-  <button class="quick-action-btn" onclick="resetExample()">
-    ♻ Reset
-  </button>
+  <button class="quick-action-btn" onclick="saveOffer()">Sačuvaj</button>
+<button class="quick-action-btn" onclick="printOffer()">PDF</button>
+<button class="quick-action-btn" onclick="toggleSavedOffers()">Ponude</button>
+<button class="quick-action-btn" onclick="resetExample()">Reset</button>
 
 </div>
      <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
@@ -2138,14 +2377,18 @@ body.printing-offer .offer {
   </select>
 </div>
         </div>
-        <label>Naziv ponude</label><input id="title" placeholder="Unesite naziv ponude" oninput="updateOffer()" />
+       <label>Naziv ponude</label>
+<input id="title" placeholder="Unesite naziv ponude" oninput="updateOffer()" />
 
 <label>Status ponude</label>
 <select id="offerStatus" onchange="updateOffer()">
-  <label>Tema dokumenta</label>
+  <option value="Draft">Draft</option>
+  <option value="Spremno za slanje">Spremno za slanje</option>
+  <option value="Na čekanju">Na čekanju</option>
+  <option value="Plaćeno">Plaćeno</option>
+</select>
 
 <label>Boja brenda <span class="business-badge">Business</span></label>
-
 <input
   type="color"
   id="brandColor"
@@ -2158,26 +2401,27 @@ body.printing-offer .offer {
   <option value="no">Bez naslovne strane</option>
   <option value="yes">Naslovna strana · Business</option>
 </select>
-  
+
 <label>Tema dokumenta</label>
 <select id="documentTheme" onchange="handleThemeChange()">
   <option value="classic">Classic</option>
   <option value="modern">Modern · Premium</option>
   <option value="executive">Executive · Premium</option>
-  <option value="custom">Custom branding · Business</option>
+  <option value="custom" disabled>Custom branding (uskoro)</option>
 </select>
 
 <div class="theme-hint">
   Premium teme menjaju izgled PDF dokumenta. Custom branding je namenjen firmama koje žele dokument u svom vizuelnom identitetu.
 </div>
-
-<label>Status ponude</label>
-<select id="offerStatus" onchange="updateOffer()">
-  <option value="Draft">Draft</option>
-  <option value="Spremno za slanje">Spremno za slanje</option>
-  <option value="Na čekanju">Na čekanju</option>
-  <option value="Plaćeno">Plaćeno</option>
-</select>
+        <div id="themePreviewBox" class="theme-preview-box">
+  <div class="theme-preview-top">
+    <span id="themePreviewName">Classic</span>
+    <strong>PDF style</strong>
+  </div>
+  <div class="theme-preview-line"></div>
+  <div class="theme-preview-row"></div>
+  <div class="theme-preview-row short"></div>
+</div>
         <div class="two">
           <div><label>Rok izrade</label><input id="deadline" placeholder="Unesite rok izrade" oninput="updateOffer()" /></div>
           <div>
@@ -2225,7 +2469,7 @@ body.printing-offer .offer {
         </div>
         <div class="checkbox-row"><input id="hideZeroRows" type="checkbox" checked onchange="updateOffer()" /><span>Sakrij popust i PDV ako su 0</span></div>
         <label>Napomena / uslovi</label><textarea id="note" placeholder="Unesite napomenu ili uslove ponude" oninput="updateOffer()"></textarea>
-        <button onclick="updateOffer()">Osveži ponudu</button>
+        
 
 <div class="two">
   <button class="secondary" onclick="saveOffer()">
@@ -2305,6 +2549,7 @@ body.printing-offer .offer {
 
     <div class="card offer theme-classic" id="offerPreview">
       <div id="coverPage" class="cover-page" style="display:none;">
+        <div class="cover-badge">Business cover page</div>
   <div class="cover-logo" id="coverLogo"></div>
   <div class="cover-kicker">Poslovna ponuda</div>
   <div class="cover-title" id="coverTitle">Naziv ponude</div>
@@ -2325,9 +2570,6 @@ body.printing-offer .offer {
 
      <div class="offer-title" id="outTitle"></div>
 <div id="outStatus" class="preview-status">Draft</div>
-      <div id="outThemeBadge" class="preview-theme-badge">
-  Classic Theme
-</div>
       <div class="info-grid">
         <div class="info-box">
   <strong id="clientBoxTitle">Podaci o klijentu</strong><br>
@@ -2378,28 +2620,29 @@ body.printing-offer .offer {
 
   <div class="pricing-page" id="pricingPage">
   <div class="pricing-hero">
-  <h1 id="pricingTitle">Profesionalne PDF ponude bez komplikacije</h1>
-<p id="pricingDescription">Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.</p>
+  <h1 id="pricingTitle">Paketi za profesionalnu izradu ponuda</h1>
+  <p id="pricingDescription">Izaberite paket prema tome koliko često šaljete ponude klijentima. Jedna ponuda za brz posao, mesečni paket za stalni rad, ili Business paket za ozbiljniji brendirani nastup.</p>
 
-<div class="trust-row">
-  <div class="trust-pill">Branded PDF export</div>
-  <div class="trust-pill">Logo, pečat i potpis</div>
-  <div class="trust-pill">Više valuta</div>
-  <div class="trust-pill">Bez PonudaPro oznake</div>
+  <div class="trust-row">
+    <div class="trust-pill">✓ PDF export</div>
+    <div class="trust-pill">✓ Brendirani dokumenti</div>
+    <div class="trust-pill">✓ Bez ručnog formatiranja</div>
+  </div>
 </div>
 
 <div class="pricing-grid">
   <div class="price-card">
     <div class="price-name">Single Document</div>
-    <div class="price-desc">Jednokratni pristup za izradu jednog profesionalnog PDF dokumenta.</div>
+   <div class="price-desc">
+  Idealan za jednu profesionalnu ponudu kada vam treba brz i uredan PDF dokument za klijenta.
+</div>
     <div class="price">1.00 €</div>
     <div class="price-small">test cena preko Paddle-a</div>
     <ul class="features">
-  <li>1 profesionalni PDF dokument</li>
-  <li>Brendiranje dokumenta bez PonudaPro oznake</li>
-  <li>Logo, pečat, potpis i poslovni podaci</li>
-  <li>Više valuta: RSD, EUR, USD, GBP, CHF</li>
-  <li>Spreman dokument za slanje klijentu</li>
+ <li>1 profesionalna PDF ponuda</li>
+<li>Logo, pečat i potpis</li>
+<li>Moderan poslovni izgled</li>
+<li>Brz export za slanje klijentu</li>
 </ul>
     <button onclick="buyPlan('one_offer')">Aktiviraj paket</button>
   </div>
@@ -2407,18 +2650,17 @@ body.printing-offer .offer {
   <div class="price-card featured">
     <div class="tag">Najčešći izbor</div>
     <div class="price-name">Business Monthly</div>
-    <div class="price-desc">Mesečni pristup za firme koje redovno pripremaju i šalju poslovne ponude.</div>
+    <div class="price-desc">
+  Najbolji izbor za freelancere, agencije i firme koje redovno šalju poslovne ponude.
+</div>
     <div class="price">1.00 €</div>
     <div class="price-small">test cena mesečno preko Paddle-a</div>
     <ul class="features">
-  <li>Neograničen broj PDF dokumenata tokom 30 dana</li>
-  <li>Dokumenti bez PonudaPro oznake</li>
-  <li>Profesionalni layout za prodajne ponude</li>
-  <li>Logo, pečat, potpis i podaci firme</li>
-  <li>Stavke, popust, PDV i obračun ukupne cene</li>
-  <li>Više profesionalnih PDF tema</li>
-  <li>Više valuta za domaće i strane klijente</li>
-  <li>Brži workflow za timove koji često šalju ponude</li>
+  <li>Neograničen broj ponuda</li>
+<li>Čuvanje i učitavanje ponuda</li>
+<li>Premium teme i stilovi</li>
+<li>Naslovna strana i status dokumenta</li>
+<li>Brži workflow za svakodnevni rad</li>
 </ul>
     <button onclick="buyPlan('monthly')">Aktiviraj paket</button>
   </div>
@@ -2538,6 +2780,10 @@ function applyLanguage() {
   setText('loginBtn', isEn ? 'Log in' : 'Prijavi se');
   setText('logoutBtn', isEn ? 'Log out' : 'Odjavi se');;
   setText('languageToggle', isEn ? 'EN / SR' : 'SR / EN');
+
+  setText('landingFeature1', isEn ? '✓ Professional PDF appearance' : '✓ Profesionalan PDF izgled');
+setText('landingFeature2', isEn ? '✓ Logo, stamp, signature and cover page' : '✓ Logo, pečat, potpis i naslovna strana');
+setText('landingFeature3', isEn ? '✓ Saved offers, themes and fast export' : '✓ Sačuvane ponude, teme i brzi export');
 
   setText('mainTitle', isEn ? 'Create a business offer' : 'Izrada poslovne ponude');
   setText('mainDescription', isEn ? 'Create a clean, branded and ready-to-send PDF document for clients or internal records.' : 'Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.');
@@ -3281,6 +3527,33 @@ function showPolicy(type) {
       return Number(n).toLocaleString('sr-RS', { maximumFractionDigits: 2 });
     }
 
+function showToast(message) {
+  var oldToast = document.getElementById('customToast');
+
+  if (oldToast) {
+    oldToast.remove();
+  }
+
+  var toast = document.createElement('div');
+  toast.id = 'customToast';
+  toast.className = 'custom-toast';
+  toast.textContent = message;
+
+  document.body.appendChild(toast);
+
+  setTimeout(function() {
+    toast.classList.add('show');
+  }, 10);
+
+  setTimeout(function() {
+    toast.classList.remove('show');
+
+    setTimeout(function() {
+      toast.remove();
+    }, 300);
+  }, 2600);
+}
+    
 async function saveOffer() {
   if (!currentUser) {
     showLoginModal('Prijavite se da biste sačuvali ponudu.');
@@ -3336,7 +3609,8 @@ async function saveOffer() {
     return;
   }
 
-  alert('Ponuda je sačuvana.');
+    setSavedState();
+  showToast('Ponuda je uspešno sačuvana.');
   loadSavedOffers();
 }
 
@@ -3396,6 +3670,10 @@ data.sort(function(a, b) {
   
   var box = el('savedOffersList');
 
+  var totalValue = 0;
+  var paidOffers = 0;
+  var draftOffers = 0;
+
   setText('savedOffersCount', data.length + ' sačuvanih ponuda');
 
 if (!data.length) {
@@ -3409,9 +3687,22 @@ if (!data.length) {
   return;
 }
 
-  box.innerHTML = '';
+box.innerHTML = '';
 
   data.forEach(function(offer) {
+    var offerTotal = Number(calculateOfferTotal(offer.offer_data)) || 0;
+    var offerStatus = offer.offer_data.offerStatus || 'Draft';
+
+    totalValue += offerTotal;
+
+    if (offerStatus === 'Plaćeno') {
+      paidOffers++;
+    }
+
+    if (offerStatus === 'Draft') {
+      draftOffers++;
+    }
+
 box.innerHTML += `
   <div class="saved-offer-card">
 
@@ -3471,7 +3762,12 @@ box.innerHTML += `
 
   </div>
 `;
-  });
+   });
+
+  el('dashTotalOffers').textContent = data.length;
+  el('dashTotalValue').textContent = totalValue.toLocaleString('sr-RS') + ' RSD';
+  el('dashPaidOffers').textContent = paidOffers;
+  el('dashDraftOffers').textContent = draftOffers;
 }
 
 function applyTemplate(type) {
@@ -3844,6 +4140,48 @@ function loadLocalDraft() {
   }
 }
 
+function setUnsavedChanges() {
+  var indicator = el('saveIndicator');
+
+  if (!indicator) return;
+
+  indicator.classList.remove('saved');
+  indicator.classList.add('unsaved');
+
+  indicator.textContent = 'Nesačuvane izmene';
+}
+
+function setSavedState() {
+  var indicator = el('saveIndicator');
+
+  if (!indicator) return;
+
+  indicator.classList.remove('unsaved');
+  indicator.classList.add('saved');
+
+  indicator.textContent = 'Sačuvano upravo sada';
+}
+
+function updateThemePreview(theme) {
+  var box = el('themePreviewBox');
+  var name = el('themePreviewName');
+
+  if (!box || !name) return;
+
+  box.classList.remove('theme-preview-classic', 'theme-preview-modern', 'theme-preview-executive');
+
+  if (theme === 'modern') {
+    box.classList.add('theme-preview-modern');
+    name.textContent = 'Modern';
+  } else if (theme === 'executive') {
+    box.classList.add('theme-preview-executive');
+    name.textContent = 'Executive';
+  } else {
+    box.classList.add('theme-preview-classic');
+    name.textContent = 'Classic';
+  }
+}
+    
 function handleThemeChange() {
   var theme = el('documentTheme').value;
 
@@ -3858,7 +4196,7 @@ function handleThemeChange() {
     el('documentTheme').value = 'classic';
     showLoginModal('Premium teme su dostupne uz aktivan paket.');
   }
-
+  updateThemePreview(theme);
   updateOffer();
 }
 
@@ -3875,12 +4213,21 @@ function handleCoverPageChange() {
   if (el('coverPageEnabled').value === 'yes' && !hasAccess) {
     el('coverPageEnabled').value = 'no';
     showLoginModal('Naslovna strana je dostupna uz Business paket.');
+    updateOffer();
+    return;
   }
 
   updateOffer();
+
+  if (el('coverPageEnabled').value === 'yes') {
+    showToast('Naslovna strana je uključena.');
+  } else {
+    showToast('Naslovna strana je isključena.');
+  }
 }
   
     function updateOffer() {
+      setUnsavedChanges();
       el('outCompany').textContent = el('company').value;
       el('outCompanyAddress').textContent = el('companyAddress').value;
       el('outCompanyPhone').textContent = el('companyPhone').value;
@@ -3893,6 +4240,27 @@ function handleCoverPageChange() {
       el('outValidUntil').textContent = el('validUntil').value;
       el('outTitle').textContent = el('title').value;
       var status = el('offerStatus').value;
+      var statusEl = el('outStatus');
+
+statusEl.textContent = status;
+
+statusEl.className = 'preview-status';
+
+if (status === 'Draft') {
+  statusEl.classList.add('status-draft');
+}
+
+if (status === 'Spremno za slanje') {
+  statusEl.classList.add('status-sent');
+}
+
+if (status === 'Na čekanju') {
+  statusEl.classList.add('status-pending');
+}
+
+if (status === 'Plaćeno') {
+  statusEl.classList.add('status-paid');
+}
 var statusBox = el('outStatus');
 
 statusBox.textContent = status;
