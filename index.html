@@ -551,6 +551,26 @@ button:hover,
   background: linear-gradient(90deg, #2563eb, #60a5fa);
 }
 
+.theme-modern .offer-title {
+  color: #1d4ed8;
+}
+
+.theme-modern th {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+}
+
+.theme-modern .info-box,
+.theme-modern .payment-card,
+.theme-modern .note {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.theme-modern .sum-total {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+}
+    
 .theme-modern .summary {
   border: 2px solid #bfdbfe;
   background: linear-gradient(180deg, #ffffff, #eff6ff);
@@ -581,6 +601,28 @@ button:hover,
 
 .theme-executive .top-line {
   background: linear-gradient(90deg, #111827, #374151);
+}
+
+    .theme-executive .offer-title {
+  color: #111827;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.theme-executive .info-box,
+.theme-executive .payment-card,
+.theme-executive .note {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.theme-executive .sum-total {
+  background: #111827;
+  color: white;
+}
+
+.theme-executive .brand-name {
+  text-transform: uppercase;
 }
 
 .theme-executive th {
@@ -672,7 +714,7 @@ button:hover,
   text-transform: uppercase;
   letter-spacing: 0.16em;
   opacity: 0.82;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .cover-title {
@@ -681,9 +723,14 @@ button:hover,
   font-weight: 900;
   letter-spacing: -0.05em;
   max-width: 620px;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  max-width: 520px;
 }
 
 .cover-company {
+  font-weight: 800;
+  letter-spacing: -0.03em;
   margin-top: 20px;
   font-size: 18px;
   font-weight: 800;
@@ -1626,12 +1673,14 @@ th {
 }
 
 .small-btn {
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
-}
-
-.small-btn {
-  color: white;
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)),
+    linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white !important;
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow:
+    0 14px 30px rgba(37, 99, 235, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.18);
 }
     
 .locked-message {
@@ -1732,6 +1781,32 @@ th {
 
 .theme-preview-executive .theme-preview-line {
   background: linear-gradient(90deg, #111827, #374151);
+}
+
+    .advanced-options {
+  margin-top: 16px;
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  padding: 14px 16px;
+}
+
+.advanced-options summary {
+  cursor: pointer;
+  font-weight: 900;
+  color: #334155;
+  font-size: 14px;
+}
+
+.advanced-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.advanced-actions button {
+  margin-top: 0;
 }
     
     @media (max-width: 980px) {
@@ -2392,12 +2467,12 @@ body.printing-offer .offer {
   <option value="Plaćeno">Plaćeno</option>
 </select>
 
-<label>Boja brenda <span class="business-badge">Business</span></label>
 <input
   type="color"
   id="brandColor"
   value="#2563eb"
   onchange="handleBrandColorChange()"
+  style="display:none;"
 />
 
 <label>Naslovna strana <span class="business-badge">Business</span></label>
@@ -2405,6 +2480,9 @@ body.printing-offer .offer {
   <option value="no">Bez naslovne strane</option>
   <option value="yes">Naslovna strana · Business</option>
 </select>
+
+        <label>Tekst na naslovnoj strani</label>
+<input id="coverKickerInput" placeholder="npr. Poslovna ponuda" oninput="updateOffer()" />
 
 <label>Tema dokumenta</label>
 <select id="documentTheme" onchange="handleThemeChange()">
@@ -2495,16 +2573,19 @@ body.printing-offer .offer {
   </button>
 </div>
 
-<div class="two">
-  <button class="secondary" onclick="exportOfferJson()">
-    Export JSON
-  </button>
+<details class="advanced-options">
+  <summary>Napredne opcije</summary>
 
-  <label class="btn ghost" for="importOfferInput" style="margin-top:16px;">
-    Import JSON
-  </label>
-  <input id="importOfferInput" class="hidden-file" type="file" accept=".json" onchange="importOfferJson(event)" />
-</div>
+  <div class="advanced-actions">
+    <button class="ghost" onclick="exportOfferJson()">Export JSON</button>
+
+    <label class="btn ghost" for="importOfferInput">
+      Import JSON
+    </label>
+
+    <input id="importOfferInput" class="hidden-file" type="file" accept=".json" onchange="importOfferJson(event)" />
+  </div>
+</details>
 
 <div id="savedOffersBox" style="display:none; margin-top:16px;">
 
@@ -2553,7 +2634,7 @@ body.printing-offer .offer {
 
     <div class="card offer theme-classic" id="offerPreview">
       <div id="coverPage" class="cover-page" style="display:none;">
-        <div class="cover-badge">Business cover page</div>
+       
   <div class="cover-logo" id="coverLogo"></div>
   <div class="cover-kicker">Poslovna ponuda</div>
   <div class="cover-title" id="coverTitle">Naziv ponude</div>
@@ -4192,6 +4273,7 @@ function handleThemeChange() {
   if (theme === 'custom') {
     el('documentTheme').value = 'classic';
     showLoginModal('Custom branding je dostupan za Business paket.');
+    updateThemePreview('classic');
     updateOffer();
     return;
   }
@@ -4199,7 +4281,9 @@ function handleThemeChange() {
   if (theme !== 'classic' && !hasAccess) {
     el('documentTheme').value = 'classic';
     showLoginModal('Premium teme su dostupne uz aktivan paket.');
+    theme = 'classic';
   }
+
   updateThemePreview(theme);
   updateOffer();
 }
@@ -4296,6 +4380,7 @@ preview.style.setProperty('--brand-color', brandColor);
       var coverEnabled = el('coverPageEnabled').value === 'yes';
 
 el('coverPage').style.display = coverEnabled ? 'flex' : 'none';
+el('coverKicker').textContent = el('coverKickerInput').value || 'POSLOVNA PONUDA';
 el('coverTitle').textContent = el('title').value || 'Naziv ponude';
 el('coverCompany').textContent = el('company').value || 'Naziv firme';
 el('coverDate').textContent = 'Datum: ' + new Date().toLocaleDateString();
