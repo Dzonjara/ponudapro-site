@@ -1808,6 +1808,14 @@ th {
 .advanced-actions button {
   margin-top: 0;
 }
+
+.theme-hint {
+  margin-top: 10px;
+  margin-bottom: 12px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
     
     @media (max-width: 980px) {
       .page, .pricing-grid, .explain-grid { grid-template-columns: 1fr; }
@@ -4273,9 +4281,7 @@ function handleThemeChange() {
   if (theme === 'custom') {
     el('documentTheme').value = 'classic';
     showLoginModal('Custom branding je dostupan za Business paket.');
-    updateThemePreview('classic');
-    updateOffer();
-    return;
+    theme = 'classic';
   }
 
   if (theme !== 'classic' && !hasAccess) {
@@ -4475,7 +4481,7 @@ saveDraftLocally();
 
       if (!currentUser && isFreeTrialAvailable && !hasUsedFreeTrial()) {
         markFreeTrialUsed();
-        alert('Ovo je vaš jedan besplatan probni PDF dokument. Nakon toga je potrebno da se prijavite i izaberete paket.');
+        showToast('Pokreće se PDF export.');
         setTimeout(function() {
   document.body.classList.add('printing-offer');
   window.print();
