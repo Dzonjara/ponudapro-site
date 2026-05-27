@@ -1809,12 +1809,59 @@ th {
   margin-top: 0;
 }
 
+.theme-modern {
+  background: linear-gradient(180deg, #ffffff, #eff6ff);
+}
+
+.theme-modern .offer-header {
+  border-bottom: 2px solid #60a5fa;
+}
+
+.theme-modern table th {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+}
+
+.theme-modern .sum-total {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+}
+
+.theme-modern .info-box,
+.theme-modern .payment-card,
+.theme-modern .note {
+  background: #eff6ff;
+}
+    
 .theme-hint {
   margin-top: 10px;
   margin-bottom: 12px;
   color: #64748b;
   font-size: 13px;
   line-height: 1.5;
+}
+
+.theme-executive {
+  background: linear-gradient(180deg, #ffffff, #f3f4f6);
+}
+
+.theme-executive .offer-header {
+  border-bottom: 2px solid #111827;
+}
+
+.theme-executive table th {
+  background: #111827;
+}
+
+.theme-executive .sum-total {
+  background: #111827;
+  color: white;
+}
+
+.theme-executive .info-box,
+.theme-executive .payment-card,
+.theme-executive .note {
+  background: #f3f4f6;
+  border-color: #9ca3af;
 }
     
     @media (max-width: 980px) {
@@ -2644,7 +2691,7 @@ body.printing-offer .offer {
       <div id="coverPage" class="cover-page" style="display:none;">
        
   <div class="cover-logo" id="coverLogo"></div>
-  <div class="cover-kicker">Poslovna ponuda</div>
+ <div class="cover-kicker" id="coverKicker">Poslovna ponuda</div>
   <div class="cover-title" id="coverTitle">Naziv ponude</div>
   <div class="cover-company" id="coverCompany">Naziv firme</div>
   <div class="cover-date" id="coverDate"></div>
