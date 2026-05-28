@@ -2968,14 +2968,19 @@ body.printing-offer .offer {
         <div class="live-total-card">
 
   <div class="live-total-row">
-    <span>Subtotal</span>
-    <strong id="liveSubtotal">0.00</strong>
-  </div>
+  <span>Subtotal</span>
+  <strong id="liveSubtotal">0.00</strong>
+</div>
 
-  <div class="live-total-row">
-    <span>PDV</span>
-    <strong id="liveTax">0.00</strong>
-  </div>
+<div class="live-total-row" id="liveDiscountRow">
+  <span>Popust</span>
+  <strong>- <span id="liveDiscount">0.00</span></strong>
+</div>
+
+<div class="live-total-row">
+  <span>PDV</span>
+  <strong id="liveTax">0.00</strong>
+</div>
 
   <div class="live-total-row live-total-final">
     <span>Ukupno</span>
@@ -4857,8 +4862,11 @@ if (preview) {
       var tax = afterDiscount * ((Number(el('tax').value) || 0) / 100);
       var finalTotal = afterDiscount + tax;
       el('liveSubtotal').textContent = formatNumber(subtotal) + ' ' + currency;
+el('liveDiscount').textContent = formatNumber(discount) + ' ' + currency;
 el('liveTax').textContent = formatNumber(tax) + ' ' + currency;
 el('liveGrandTotal').textContent = formatNumber(finalTotal) + ' ' + currency;
+
+el('liveDiscountRow').style.display = discount > 0 ? 'flex' : 'none';
       el('outItems').innerHTML = rows;
       el('outSubtotal').textContent = formatNumber(subtotal);
 el('outDiscountAmount').textContent = formatNumber(discount);
