@@ -89,14 +89,15 @@
   font-weight: 900;
 }
     .page {
-      max-width: 1320px;
-      margin: 22px auto 0;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 26px;
-      align-items: start;
-    }
+  max-width: 1320px;
+  margin: 22px auto 0;
+  padding: 20px;
+  padding-bottom: 60px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 32px;
+  align-items: start;
+}
 
     .pricing-page {
       max-width: 1120px;
@@ -126,18 +127,19 @@
 
     .card {
   border-radius: 26px;
-  padding: 32px;
+  padding: 36px;
 }
 
     h1 { margin: 0 0 8px; font-size: 30px; }
 
     h2 {
-  margin: 34px 0 14px;
-  padding-top: 22px;
+  margin: 38px 0 16px;
+  padding-top: 24px;
   border-top: 1px solid #e5e7eb;
-  font-size: 19px;
-  letter-spacing: -0.03em;
+  font-size: 20px;
+  letter-spacing: -0.04em;
   color: #0f172a;
+  font-weight: 900;
 }
 
    label {
@@ -154,8 +156,8 @@ select,
 textarea {
   width: 100%;
   padding: 14px 15px;
-  border: 1px solid #dbe3ef;
-  border-radius: 14px;
+  border: 1px solid #d6e0ee;
+  border-radius: 16px;
   font-size: 14px;
   background: rgba(255, 255, 255, 0.96);
   color: #0f172a;
@@ -222,6 +224,18 @@ button:hover,
       background: #f8fafc;
     }
 
+    .item-box,
+.upload-card,
+.status-box,
+.locked-message {
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.05);
+}
+
+.item-box:hover,
+.upload-card:hover {
+  transform: translateY(-1px);
+}
+    
     .status-box {
       background: #eff6ff;
       border-color: #bfdbfe;
@@ -262,32 +276,36 @@ button:hover,
    .quick-actions-bar {
   display: flex;
   gap: 10px;
-  margin-top: 16px;
-  margin-bottom: 18px;
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: blur(14px);
+  margin-top: 18px;
+  margin-bottom: 22px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.78));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   padding: 10px;
-  border-radius: 18px;
-  border: 1px solid rgba(226,232,240,0.9);
+  border-radius: 22px;
+  border: 1px solid rgba(203,213,225,0.9);
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
 }
 
 .quick-action-btn {
   margin: 0;
   width: auto;
   flex: 1;
-  padding: 14px 16px;
-  border-radius: 16px;
+  padding: 15px 16px;
+  border-radius: 17px;
   font-size: 13px;
   font-weight: 900;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.22);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)),
-    linear-gradient(135deg, #2563eb, #1d4ed8);
+    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)),
+    linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
   box-shadow:
-    0 14px 30px rgba(37, 99, 235, 0.18),
-    inset 0 1px 0 rgba(255,255,255,0.18);
+    0 16px 34px rgba(37, 99, 235, 0.22),
+    inset 0 1px 0 rgba(255,255,255,0.24);
 }
 
 .quick-action-btn::before {
@@ -329,19 +347,44 @@ button:hover,
     .locked-content { opacity: 0.45; pointer-events: none; filter: grayscale(0.2); }
 
     .upload-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    
     .template-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 12px;
+  gap: 14px;
+  margin-top: 14px;
 }
 
 .template-btn {
   margin-top: 0;
-  padding: 13px 14px;
+  padding: 16px 16px;
   text-align: center;
   font-size: 13px;
+  font-weight: 900;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,250,252,0.78));
+  border: 1px solid #dbe3ef;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
+
+    .template-btn:hover {
+  transform: translateY(-2px);
+  border-color: #93c5fd;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+}
+
+.template-btn.active {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border-color: #2563eb;
+  box-shadow: 0 20px 44px rgba(37, 99, 235, 0.22);
+}
+    
     .hidden-file { display: none; }
 
     .upload-preview {
@@ -478,15 +521,26 @@ button:hover,
 
     .checkbox-row input { width: auto; }
 
-    .offer {
+   .offer {
   min-height: 900px;
   position: relative;
   transition:
     background 0.35s ease,
     box-shadow 0.35s ease,
-    border 0.35s ease;
+    border 0.35s ease,
+    transform 0.18s ease;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background-clip: padding-box;
+  position: sticky;
+  top: 22px;
 }
 
+.offer:hover {
+  box-shadow: 0 36px 100px rgba(15, 23, 42, 0.16);
+}
+    
 .offer.draft-watermark::after {
   content: "DRAFT";
   position: absolute;
@@ -507,35 +561,56 @@ button:hover,
 }
 
     .top-line {
-      height: 8px;
-      background: linear-gradient(90deg, #0f172a, var(--brand-color, #2563eb));
-      border-radius: 14px 14px 0 0;
-      margin: -28px -28px 24px;
-    }
+  height: 9px;
+  background: linear-gradient(90deg, #0f172a, var(--brand-color, #2563eb), #60a5fa);
+  border-radius: 18px 18px 0 0;
+  margin: -32px -32px 26px;
+  transition: background 0.35s ease;
+}
 
     .offer-header {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 22px;
-      margin-bottom: 24px;
-    }
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 30px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 26px;
+  margin-bottom: 28px;
+}
 
-    .company-block { display: flex; gap: 16px; align-items: flex-start; }
+    .company-block {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
 
-    .offer-logo {
-      width: 96px;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+   .offer-logo {
+  width: 104px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
-    .brand-name { font-size: 26px; font-weight: 900; margin-bottom: 5px; }
-    .offer-meta { text-align: right; line-height: 1.8; font-size: 14px; color: #374151; }
-    .offer-title { font-size: 29px; margin-bottom: 22px; font-weight: 900; }
+    .brand-name {
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  letter-spacing: -0.04em;
+}
+    .offer-meta {
+  text-align: right;
+  line-height: 1.9;
+  font-size: 14px;
+  color: #374151;
+}
+    .offer-title {
+  font-size: 32px;
+  margin-bottom: 26px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1.08;
+}
 
     .theme-classic {
   background: rgba(255,255,255,0.96);
@@ -829,11 +904,35 @@ button:hover,
 }
     
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-    .info-box, .payment-card { background: #f8fafc; line-height: 1.6; font-size: 14px; }
+    .info-box,
+.payment-card {
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+  border-color: #dbe3ef;
+  line-height: 1.65;
+  font-size: 14px;
+  border-radius: 18px;
+}
 
-    table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px; }
-    th { background: #0f172a; color: white; text-align: left; padding: 13px 10px; font-size: 13px; }
-    td { border-bottom: 1px solid #e5e7eb; padding: 12px 10px; }
+    table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+  font-size: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+    th {
+  background: linear-gradient(135deg, #0f172a, #111827);
+  color: white;
+  text-align: left;
+  padding: 14px 12px;
+  font-size: 13px;
+  transition: background 0.35s ease;
+}
+    td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 13px 12px;
+}
     tr:nth-child(even) td { background: #f9fafb; }
     .right { text-align: right; }
 
@@ -873,28 +972,70 @@ button:hover,
 }
     
     .summary {
-      margin-top: 18px;
-      margin-left: auto;
-      width: 340px;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.35s ease;
-    }
+  margin-top: 22px;
+  margin-left: auto;
+  width: 360px;
+  border: 1px solid #dbe3ef;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+}
 
-    .sum-row { display: flex; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
-    .sum-total { background: #dbeafe; color: var(--brand-color, #2563eb); font-size: 20px; font-weight: 900; }
+    .sum-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+    .sum-total {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  color: var(--brand-color, #2563eb);
+  font-size: 21px;
+  font-weight: 900;
+}
 
     .payment-box { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .note { margin-top: 18px; background: #f9fafb; line-height: 1.6; white-space: pre-wrap; }
+    .note {
+  margin-top: 22px;
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+  border-color: #dbe3ef;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  border-radius: 18px;
+}
 
-    .signature-area { margin-top: 42px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+    .signature-area {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: end;
+}
     .signature-box { text-align: center; color: #6b7280; font-size: 13px; }
     .stamp-box { height: 100px; width: 140px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .signature-image-box { height: 70px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 8px; }
-    .signature-line { border-top: 1px solid #111827; padding-top: 8px; margin-top: 42px; }
-    .footer-text { margin-top: 30px; padding-top: 14px; border-top: 1px solid #e5e7eb; color: #64748b; font-size: 12px; text-align: center; }
-    .license-line { margin-top: 8px; font-size: 12px; color: #475569; }
+    .signature-line {
+  border-top: 1px solid #111827;
+  padding-top: 10px;
+  margin-top: 46px;
+}
+    .footer-text {
+  margin-top: 34px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  color: #64748b;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.55;
+}
+    .license-line {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #475569;
+  font-weight: 700;
+}
 
     .pricing-hero { text-align: center; margin-bottom: 24px; }
     .pricing-hero h1 { font-size: 36px; }
@@ -902,18 +1043,18 @@ button:hover,
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; }
 
     .price-card {
-  border-radius: 28px;
-  padding: 28px;
+  border-radius: 30px;
+  padding: 32px;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(14px);
 }
     .price-card.featured {
   border: 2px solid #2563eb;
-  transform: translateY(-10px);
+  transform: translateY(-12px);
   box-shadow:
-    0 34px 90px rgba(37, 99, 235, 0.20),
-    0 10px 30px rgba(37, 99, 235, 0.10);
+    0 38px 100px rgba(37, 99, 235, 0.22),
+    0 12px 34px rgba(37, 99, 235, 0.12);
 }
     .tag {
   position: static;
@@ -933,7 +1074,12 @@ button:hover,
   letter-spacing: -0.04em;
   color: #0f172a;
 }
-    .price-desc { color: #64748b; font-size: 14px; line-height: 1.5; min-height: 42px; }
+    .price-desc {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.65;
+  min-height: 52px;
+}
     .price {
   font-size: 42px;
   font-weight: 900;
@@ -968,22 +1114,25 @@ button:hover,
     .login-modal {
   position: relative;
   width: 100%;
-  max-width: 460px;
-  background: rgba(255, 255, 255, 0.97);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.28);
-  border-radius: 24px;
-  padding: 28px;
+  max-width: 470px;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(37, 99, 235, 0.10), transparent 32%),
+    rgba(255,255,255,0.98);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 40px 110px rgba(15, 23, 42, 0.34);
+  border-radius: 28px;
+  padding: 30px;
   transform: translateY(30px) scale(0.96);
   opacity: 0;
   animation: loginPop 0.35s ease forwards;
 }
+    
 .login-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 34px;
-  height: 34px;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
   margin: 0;
   padding: 0;
   border-radius: 999px;
@@ -1001,34 +1150,79 @@ button:hover,
 }
     @keyframes loginPop { to { transform: translateY(0) scale(1); opacity: 1; } }
 
-    .login-modal h2 { margin: 0 0 8px; font-size: 28px; font-weight: 900; color: #0f172a; border-top: none; padding-top: 0; }
-    .login-modal p { margin: 0 0 16px; color: #64748b; font-size: 14px; line-height: 1.5; }
+    .login-modal h2 {
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-weight: 900;
+  color: #0f172a;
+  border-top: none;
+  padding-top: 0;
+  letter-spacing: -0.04em;
+}
+    .login-modal p {
+  margin: 0 0 18px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
     .login-badge { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #dbeafe; color: #1d4ed8; font-size: 12px; font-weight: 800; margin-bottom: 12px; }
-    .auth-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .auth-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
     .mini-note { margin-top: 14px; font-size: 12px; color: #64748b; text-align: center; }
     .login-error { margin-top: 12px; padding: 12px; border-radius: 12px; background: #f8fafc; border: 1px solid #e2e8f0; color: #334155; font-size: 13px; line-height: 1.5; }
-    .google-login-btn { background: white; color: #0f172a; border: 1px solid #d1d5db; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08); }
+    .google-login-btn {
+  background: white;
+  color: #0f172a;
+  border: 1px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+}
     .google-login-btn:hover { background: #f8fafc; }
     .google-icon { width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; color: #4285f4; background: #fff; border: 1px solid #e5e7eb; }
     .login-divider { display: flex; align-items: center; gap: 12px; margin: 18px 0 4px; color: #94a3b8; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
     .login-divider::before, .login-divider::after { content: ''; height: 1px; background: #e2e8f0; flex: 1; }
 
     .site-footer {
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 18px 20px 34px;
-      color: #64748b;
-      font-size: 13px;
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 20px 38px;
+  color: #64748b;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(203, 213, 225, 0.75);
+}
 
-    .site-footer a { color: #2563eb; text-decoration: none; font-weight: 800; margin-left: 12px; cursor: pointer; }
+    .site-footer a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 900;
+  margin-left: 12px;
+  cursor: pointer;
+}
 
-    .policy-card { border-radius: 22px; padding: 32px; line-height: 1.7; color: #334155; }
-    .policy-card h1 { color: #0f172a; margin-bottom: 12px; }
+    .policy-card {
+  border-radius: 26px;
+  padding: 36px;
+  line-height: 1.75;
+  color: #334155;
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+}
+    .policy-card h1 {
+  color: #0f172a;
+  margin-bottom: 14px;
+  letter-spacing: -0.04em;
+}
     .policy-card h2 { color: #0f172a; }
     .policy-card p { margin: 10px 0; }
     .policy-card ul { margin: 10px 0 10px 22px; }
@@ -1096,11 +1290,12 @@ button:hover,
   align-items: center;
   color: #0f172a;
   font-size: 15px;
-  font-weight: 800;
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(219, 227, 239, 0.9);
-  border-radius: 14px;
-  padding: 12px 14px;
+  font-weight: 850;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(219, 227, 239, 0.95);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
 }
 
 .landing-actions {
@@ -1112,34 +1307,40 @@ button:hover,
 
 .landing-actions button {
   width: auto;
-  min-width: 210px;
-  padding: 16px 22px;
-  border-radius: 16px;
+  min-width: 220px;
+  padding: 17px 24px;
+  border-radius: 18px;
   font-size: 15px;
+  font-weight: 900;
   margin-top: 0;
 }
 
 .landing-actions .secondary {
-  background: rgba(255,255,255,0.72);
+  background: rgba(255,255,255,0.82);
   color: #0f172a;
   border: 1px solid #dbe3ef;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
-
 .landing-points {
   display: grid;
   gap: 12px;
 }
 
 .landing-point {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(203, 213, 225, 0.75);
-  border-radius: 20px;
-  padding: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  border-radius: 22px;
+  padding: 20px;
   color: #334155;
-  line-height: 1.55;
+  line-height: 1.6;
   font-size: 14px;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+    .landing-point:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 54px rgba(15, 23, 42, 0.12);
 }
 
 .landing-point strong {
@@ -1229,8 +1430,8 @@ body::after {
 }
 
 .price-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.16);
+  transform: translateY(-4px);
+  box-shadow: 0 30px 78px rgba(15, 23, 42, 0.17);
 }
 
 .price-card.featured {
@@ -1299,7 +1500,9 @@ body::after {
 }
 
 .card.form-card {
-  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.12);
+  box-shadow:
+    0 28px 80px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.7);
 }
 
 .form-card h1,
@@ -1447,18 +1650,19 @@ th {
 }
 
 .trust-strip-inner div {
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 18px;
-  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 20px;
+  padding: 18px 20px;
   box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
 }
 
 .trust-strip-inner strong {
   display: block;
   color: #0f172a;
-  font-size: 14px;
-  margin-bottom: 4px;
+  font-size: 15px;
+  margin-bottom: 5px;
+  font-weight: 900;
 }
 
 .trust-strip-inner span {
@@ -1473,11 +1677,11 @@ th {
   background:
     linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,250,252,0.86));
   border: 1px solid rgba(203, 213, 225, 0.9);
-  border-radius: 34px;
-  padding: 28px;
+  border-radius: 36px;
+  padding: 30px;
   box-shadow:
-    0 40px 100px rgba(15, 23, 42, 0.16),
-    0 10px 30px rgba(37, 99, 235, 0.08);
+  0 46px 110px rgba(15, 23, 42, 0.18),
+  0 14px 34px rgba(37, 99, 235, 0.10);
   transform: rotate(2deg);
   animation: heroFloat 5s ease-in-out infinite;
 }
@@ -1516,14 +1720,16 @@ th {
 
 .hero-step {
   height: 180px;
-  padding: 28px;
-  border-radius: 26px;
+  padding: 30px;
+  border-radius: 28px;
   background:
+    radial-gradient(circle at 15% 10%, rgba(255,255,255,0.22), transparent 28%),
     linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
 }
 
 .hero-step strong {
@@ -1647,11 +1853,18 @@ th {
 }
 
 .price-card.featured:hover {
-  transform: translateY(-14px);
+  transform: translateY(-12px);
 }
 
 .price-card button {
-  margin-top: 22px;
+  margin-top: 24px;
+  border-radius: 18px;
+  padding: 16px 18px;
+  font-weight: 900;
+}
+
+    .price-card button:active {
+  transform: scale(0.98);
 }
 
 .form-card h1,
@@ -1661,6 +1874,7 @@ th {
 
 .form-card {
   background: rgba(255,255,255,0.94);
+  border: 1px solid rgba(226, 232, 240, 0.9);
 }
 
 .locked-content {
@@ -1705,13 +1919,14 @@ th {
   position: fixed;
   right: 24px;
   bottom: 24px;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background:
+    linear-gradient(135deg, #0f172a, #1e293b);
   color: white;
-  padding: 14px 18px;
-  border-radius: 16px;
+  padding: 15px 20px;
+  border-radius: 18px;
   font-size: 14px;
-  font-weight: 800;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+  font-weight: 900;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.28);
   z-index: 5000;
   opacity: 0;
   transform: translateY(14px);
@@ -1863,6 +2078,91 @@ th {
   background: #f3f4f6;
   border-color: #9ca3af;
 }
+
+    .saved-offers-toolbar {
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.saved-offers-toolbar select {
+  margin-bottom: 0;
+}
+
+    body.client-view .form-card {
+  display: none;
+}
+
+body.client-view .page {
+  grid-template-columns: 1fr;
+  max-width: 980px;
+}
+
+body.client-view .offer {
+  margin: 0 auto;
+}
+
+body.client-view .quick-actions-bar {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.client-view {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(37, 99, 235, 0.10), transparent 30%),
+    linear-gradient(180deg, #f8fafc, #eef2ff);
+}
+
+body.client-view .offer {
+  box-shadow: 0 40px 120px rgba(15, 23, 42, 0.18);
+}
+
+body.client-view .header,
+body.client-view .landing-section,
+body.client-view .trust-strip,
+body.client-view .site-footer {
+  display: none;
+}
+
+    .section-hint {
+  margin: -4px 0 14px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+    body.client-view .quick-actions-bar {
+  position: sticky;
+  top: 18px;
+  z-index: 100;
+}
+
+    body.client-view .offer {
+  position: relative;
+  top: auto;
+}
+
+    .price-card.featured {
+  transform: translateY(-10px);
+}
+
+.price-card.featured:hover {
+  transform: translateY(-12px);
+}
+
+    .price-card.featured {
+  border: 2px solid #2563eb;
+  transform: translateY(-10px);
+  box-shadow:
+    0 38px 100px rgba(37, 99, 235, 0.20),
+    0 12px 34px rgba(37, 99, 235, 0.12);
+}
+
+.price-card.featured:hover {
+  transform: translateY(-12px);
+}
     
     @media (max-width: 980px) {
       .page, .pricing-grid, .explain-grid { grid-template-columns: 1fr; }
@@ -1898,7 +2198,8 @@ th {
   background: rgba(248, 250, 252, 0.72);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.65);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.75);
+box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
 }
 
   .brand {
@@ -1926,12 +2227,13 @@ th {
   }
 
   .nav button {
-    width: 100%;
-    margin: 0;
-    padding: 11px 10px;
-    font-size: 13px;
-    border-radius: 12px;
-  }
+  width: 100%;
+  margin: 0;
+  padding: 12px 10px;
+  font-size: 13px;
+  border-radius: 14px;
+  font-weight: 900;
+}
 
   #loginBtn,
   #logoutBtn {
@@ -2039,10 +2341,13 @@ th {
   }
 
   .offer {
-    margin-top: 16px;
-    min-height: auto;
-    overflow: hidden;
-  }
+  margin-top: 18px;
+  min-height: auto;
+  overflow: hidden;
+  border-radius: 22px;
+  position: relative;
+  top: auto;
+}
 
   .offer-title {
     font-size: 27px;
@@ -2058,22 +2363,26 @@ th {
   }
 
   .summary {
-    width: 100%;
-  }
+  width: 100%;
+  margin-left: 0;
+}
 
   table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-    font-size: 13px;
-  }
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-size: 13px;
+  border-radius: 14px;
+}
 
   .print-button {
-    position: sticky;
-    bottom: 12px;
-    z-index: 900;
-  }
+  position: sticky;
+  bottom: 14px;
+  z-index: 900;
+  border-radius: 16px;
+  box-shadow: 0 18px 44px rgba(37, 99, 235, 0.24);
+}
 
   .site-footer {
     max-width: 100%;
@@ -2152,8 +2461,32 @@ body.mobile-menu-collapsed .mobile-menu-toggle {
 .quick-actions-bar {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 18px;
 }
 
+.quick-action-btn {
+  padding: 13px 12px;
+  font-size: 12px;
+  border-radius: 14px;
+}
+
+.custom-toast {
+  left: 14px;
+  right: 14px;
+  bottom: 16px;
+  text-align: center;
+}
+         
+.template-grid {
+  grid-template-columns: 1fr;
+}
+
+.template-btn {
+  padding: 14px 14px;
+}
+         
  .business-dashboard {
   grid-template-columns: 1fr 1fr;
 }        
@@ -2169,6 +2502,12 @@ body.mobile-menu-collapsed .mobile-menu-toggle {
 
 
     @media print {
+
+.offer {
+  position: relative !important;
+  top: auto !important;
+}
+      
       body::before,
 body::after {
   display: none !important;
@@ -2220,7 +2559,10 @@ body.printing-offer .offer {
   padding: 0 !important;
   border-radius: 0 !important;
 }
-      @page { size: A4; margin: 8mm; }
+      @page {
+  size: A4;
+  margin: 10mm;
+}
       body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
      .header, .landing-section, .form-card, .print-button, .pricing-page, .policy-page, .login-overlay, .site-footer { display: none !important; }
       .page { display: block !important; max-width: 100%; padding: 0; margin: 0; }
@@ -2230,23 +2572,41 @@ body.printing-offer .offer {
       .offer-logo { width: 78px; height: 58px; }
       .brand-name { font-size: 22px; }
       .muted, .offer-meta, .info-box, td, th, .note, .payment-card { font-size: 11px; }
-      .offer-title { font-size: 22px; margin-bottom: 12px; }
+      .offer-title {
+  font-size: 24px;
+  margin-bottom: 14px;
+  line-height: 1.12;
+}
       .info-grid { gap: 10px; margin-bottom: 12px; }
       .info-box { padding: 10px; line-height: 1.4; }
       table { margin-top: 8px; font-size: 11px; }
-      th, td { padding: 8px; }
-      .summary { width: 280px; margin-top: 10px; }
+      th,
+      td {
+      padding: 9px 8px;
+}
+      .summary {
+  width: 300px;
+  margin-top: 12px;
+}
       .sum-row { padding: 8px 12px; font-size: 11px; }
       .sum-total { font-size: 15px; }
       .payment-box { margin-top: 10px; gap: 8px; }
       .payment-card { padding: 9px; }
       .note { margin-top: 10px; padding: 10px; line-height: 1.4; }
-      .signature-area { margin-top: 16px; gap: 24px; }
+      .signature-area {
+  margin-top: 20px;
+  gap: 28px;
+}
       .stamp-box { width: 100px; height: 58px; }
       .signature-image-box { height: 40px; }
       .signature-image-box img { max-height: 38px; max-width: 160px; }
       .signature-line { margin-top: 6px; padding-top: 5px; }
-      .footer-text { margin-top: 12px; padding-top: 8px; font-size: 10px; }
+      .footer-text {
+  margin-top: 14px;
+  padding-top: 9px;
+  font-size: 10px;
+  line-height: 1.45;
+}
     }
   </style>
 </head>
@@ -2439,6 +2799,7 @@ body.printing-offer .offer {
 <button class="quick-action-btn" onclick="printOffer()">PDF</button>
 <button class="quick-action-btn" onclick="toggleSavedOffers()">Ponude</button>
 <button class="quick-action-btn" onclick="resetExample()">Reset</button>
+<button id="clientViewBtn" class="quick-action-btn" onclick="toggleClientView()">Client View</button>
 
 </div>
      <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
@@ -2467,14 +2828,22 @@ body.printing-offer .offer {
         </div>
 
         <h2>Šabloni ponude</h2>
+        <p class="section-hint">
+  Izaberite šablon da automatski popunite naziv ponude, stavke, rok i napomenu. Sve možete promeniti ručno.
+</p>
 
 <div class="template-grid">
-  <button class="ghost template-btn" onclick="applyTemplate('agency')">Marketing agencija</button>
-  <button class="ghost template-btn" onclick="applyTemplate('services')">Majstor / usluge</button>
-  <button class="ghost template-btn" onclick="applyTemplate('auto')">Auto servis</button>
-  <button class="ghost template-btn" onclick="applyTemplate('web')">IT / web dizajn</button>
+  <button class="ghost template-btn" data-template="agency" onclick="applyTemplate('agency')">Marketing agencija</button>
+  
+  <button class="ghost template-btn" data-template="services" onclick="applyTemplate('services')">Majstor / usluge</button>
+
+<button class="ghost template-btn" data-template="auto" onclick="applyTemplate('auto')">Auto servis</button>
+
+<button class="ghost template-btn" data-template="web" onclick="applyTemplate('web')">IT / web dizajn</button>
 </div>
 
+
+        
 <h2>Podaci firme</h2>
         <label>Naziv firme / tvoje ime</label><input id="company" placeholder="Unesite naziv firme" oninput="updateOffer()" />
         <label>Adresa firme</label><input id="companyAddress" placeholder="Unesite adresu firme" oninput="updateOffer()" />
@@ -2651,21 +3020,21 @@ body.printing-offer .offer {
     </div>
   </div>
 
-  <div class="two">
-  <select id="savedOffersSort" onchange="loadSavedOffers()" style="margin-bottom:14px;">
+  <div class="saved-offers-toolbar">
+  <select id="savedOffersSort" onchange="loadSavedOffers()">
     <option value="newest">Najnovije prvo</option>
     <option value="oldest">Najstarije prvo</option>
     <option value="highest">Najveći iznos</option>
     <option value="lowest">Najmanji iznos</option>
   </select>
-
-  <select id="savedOffersStatusFilter" onchange="loadSavedOffers()" style="margin-bottom:14px;">
-    <option value="all">Svi statusi</option>
-    <option value="Draft">Draft</option>
-    <option value="Spremno za slanje">Spremno za slanje</option>
-    <option value="Na čekanju">Na čekanju</option>
-    <option value="Plaćeno">Plaćeno</option>
-  </select>
+    
+  <select id="savedOffersStatusFilter" onchange="loadSavedOffers()">
+  <option value="all">Svi statusi</option>
+  <option value="Draft">Draft</option>
+  <option value="Spremno za slanje">Spremno za slanje</option>
+  <option value="Na čekanju">Na čekanju</option>
+  <option value="Plaćeno">Plaćeno</option>
+</select>
 </div>
   <option value="newest">Najnovije prvo</option>
   <option value="oldest">Najstarije prvo</option>
@@ -2777,7 +3146,7 @@ body.printing-offer .offer {
   Idealan za jednu profesionalnu ponudu kada vam treba brz i uredan PDF dokument za klijenta.
 </div>
     <div class="price">1.00 €</div>
-    <div class="price-small">test cena preko Paddle-a</div>
+    <div class="price-small">Jednokratno plaćanje</div>
     <ul class="features">
  <li>1 profesionalna PDF ponuda</li>
 <li>Logo, pečat i potpis</li>
@@ -2794,7 +3163,7 @@ body.printing-offer .offer {
   Najbolji izbor za freelancere, agencije i firme koje redovno šalju poslovne ponude.
 </div>
     <div class="price">1.00 €</div>
-    <div class="price-small">test cena mesečno preko Paddle-a</div>
+    <div class="price-small">Mesečna pretplata</div>
     <ul class="features">
   <li>Neograničen broj ponuda</li>
 <li>Čuvanje i učitavanje ponuda</li>
@@ -2809,7 +3178,7 @@ body.printing-offer .offer {
    <div class="price-name">Godišnji pristup</div>
     <div class="price-desc">365 dana pristupa za korisnike koji žele dugoročno rešenje bez mesečne pretplate.</div>
     <div class="price">1.00 €</div>
-    <div class="price-small">test cena preko Paddle-a</div>
+    <div class="price-small">Godišnje plaćanje</div>
     <ul class="features">
   <li>Trajni pristup platformi</li>
   <li>Sve funkcije iz Business Monthly paketa</li>
@@ -2982,44 +3351,44 @@ document.querySelector('.landing-card h1').textContent = isEn ? 'Create professi
 
   var cards = document.querySelectorAll('.price-card');
 
-  cards[0].querySelector('.price-name').textContent = isEn ? 'Single Document' : 'Jedan dokument';
-  cards[0].querySelector('.price-desc').textContent = isEn ? 'One-time access for creating one professional PDF document.' : 'Jednokratni pristup za izradu jednog profesionalnog PDF dokumenta.';
-  cards[0].querySelector('.price-small').textContent = isEn ? 'test price via Paddle' : 'test cena preko Paddle-a';
+  cards[0].querySelector('.price-name').textContent = isEn ? 'Single PDF' : 'Jedan PDF';
+cards[0].querySelector('.price-desc').textContent = isEn ? 'Perfect for one professional offer, proposal or branded PDF document.' : 'Idealno za jednu profesionalnu ponudu, predlog saradnje ili brendirani PDF dokument.';
+cards[0].querySelector('.price-small').textContent = isEn ? 'One-time payment' : 'Jednokratno plaćanje';
 
   cards[1].querySelector('.tag').textContent = isEn ? 'Most popular' : 'Najčešći izbor';
-  cards[1].querySelector('.price-name').textContent = isEn ? 'Business Monthly' : 'Biznis mesečni paket';
-  cards[1].querySelector('.price-desc').textContent = isEn ? 'Monthly access for companies that regularly prepare and send business offers.' : 'Mesečni pristup za firme koje redovno pripremaju i šalju poslovne ponude.';
-  cards[1].querySelector('.price-small').textContent = isEn ? 'test monthly price via Paddle' : 'test cena mesečno preko Paddle-a';
+cards[1].querySelector('.price-name').textContent = isEn ? 'Business Monthly' : 'Business mesečni';
+cards[1].querySelector('.price-desc').textContent = isEn ? 'Unlimited professional PDF offers, branded documents and saved projects for growing businesses.' : 'Neograničene profesionalne PDF ponude, brendirani dokumenti i sačuvani projekti za firme koje rastu.';
+cards[1].querySelector('.price-small').textContent = isEn ? 'Monthly subscription' : 'Mesečna pretplata';
 
   cards[2].querySelector('.price-name').textContent = isEn ? 'Annual Access' : 'Godišnji pristup';
-  cards[2].querySelector('.price-desc').textContent = isEn ? '365 days of access for users who want a long-term solution without a monthly subscription.' : '365 dana pristupa za korisnike koji žele dugoročno rešenje bez mesečne pretplate.';
-  cards[2].querySelector('.price-small').textContent = isEn ? 'test price via Paddle' : 'test cena preko Paddle-a';
+cards[2].querySelector('.price-desc').textContent = isEn ? 'Long-term access for companies that want a stable proposal workflow without monthly interruptions.' : 'Dugoročni pristup za firme koje žele stabilan workflow za ponude bez mesečnih prekida.';
+cards[2].querySelector('.price-small').textContent = isEn ? 'Annual payment' : 'Godišnje plaćanje';
 
   var buttons = document.querySelectorAll('.price-card button');
   buttons.forEach(function(btn) {
-    btn.textContent = isEn ? 'Activate plan' : 'Aktiviraj paket';
+    btn.textContent = isEn ? 'Choose plan' : 'Izaberi paket';
       var trust = document.querySelectorAll('.trust-pill');
-  if (trust.length >= 4) {
-    trust[0].textContent = isEn ? 'Branded PDF export' : 'Branded PDF export';
-    trust[1].textContent = isEn ? 'Logo, stamp and signature' : 'Logo, pečat i potpis';
-    trust[2].textContent = isEn ? 'Multiple currencies' : 'Više valuta';
-    trust[3].textContent = isEn ? 'No PonudaPro mark' : 'Bez PonudaPro oznake';
-  }
+if (trust.length >= 4) {
+  trust[0].textContent = isEn ? 'Branded PDF export' : 'Brendirani PDF export';
+  trust[1].textContent = isEn ? 'Logo, stamp and signature' : 'Logo, pečat i potpis';
+  trust[2].textContent = isEn ? 'Multiple currencies' : 'Više valuta';
+  trust[3].textContent = isEn ? 'No PonudaPro mark' : 'Bez PonudaPro oznake';
+}
 
   var featureLists = document.querySelectorAll('.features');
 
   if (featureLists.length >= 3) {
     var singleFeatures = isEn
-      ? ['1 professional PDF document', 'Document branding without PonudaPro mark', 'Logo, stamp, signature and business details', 'Multiple currencies: RSD, EUR, USD, GBP, CHF', 'Ready-to-send client document']
-      : ['1 profesionalni PDF dokument', 'Brendiranje dokumenta bez PonudaPro oznake', 'Logo, pečat, potpis i poslovni podaci', 'Više valuta: RSD, EUR, USD, GBP, CHF', 'Spreman dokument za slanje klijentu'];
+  ? ['1 professional PDF offer', 'Branded document without PonudaPro mark', 'Logo, stamp and signature', 'Multiple currencies', 'Ready to send to client']
+  : ['1 profesionalna PDF ponuda', 'Brendirani dokument bez PonudaPro oznake', 'Logo, pečat i potpis', 'Više valuta', 'Spremno za slanje klijentu'];
 
     var monthlyFeatures = isEn
-      ? ['Unlimited PDF documents during 30 days', 'Documents without PonudaPro mark', 'Professional layout for sales offers', 'Logo, stamp, signature and company details', 'Items, discount, VAT and total price calculation', 'Multiple currencies for local and international clients', 'Faster workflow for teams that often send offers']
-      : ['Neograničen broj PDF dokumenata tokom 30 dana', 'Dokumenti bez PonudaPro oznake', 'Profesionalni layout za prodajne ponude', 'Logo, pečat, potpis i podaci firme', 'Stavke, popust, PDV i obračun ukupne cene', 'Više valuta za domaće i strane klijente', 'Brži workflow za timove koji često šalju ponude'];
+  ? ['Unlimited PDF offers during 30 days', 'Saved offers and project history', 'Premium document themes', 'Logo, stamp and signature', 'Discount, VAT and total calculation', 'Client-ready branded documents']
+  : ['Neograničene PDF ponude tokom 30 dana', 'Sačuvane ponude i istorija projekata', 'Premium teme dokumenata', 'Logo, pečat i potpis', 'Popust, PDV i obračun ukupne cene', 'Brendirani dokumenti spremni za klijente'];
 
     var lifetimeFeatures = isEn
-      ? ['Permanent platform access', 'All features from Business Monthly plan', 'Unlimited PDF documents', 'Professional branded documents without mark', 'Access to future platform improvements', 'Premium business workflow without monthly subscription', 'Best option for long-term use']
-      : ['Trajni pristup platformi', 'Sve funkcije iz Business Monthly paketa', 'Neograničen broj PDF dokumenata', 'Profesionalni branded dokumenti bez oznake', 'Pristup budućim unapređenjima platforme', 'Premium poslovni workflow bez mesečne pretplate', 'Najbolja opcija za dugoročno korišćenje'];
+  ? ['Permanent platform access', 'All Business Monthly features included', 'Unlimited PDF documents', 'Professional branded documents without mark', 'Access to future platform improvements', 'Premium workflow for serious teams']
+  : ['Trajni pristup platformi', 'Sve funkcije iz Business mesečnog paketa', 'Neograničen broj PDF dokumenata', 'Profesionalni brendirani dokumenti bez oznake', 'Pristup budućim unapređenjima platforme', 'Premium workflow za ozbiljne timove'];
 
     function fillFeatures(list, items) {
       list.innerHTML = items.map(function(item) {
@@ -3912,61 +4281,65 @@ box.innerHTML += `
 
 function applyTemplate(type) {
 
+  document.querySelectorAll('.template-btn').forEach(function(btn) {
+  btn.classList.remove('active');
+});
+
+var activeBtn = document.querySelector('[data-template="' + type + '"]');
+
+if (activeBtn) {
+  activeBtn.classList.add('active');
+}
+
   el('itemsContainer').innerHTML = '';
 
   if (type === 'agency') {
-
-    el('title').value = 'Marketing usluge';
+    el('title').value = 'Marketing i digitalne usluge';
     el('deadline').value = '5 radnih dana';
-    el('note').value = 'Ponuda uključuje kompletnu realizaciju i komunikaciju tokom projekta.';
+    el('note').value = 'Ponuda obuhvata planiranje, pripremu i realizaciju dogovorenih marketinških aktivnosti, uz redovnu komunikaciju tokom projekta.';
     el('paymentMethod').value = 'Bankarski transfer';
 
     addItem('Vođenje društvenih mreža', 1, 'mesec', 300);
-    addItem('Dizajn objava', 12, 'kom', 25);
-    addItem('Meta Ads kampanja', 1, 'kom', 150);
-
+    addItem('Kreiranje dizajna i objava', 12, 'kom', 25);
+    addItem('Meta Ads kampanja', 1, 'paket', 150);
   }
 
   if (type === 'services') {
-
     el('title').value = 'Usluge izvođenja radova';
     el('deadline').value = '7 radnih dana';
-    el('note').value = 'Cena uključuje rad i osnovni materijal.';
-    el('paymentMethod').value = 'Gotovina';
+    el('note').value = 'Ponuda uključuje dogovorene radove, osnovni materijal i završnu proveru kvaliteta izvedenih usluga.';
+    el('paymentMethod').value = 'Po dogovoru';
 
-    addItem('Demontaža', 1, 'kom', 80);
-    addItem('Montaža', 1, 'kom', 140);
-    addItem('Izlazak na teren', 1, 'kom', 40);
-
+    addItem('Priprema i izlazak na teren', 1, 'kom', 80);
+    addItem('Izvođenje radova', 1, 'paket', 140);
+    addItem('Završna kontrola', 1, 'kom', 40);
   }
 
   if (type === 'auto') {
-
     el('title').value = 'Servis vozila';
     el('deadline').value = '1 radni dan';
-    el('note').value = 'Garancija na ugrađene delove i izvršene usluge.';
-    el('paymentMethod').value = 'Gotovina';
+    el('note').value = 'Ponuda obuhvata dijagnostiku, servisne usluge i ugradnju dogovorenih delova, uz garanciju na izvršene radove.';
+    el('paymentMethod').value = 'Po dogovoru';
 
     addItem('Mali servis', 1, 'kom', 120);
     addItem('Ulje i filteri', 1, 'set', 90);
-    addItem('Dijagnostika', 1, 'kom', 35);
-
+    addItem('Dijagnostika vozila', 1, 'kom', 35);
   }
 
   if (type === 'web') {
-
     el('title').value = 'Izrada web sajta';
     el('deadline').value = '14 radnih dana';
-    el('note').value = 'Ponuda uključuje dizajn, development i osnovni SEO.';
+    el('note').value = 'Ponuda uključuje dizajn, development, osnovnu SEO pripremu i finalnu optimizaciju web sajta za objavu.';
     el('paymentMethod').value = 'Avans 50% / ostatak po završetku';
 
     addItem('UI/UX dizajn', 1, 'projekat', 400);
     addItem('Frontend development', 1, 'projekat', 700);
-    addItem('SEO optimizacija', 1, 'kom', 180);
-
+    addItem('Osnovna SEO optimizacija', 1, 'paket', 180);
   }
 
   updateOffer();
+setUnsavedChanges();
+showToast('Šablon je uspešno primenjen.');
 }
     
 function loadOffer(dataString) {
@@ -4560,6 +4933,18 @@ setTimeout(function() {
       return { company: el('company').value, companyAddress: el('companyAddress').value, companyPhone: el('companyPhone').value, companyEmail: el('companyEmail').value, companyPib: el('companyPib').value, companyMb: el('companyMb').value, bankAccount: el('bankAccount').value, paymentMethod: el('paymentMethod').value, offerNumber: el('offerNumber').value, title: el('title').value,offerStatus: el('offerStatus').value, deadline: el('deadline').value, validUntil: el('validUntil').value, client: el('client').value, clientAddress: el('clientAddress').value, currency: el('currency').value, items: items };
     }
 
+function toggleClientView() {
+  document.body.classList.toggle('client-view');
+
+  if (document.body.classList.contains('client-view')) {
+    el('clientViewBtn').textContent = 'Exit View';
+    showToast('Client View je uključen.');
+  } else {
+    el('clientViewBtn').textContent = 'Client View';
+    showToast('Client View je isključen.');
+  }
+}
+    
     function resetExample() {
       el('company').value = 'Moj Biznis';
       el('companyAddress').value = 'Bulevar primer 12, Beograd';
