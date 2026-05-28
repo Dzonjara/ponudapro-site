@@ -3431,7 +3431,7 @@ if (trust.length >= 4) {
     tableHeads[4].textContent = isEn ? 'Total' : 'Ukupno';
   }
 
-  var sumRows = document.querySelectorAll('.summary .sum-row span:first-child');
+  var sumRows = document.querySelectorAll('.summary .sum-row > span:first-child');
   if (sumRows.length >= 4) {
     sumRows[0].textContent = isEn ? 'Subtotal' : 'Međuzbir';
     sumRows[1].textContent = isEn ? 'Discount' : 'Popust';
