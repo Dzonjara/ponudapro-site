@@ -544,15 +544,16 @@ button:hover,
 .offer.draft-watermark::after {
   content: "DRAFT";
   position: absolute;
-  top: 45%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-28deg);
-  font-size: 90px;
+  font-size: 82px;
   font-weight: 900;
-  color: rgba(15, 23, 42, 0.06);
-  letter-spacing: 8px;
+  color: rgba(15, 23, 42, 0.035);
+  letter-spacing: 10px;
   pointer-events: none;
   z-index: 1;
+  filter: blur(1px);
 }
 
 .offer > * {
@@ -1007,14 +1008,22 @@ button:hover,
 }
 
     .signature-area {
-  margin-top: 48px;
+  margin-top: 34px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   align-items: end;
 }
     .signature-box { text-align: center; color: #6b7280; font-size: 13px; }
-    .stamp-box { height: 100px; width: 140px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .stamp-box {
+  height: 120px;
+  width: 170px;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
     .signature-image-box { height: 70px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 8px; }
     .signature-line {
   border-top: 1px solid #111827;
@@ -2507,6 +2516,10 @@ body.mobile-menu-collapsed .mobile-menu-toggle {
   position: relative !important;
   top: auto !important;
 }
+
+      .preview-status {
+  display: none !important;
+}
       
       body::before,
 body::after {
@@ -2594,10 +2607,13 @@ body.printing-offer .offer {
       .payment-card { padding: 9px; }
       .note { margin-top: 10px; padding: 10px; line-height: 1.4; }
       .signature-area {
-  margin-top: 20px;
+  margin-top: 14px;
   gap: 28px;
 }
-      .stamp-box { width: 100px; height: 58px; }
+      .stamp-box {
+  width: 130px;
+  height: 78px;
+}
       .signature-image-box { height: 40px; }
       .signature-image-box img { max-height: 38px; max-width: 160px; }
       .signature-line { margin-top: 6px; padding-top: 5px; }
@@ -4845,9 +4861,9 @@ el('liveTax').textContent = formatNumber(tax) + ' ' + currency;
 el('liveGrandTotal').textContent = formatNumber(finalTotal) + ' ' + currency;
       el('outItems').innerHTML = rows;
       el('outSubtotal').textContent = formatNumber(subtotal);
-      el('outDiscountAmount').textContent = formatNumber(discount);
-      el('outTaxAmount').textContent = formatNumber(tax);
-      el('outTotal').textContent = formatNumber(finalTotal);
+el('outDiscountAmount').textContent = '- ' + formatNumber(discount);
+el('outTaxAmount').textContent = formatNumber(tax);
+el('outTotal').textContent = formatNumber(finalTotal);
       el('discountRow').style.display = el('hideZeroRows').checked && discount === 0 ? 'none' : 'flex';
 el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 'flex';
 
