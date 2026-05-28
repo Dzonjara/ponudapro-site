@@ -4861,7 +4861,7 @@ el('liveTax').textContent = formatNumber(tax) + ' ' + currency;
 el('liveGrandTotal').textContent = formatNumber(finalTotal) + ' ' + currency;
       el('outItems').innerHTML = rows;
       el('outSubtotal').textContent = formatNumber(subtotal);
-el('outDiscountAmount').textContent = '- ' + formatNumber(discount);
+el('outDiscountAmount').textContent = formatNumber(discount);
 el('outTaxAmount').textContent = formatNumber(tax);
 el('outTotal').textContent = formatNumber(finalTotal);
       el('discountRow').style.display = el('hideZeroRows').checked && discount === 0 ? 'none' : 'flex';
