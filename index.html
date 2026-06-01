@@ -3160,7 +3160,7 @@ body.printing-offer .offer {
    <div class="price-desc">
   Idealan za jednu profesionalnu ponudu kada vam treba brz i uredan PDF dokument za klijenta.
 </div>
-    <div class="price">1.00 €</div>
+    <div class="price">6.99 €</div>
     <div class="price-small">Jednokratno plaćanje</div>
     <ul class="features">
  <li>1 profesionalna PDF ponuda</li>
@@ -3177,7 +3177,7 @@ body.printing-offer .offer {
     <div class="price-desc">
   Najbolji izbor za freelancere, agencije i firme koje redovno šalju poslovne ponude.
 </div>
-    <div class="price">1.00 €</div>
+    <div class="price">29.99 €</div>
     <div class="price-small">Mesečna pretplata</div>
     <ul class="features">
   <li>Neograničen broj ponuda</li>
@@ -3192,10 +3192,10 @@ body.printing-offer .offer {
   <div class="price-card">
    <div class="price-name">Godišnji pristup</div>
     <div class="price-desc">365 dana pristupa za korisnike koji žele dugoročno rešenje bez mesečne pretplate.</div>
-    <div class="price">1.00 €</div>
+    <div class="price">249.99 €</div>
     <div class="price-small">Godišnje plaćanje</div>
     <ul class="features">
-  <li>Trajni pristup platformi</li>
+  <li>Godišnji pristup platformi</li>
   <li>Sve funkcije iz Business Monthly paketa</li>
   <li>Neograničen broj PDF dokumenata</li>
   <li>Profesionalni branded dokumenti bez oznake</li>
@@ -3204,13 +3204,17 @@ body.printing-offer .offer {
   <li>Custom branding za izgled dokumenata</li>
   <li>Premium naslovna strana za PDF</li>
   <li>Boja brenda na dokumentima</li>
-  <li>Premium poslovni workflow bez mesečne pretplate</li>
+  <li>Premium poslovni workflow uz godišnje plaćanje</li>
   <li>Najbolja opcija za dugoročno korišćenje</li>
 </ul>
     <button onclick="buyPlan('lifetime')">Aktiviraj paket</button>
   </div>
 </div>
 
+<p class="muted" style="text-align:center; margin-top:18px;">
+  Sigurno plaćanje karticom u EUR preko Paddle checkout-a.
+</p>
+    
  <div class="explain-box">
     <h2 id="activationTitle">Kako funkcioniše aktivacija?</h2>
     <div class="explain-grid">
@@ -3402,8 +3406,8 @@ if (trust.length >= 4) {
   : ['Neograničene PDF ponude tokom 30 dana', 'Sačuvane ponude i istorija projekata', 'Premium teme dokumenata', 'Logo, pečat i potpis', 'Popust, PDV i obračun ukupne cene', 'Brendirani dokumenti spremni za klijente'];
 
     var lifetimeFeatures = isEn
-  ? ['Permanent platform access', 'All Business Monthly features included', 'Unlimited PDF documents', 'Professional branded documents without mark', 'Access to future platform improvements', 'Premium workflow for serious teams']
-  : ['Trajni pristup platformi', 'Sve funkcije iz Business mesečnog paketa', 'Neograničen broj PDF dokumenata', 'Profesionalni brendirani dokumenti bez oznake', 'Pristup budućim unapređenjima platforme', 'Premium workflow za ozbiljne timove'];
+  ? ['Annual platform access', 'All Business Monthly features included', 'Unlimited PDF documents', 'Professional branded documents without mark', 'Access to future platform improvements', 'Premium workflow for serious teams']
+  : ['Godišnji pristup platformi', 'Sve funkcije iz Business mesečnog paketa', 'Neograničen broj PDF dokumenata', 'Profesionalni brendirani dokumenti bez oznake', 'Pristup budućim unapređenjima platforme', 'Premium workflow za ozbiljne timove'];
 
     function fillFeatures(list, items) {
       list.innerHTML = items.map(function(item) {
@@ -3827,9 +3831,9 @@ function unlockGenerator(subscription) {
     planText = isEn ? 'Single PDF offer' : 'Jedna PDF ponuda';
   } else if (subscription.plan === 'monthly') {
     planText = isEn ? 'Monthly plan' : 'Mesečni paket';
-  } else if (subscription.plan === 'lifetime') {
-    planText = isEn ? 'Annual plan' : 'Godišnji paket';
-  }
+  } else if (subscription.plan === 'lifetime' || subscription.plan === 'yearly') {
+  planText = isEn ? 'Annual plan' : 'Godišnji paket';
+}
 
   el('userStatusBox').style.display = 'block';
   var statusHtml = '<strong>' + (isEn ? 'Logged in:' : 'Prijavljeni ste:') + '</strong> ' + currentUser.email;
