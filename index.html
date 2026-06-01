@@ -3616,12 +3616,44 @@ routePage();
   addItem('', 1, currentLanguage === 'en' ? 'pcs' : 'kom', 0);
 }
   if (window.location.search.includes('checkout=success')) {
-    setTimeout(async function() {
-      await checkSession();
-      showPage('generator');
-      alert('Plaćanje je uspešno. Ako se paket još ne vidi, sačekajte 10-20 sekundi i osvežite stranicu.');
-    }, 1500);
-  }
+  showPage('generator');
+  showToast('Plaćanje je uspešno. Aktiviramo paket...');
+
+  var attempts = 0;
+
+  var activationCheck = setInterval(async function() {
+    attempts++;
+
+    await checkSession();
+    await checkSubscription();
+
+    if (isSubscriptionActive) {
+      clearInterval(activationCheck);
+
+      showToast('Paket je aktiviran. Stranica se osvežava...');
+
+      var cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+
+      setTimeout(function() {
+        window.location.reload();
+      }, 1200);
+    }
+
+    if (attempts >= 12) {
+      clearInterval(activationCheck);
+
+      showToast('Plaćanje je primljeno. Stranica se osvežava...');
+
+      var cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+
+      setTimeout(function() {
+        window.location.reload();
+      }, 2500);
+    }
+  }, 2000);
+}
 
   if (window.innerWidth <= 700) {
     document.body.classList.add('mobile-menu-collapsed');
