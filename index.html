@@ -4044,27 +4044,35 @@ function showPolicy(type) {
     function addItem(name, quantity, unit, price) {
   var isEn = currentLanguage === 'en';
 
-  var units = isEn
-    ? [
-        ['pcs', 'pcs'],
-        ['m²', 'm²'],
-        ['m', 'm'],
-        ['hour', 'hour'],
-        ['day', 'day'],
-        ['kg', 'kg'],
-        ['l', 'l'],
-        ['package', 'package']
-      ]
-    : [
-        ['kom', 'kom'],
-        ['m²', 'm²'],
-        ['m', 'm'],
-        ['sat', 'sat'],
-        ['dan', 'dan'],
-        ['kg', 'kg'],
-        ['l', 'l'],
-        ['paket', 'paket']
-      ];
+ var units = isEn
+  ? [
+      ['pcs', 'pcs'],
+      ['m²', 'm²'],
+      ['m', 'm'],
+      ['hour', 'hour'],
+      ['day', 'day'],
+      ['kg', 'kg'],
+      ['l', 'l'],
+      ['package', 'package'],
+      ['service', 'service'],
+      ['project', 'project'],
+      ['month', 'month'],
+      ['set', 'set']
+    ]
+  : [
+      ['kom', 'kom'],
+      ['m²', 'm²'],
+      ['m', 'm'],
+      ['sat', 'sat'],
+      ['dan', 'dan'],
+      ['kg', 'kg'],
+      ['l', 'l'],
+      ['paket', 'paket'],
+      ['usluga', 'usluga'],
+      ['projekat', 'projekat'],
+      ['mesec', 'mesec'],
+      ['set', 'set']
+    ];
 
   var options = units.map(function(u) {
     return '<option value="' + u[0] + '">' + u[1] + '</option>';
@@ -4085,12 +4093,24 @@ function showPolicy(type) {
   el('itemsContainer').appendChild(box);
 
   if (unit) {
-    if (isEn && unit === 'kom') unit = 'pcs';
-    if (isEn && unit === 'sat') unit = 'hour';
-    if (isEn && unit === 'dan') unit = 'day';
-    if (isEn && unit === 'paket') unit = 'package';
-    box.querySelector('.item-unit').value = unit;
-  }
+  if (isEn && unit === 'kom') unit = 'pcs';
+  if (isEn && unit === 'sat') unit = 'hour';
+  if (isEn && unit === 'dan') unit = 'day';
+  if (isEn && unit === 'paket') unit = 'package';
+  if (isEn && unit === 'usluga') unit = 'service';
+  if (isEn && unit === 'projekat') unit = 'project';
+  if (isEn && unit === 'mesec') unit = 'month';
+
+  if (!isEn && unit === 'pcs') unit = 'kom';
+  if (!isEn && unit === 'hour') unit = 'sat';
+  if (!isEn && unit === 'day') unit = 'dan';
+  if (!isEn && unit === 'package') unit = 'paket';
+  if (!isEn && unit === 'service') unit = 'usluga';
+  if (!isEn && unit === 'project') unit = 'projekat';
+  if (!isEn && unit === 'month') unit = 'mesec';
+
+  box.querySelector('.item-unit').value = unit;
+}
 
   updateOffer();
 }
