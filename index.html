@@ -2810,13 +2810,10 @@ body.printing-offer .offer {
 </div>
       
       <div class="quick-actions-bar">
-
-  <button class="quick-action-btn" onclick="saveOffer()">Sačuvaj</button>
-<button class="quick-action-btn" onclick="printOffer()">PDF</button>
-<button class="quick-action-btn" onclick="toggleSavedOffers()">Ponude</button>
-<button class="quick-action-btn" onclick="resetExample()">Reset</button>
-<button id="clientViewBtn" class="quick-action-btn" onclick="toggleClientView()">Client View</button>
-
+  <button class="quick-action-btn" onclick="saveOffer()">Sačuvaj ponudu</button>
+  <button class="quick-action-btn" onclick="printOffer()">Preuzmi PDF</button>
+  <button class="quick-action-btn" onclick="toggleSavedOffers()">Moje ponude</button>
+  <button class="quick-action-btn" onclick="resetExample()">Resetuj formu</button>
 </div>
      <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
 
@@ -2828,18 +2825,21 @@ body.printing-offer .offer {
             <input id="logoInput" class="hidden-file" type="file" accept="image/*" onchange="loadImage('logoInput','logoPreview','outLogo','Logo')" />
             <label for="logoInput" class="btn small-btn">Izaberi logo</label>
             <div id="logoPreview" class="upload-preview">Nema loga</div>
+            <button type="button" class="danger small-btn" onclick="removeImage('logoInput','logoPreview','outLogo','Logo')">Ukloni logo</button>
           </div>
           <div class="upload-card">
             <label>Pečat</label>
             <input id="stampInput" class="hidden-file" type="file" accept="image/*" onchange="loadImage('stampInput','stampPreview','outStamp','Pečat')" />
             <label for="stampInput" class="btn small-btn">Izaberi pečat</label>
             <div id="stampPreview" class="upload-preview">Nema pečata</div>
+            <button type="button" class="danger small-btn" onclick="removeImage('stampInput','stampPreview','outStamp','Pečat')">Ukloni pečat</button>
           </div>
           <div class="upload-card">
             <label>Potpis</label>
             <input id="signatureInput" class="hidden-file" type="file" accept="image/*" onchange="loadImage('signatureInput','signaturePreview','outSignature','Potpis')" />
             <label for="signatureInput" class="btn small-btn">Izaberi potpis</label>
             <div id="signaturePreview" class="upload-preview">Nema potpisa</div>
+            <button type="button" class="danger small-btn" onclick="removeImage('signatureInput','signaturePreview','outSignature','Potpis')">Ukloni potpis</button>
           </div>
         </div>
 
@@ -2868,11 +2868,24 @@ body.printing-offer .offer {
 <div><label>Email</label><input id="companyEmail" placeholder="Unesite email firme" oninput="updateOffer()" /></div>
         </div>
         <div class="two">
-          <div><label>PIB</label><input id="companyPib" placeholder="Unesite PIB" oninput="updateOffer()" /></div>
-          <div><label>Matični broj</label><input id="companyMb" placeholder="Unesite matični broj" oninput="updateOffer()" /></div>
+          <div>
+  <label>PIB firme / preduzetnika</label>
+  <input id="companyPib" placeholder="Opcionalno - npr. 109876543" oninput="updateOffer()" />
+  <div class="section-hint">Opcionalno — koristi se za poslovne ponude između firmi.</div>
+</div>
+
+<div>
+  <label>Matični broj firme</label>
+  <input id="companyMb" placeholder="Opcionalno - npr. 21456789" oninput="updateOffer()" />
+  <div class="section-hint">Opcionalno — identifikacioni broj firme/preduzetnika.</div>
+</div>
         </div>
         <div class="two">
-          <div><label>Instrukcije za uplatu</label><input id="bankAccount" placeholder="Unesite instrukcije za uplatu" oninput="updateOffer()" /></div>
+          <div>
+  <label>Instrukcije za uplatu</label>
+  <input id="bankAccount" placeholder="Račun: 160-123456789-45 | Poziv: PON-001" oninput="updateOffer()" />
+  <div class="section-hint">Ovde unosite račun i poziv na broj koji klijent koristi za uplatu.</div>
+</div>
           <div><label>Način plaćanja</label><select id="paymentMethod" onchange="updateOffer()"><option>Po dogovoru</option><option>Gotovina</option><option>Bankarski transfer</option><option>Avans 50% / ostatak po završetku</option></select></div>
         </div>
 
@@ -2998,25 +3011,6 @@ body.printing-offer .offer {
         <label>Napomena / uslovi</label><textarea id="note" placeholder="Unesite napomenu ili uslove ponude" oninput="updateOffer()"></textarea>
         
 
-<div class="two">
-  <button class="secondary" onclick="saveOffer()">
-    Sačuvaj ponudu
-  </button>
-
-  <button class="ghost" onclick="resetExample()">
-    Vrati primer
-  </button>
-</div>
-
-<div class="two">
-  <button class="ghost" onclick="toggleSavedOffers()">
-    Moje sačuvane ponude
-  </button>
-
-  <button class="danger" onclick="clearDraft()">
-    Obriši draft
-  </button>
-</div>
 
 <details class="advanced-options">
   <summary>Napredne opcije</summary>
@@ -3616,7 +3610,6 @@ el('note').placeholder = isEn ? 'Enter note or offer terms' : 'Unesite napomenu 
   initPaddleCheckout();
   applyLanguage();
 await checkSession();
-loadLocalDraft();
 updateOffer();
 routePage();
   if (el('itemsContainer').children.length === 0) {
@@ -3999,6 +3992,19 @@ function showPolicy(type) {
       reader.readAsDataURL(file);
     }
 
+    function removeImage(inputId, previewId, outputId, label) {
+  el(inputId).value = '';
+  el(previewId).innerHTML = 'Nema ' + label.toLowerCase();
+  el(outputId).innerHTML = '';
+
+  if (outputId === 'outLogo' && el('coverLogo')) {
+    el('coverLogo').innerHTML = '';
+  }
+
+  updateOffer();
+  showToast(label + ' je uklonjen.');
+}
+
     function addItem(name, quantity, unit, price) {
   var isEn = currentLanguage === 'en';
 
@@ -4036,7 +4042,7 @@ function showPolicy(type) {
     '<div class="three">' +
       '<div><label>' + (isEn ? 'Quantity' : 'Količina') + '</label><input class="item-quantity" type="number" value="' + (quantity || 1) + '" oninput="updateOffer()"></div>' +
       '<div><label>' + (isEn ? 'Unit' : 'Jedinica mere') + '</label><select class="item-unit" onchange="updateOffer()">' + options + '</select></div>' +
-      '<div><label>' + (isEn ? 'Unit price' : 'Cena po jedinici') + '</label><input class="item-price" type="number" value="' + (price || 0) + '" oninput="updateOffer()"></div>' +
+      '<div><label>' + (isEn ? 'Unit price without VAT' : 'Cena bez PDV-a') + '</label><input class="item-price" type="number" value="' + (price || 0) + '" oninput="updateOffer()"></div>' +
     '</div>' +
     '<button class="danger" onclick="this.parentElement.remove(); updateOffer();">' + (isEn ? 'Delete item' : 'Obriši stavku') + '</button>';
 
@@ -4875,7 +4881,6 @@ el('outTotal').textContent = formatNumber(finalTotal);
       el('discountRow').style.display = el('hideZeroRows').checked && discount === 0 ? 'none' : 'flex';
 el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 'flex';
 
-saveDraftLocally();
 }
       
     async function printOffer() {
