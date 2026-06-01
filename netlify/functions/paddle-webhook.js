@@ -42,10 +42,10 @@ exports.handler = async function (event) {
       expiresAt.setDate(expiresAt.getDate() + 30);
     }
 
-    if (plan === 'lifetime') {
-      maxPrints = null;
-      expiresAt.setFullYear(expiresAt.getFullYear() + 10);
-    }
+    if (plan === 'lifetime' || plan === 'yearly') {
+  maxPrints = null;
+  expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+}
 
     const supabaseUrl = process.env.SUPABASE_URL;
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -59,16 +59,16 @@ exports.handler = async function (event) {
         'Prefer': 'return=minimal'
       },
       body: JSON.stringify({
-        email: email,
-        plan: plan,
-        status: 'active',
-        starts_at: new Date().toISOString(),
-        expires_at: expiresAt.toISOString(),
-        used_prints: 0,
-        max_prints: maxPrints,
-        paddle_transaction_id: transaction.id || null,
-        paddle_subscription_id: transaction.subscription_id || null
-      })
+  email: email,
+  plan: plan === 'lifetime' ? 'yearly' : plan,
+  status: 'active',
+  starts_at: new Date().toISOString(),
+  expires_at: expiresAt.toISOString(),
+  used_prints: 0,
+  max_prints: maxPrints,
+  paddle_transaction_id: transaction.id || null,
+  paddle_subscription_id: transaction.subscription_id || null
+})
     });
 
     if (!response.ok) {
