@@ -3086,10 +3086,19 @@ body.printing-offer .offer {
           <div class="offer-logo" id="outLogo"></div>
           <div>
             <div class="brand-name" id="outCompany">Moj Biznis</div>
-            <div class="muted"><span id="outCompanyAddress"></span><br>Tel: <span id="outCompanyPhone"></span> | Email: <span id="outCompanyEmail"></span><br>PIB: <span id="outCompanyPib"></span> | MB: <span id="outCompanyMb"></span></div>
+            <div class="muted">
+  <span id="outCompanyAddress"></span><br>
+  <span id="previewPhoneLabel">Tel:</span> <span id="outCompanyPhone"></span> | Email: <span id="outCompanyEmail"></span><br>
+  <span id="previewTaxLabel">PIB:</span> <span id="outCompanyPib"></span> | <span id="previewRegLabel">MB:</span> <span id="outCompanyMb"></span>
+  </div>
           </div>
         </div>
-        <div class="offer-meta"><strong>PONUDA</strong><br>Broj: <span id="outOfferNumber"></span><br>Datum: <span id="outDate"></span><br>Važi do: <span id="outValidUntil"></span></div>
+        <div class="offer-meta">
+  <strong>PONUDA</strong><br>
+  <span id="previewNumberLabel">Broj:</span> <span id="outOfferNumber"></span><br>
+  <span id="previewDateLabel">Datum:</span> <span id="outDate"></span><br>
+  <span id="previewValidLabel">Važi do:</span> <span id="outValidUntil"></span>
+</div>
       </div>
 
      <div class="offer-title" id="outTitle"></div>
@@ -3211,7 +3220,7 @@ body.printing-offer .offer {
   </div>
 </div>
 
-<p class="muted" style="text-align:center; margin-top:18px;">
+<p id="pricingPaymentNote" class="muted" style="text-align:center; margin-top:18px;">
   Sigurno plaćanje karticom u EUR preko Paddle checkout-a.
 </p>
     
@@ -3361,7 +3370,19 @@ function applyLanguage() {
   setText('heroStep3Text', isEn ? 'Ready-to-send document for your client.' : 'Spreman dokument za slanje klijentu.');
   setText('heroStep4Title', isEn ? '4. Look professional' : '4. Izgledajte profesionalno');
   setText('heroStep4Text', isEn ? 'No Word templates or manual formatting.' : 'Bez Word template-a i ručnog sređivanja.');
+  var trustBoxes = document.querySelectorAll('.trust-strip-inner div');
 
+if (trustBoxes.length >= 3) {
+  trustBoxes[0].querySelector('strong').textContent = isEn ? 'For companies and sales teams' : 'Za firme i prodajne timove';
+  trustBoxes[0].querySelector('span').textContent = isEn ? 'Offers look clean, clear and professional' : 'Ponude izgledaju uredno, jasno i profesionalno';
+
+  trustBoxes[1].querySelector('strong').textContent = isEn ? 'Branded documents' : 'Brendirani dokumenti';
+  trustBoxes[1].querySelector('span').textContent = isEn ? 'Logo, stamp, signature, themes and cover page' : 'Logo, pečat, potpis, teme i naslovna strana';
+
+  trustBoxes[2].querySelector('strong').textContent = isEn ? 'Fast offer preparation' : 'Brza priprema ponude';
+  trustBoxes[2].querySelector('span').textContent = isEn ? 'Less manual formatting, more time for clients' : 'Manje ručnog formatiranja, više vremena za klijente';
+}
+  
   setText('mainTitle', isEn ? 'Create a business offer' : 'Izrada poslovne ponude');
   setText('mainDescription', isEn ? 'Create a clean, branded and ready-to-send PDF document for clients or internal records.' : 'Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.');
 
@@ -3576,6 +3597,13 @@ function applyLanguage() {
 
   var metaStrong = document.querySelector('.offer-meta strong');
   if (metaStrong) metaStrong.textContent = isEn ? 'OFFER' : 'PONUDA';
+  setText('previewPhoneLabel', isEn ? 'Phone:' : 'Tel:');
+setText('previewTaxLabel', isEn ? 'Tax ID:' : 'PIB:');
+setText('previewRegLabel', isEn ? 'Reg. no:' : 'MB:');
+
+setText('previewNumberLabel', isEn ? 'Number:' : 'Broj:');
+setText('previewDateLabel', isEn ? 'Date:' : 'Datum:');
+setText('previewValidLabel', isEn ? 'Valid until:' : 'Važi do:');
 
   var tableHeads = document.querySelectorAll('thead th');
   if (tableHeads.length >= 5) {
@@ -3613,6 +3641,12 @@ function applyLanguage() {
   if (savedHeader) savedHeader.textContent = isEn ? 'My offers' : 'Moje ponude';
 
   setText('pricingTitle', isEn ? 'Professional PDF offers without complications' : 'Profesionalne PDF ponude bez komplikacija');
+  setText(
+  'pricingPaymentNote',
+  isEn
+    ? 'Secure card payment in EUR through Paddle checkout.'
+    : 'Sigurno plaćanje karticom u EUR preko Paddle checkout-a.'
+);
   setText('pricingDescription',
     isEn ? 'Choose a plan based on how often you send offers to clients. One document for quick work, a monthly plan for regular use, or annual access for a serious branded workflow.' : 'Izaberite paket prema tome koliko često šaljete ponude klijentima. Jedna ponuda za brz posao, mesečni paket za stalni rad ili godišnji pristup za ozbiljan brendirani workflow.'
   );
