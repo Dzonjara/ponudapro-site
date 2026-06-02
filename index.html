@@ -3302,22 +3302,270 @@ function applyLanguage() {
   var isEn = currentLanguage === 'en';
   document.documentElement.lang = isEn ? 'en' : 'sr';
 
+  document.title = isEn
+    ? 'PonudaPro - Professional PDF offer generator'
+    : 'PonudaPro - Profesionalna izrada PDF ponuda';
+
+  function txt(selector, en, sr) {
+    var node = document.querySelector(selector);
+    if (node) node.textContent = isEn ? en : sr;
+  }
+
+  function html(selector, en, sr) {
+    var node = document.querySelector(selector);
+    if (node) node.innerHTML = isEn ? en : sr;
+  }
+
+  function placeholder(id, en, sr) {
+    var node = el(id);
+    if (node) node.placeholder = isEn ? en : sr;
+  }
+
+  function optionText(selectId, index, en, sr) {
+    var select = el(selectId);
+    if (select && select.options[index]) {
+      select.options[index].textContent = isEn ? en : sr;
+    }
+  }
+
   setText('siteSubtitle', isEn ? 'Professional platform for creating offers, quotes and business documents.' : 'Profesionalna platforma za izradu ponuda, predračuna i poslovne dokumentacije.');
   setText('generatorNav', 'Generator');
   setText('pricingNav', isEn ? 'Pricing' : 'Cenovnik');
   setText('loginBtn', isEn ? 'Log in' : 'Prijavi se');
-  setText('logoutBtn', isEn ? 'Log out' : 'Odjavi se');;
+  setText('logoutBtn', isEn ? 'Log out' : 'Odjavi se');
   setText('languageToggle', isEn ? 'EN / SR' : 'SR / EN');
 
+  txt('.landing-kicker', 'Professional PDF workflow', 'Profesionalni PDF workflow');
+  txt('.landing-card h1', 'Create professional PDF offers in under 2 minutes', 'Kreirajte profesionalne PDF ponude za manje od 2 minuta');
   setText('landingFeature1', isEn ? '✓ Professional PDF appearance' : '✓ Profesionalan PDF izgled');
-setText('landingFeature2', isEn ? '✓ Logo, stamp, signature and cover page' : '✓ Logo, pečat, potpis i naslovna strana');
-setText('landingFeature3', isEn ? '✓ Saved offers, themes and fast export' : '✓ Sačuvane ponude, teme i brzi export');
+  setText('landingFeature2', isEn ? '✓ Logo, stamp, signature and cover page' : '✓ Logo, pečat, potpis i naslovna strana');
+  setText('landingFeature3', isEn ? '✓ Saved offers, themes and fast export' : '✓ Sačuvane ponude, teme i brzi export');
+
+  var lp = document.querySelectorAll('.landing-card p');
+  if (lp[0]) {
+    lp[0].textContent = isEn
+      ? 'Create a clean business offer with logo, stamp, signature, items, prices and total amount — ready to send to your client.'
+      : 'Napravite urednu poslovnu ponudu sa logom, pečatom, potpisom, stavkama, cenama i ukupnim iznosom — spremnu za slanje klijentu odmah.';
+  }
+
+  var landingBtns = document.querySelectorAll('.landing-actions button');
+  if (landingBtns[0]) landingBtns[0].textContent = isEn ? 'Open generator' : 'Otvori generator';
+  if (landingBtns[1]) landingBtns[1].textContent = isEn ? 'View plans' : 'Pogledaj pakete';
+
+  setText('heroLiveLabel', isEn ? 'Live workflow' : 'Tok izrade');
+  setText('heroStep1Title', isEn ? '1. Enter details' : '1. Unesite podatke');
+  setText('heroStep1Text', isEn ? 'Company, client, items, prices and deadlines.' : 'Firma, klijent, stavke, cena i rokovi.');
+  setText('heroStep2Title', isEn ? '2. Add branding' : '2. Dodajte brending');
+  setText('heroStep2Text', isEn ? 'Logo, stamp and signature for a more serious document.' : 'Logo, pečat i potpis za ozbiljniji dokument.');
+  setText('heroStep3Title', isEn ? '3. Download PDF' : '3. Preuzmite PDF');
+  setText('heroStep3Text', isEn ? 'Ready-to-send document for your client.' : 'Spreman dokument za slanje klijentu.');
+  setText('heroStep4Title', isEn ? '4. Look professional' : '4. Izgledajte profesionalno');
+  setText('heroStep4Text', isEn ? 'No Word templates or manual formatting.' : 'Bez Word template-a i ručnog sređivanja.');
 
   setText('mainTitle', isEn ? 'Create a business offer' : 'Izrada poslovne ponude');
   setText('mainDescription', isEn ? 'Create a clean, branded and ready-to-send PDF document for clients or internal records.' : 'Kreirajte uredan, brendiran i spreman PDF dokument za slanje klijentima ili internu evidenciju.');
 
-  setText('pricingTitle', isEn ? 'Professional PDF offers without complications' : 'Profesionalne PDF ponude bez komplikacije');
-  setText('pricingDescription', isEn ? 'Professional PDF documents for sales teams, agencies, consultants and companies that want faster, cleaner and more serious business offers.' : 'Profesionalni PDF dokumenti za prodajne timove, agencije, konsultante i firme koje žele brže, urednije i ozbiljnije poslovne ponude.');
+  txt('#saveIndicator.saved', 'Saved just now', 'Sačuvano upravo sada');
+  txt('#saveIndicator.unsaved', 'Unsaved changes', 'Nesačuvane izmene');
+
+  var dashboardLabels = document.querySelectorAll('.dashboard-box span');
+  if (dashboardLabels.length >= 4) {
+    dashboardLabels[0].textContent = isEn ? 'Total offers' : 'Ukupno ponuda';
+    dashboardLabels[1].textContent = isEn ? 'Total value' : 'Ukupna vrednost';
+    dashboardLabels[2].textContent = isEn ? 'Paid' : 'Plaćeno';
+    dashboardLabels[3].textContent = isEn ? 'Draft' : 'Draft';
+  }
+
+  var quickBtns = document.querySelectorAll('.quick-action-btn');
+  if (quickBtns.length >= 4) {
+    quickBtns[0].textContent = isEn ? 'Save offer' : 'Sačuvaj ponudu';
+    quickBtns[1].textContent = isEn ? 'Download PDF' : 'Preuzmi PDF';
+    quickBtns[2].textContent = isEn ? 'My offers' : 'Moje ponude';
+    quickBtns[3].textContent = isEn ? 'Reset form' : 'Resetuj formu';
+  }
+
+  html('#lockedMessage',
+    '<strong>Access is not active.</strong><br>Log in and check your plan status. To activate access, choose a plan in the <strong>Pricing</strong> section.',
+    '<strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.'
+  );
+
+  var textMap = isEn ? {
+    'Logo, pečat i potpis': 'Logo, stamp and signature',
+    'Logo firme': 'Company logo',
+    'Pečat': 'Stamp',
+    'Potpis': 'Signature',
+    'Izaberi logo': 'Choose logo',
+    'Izaberi pečat': 'Choose stamp',
+    'Izaberi potpis': 'Choose signature',
+    'Ukloni logo': 'Remove logo',
+    'Ukloni pečat': 'Remove stamp',
+    'Ukloni potpis': 'Remove signature',
+    'Nema loga': 'No logo',
+    'Nema pečata': 'No stamp',
+    'Nema potpisa': 'No signature',
+    'Šabloni ponude': 'Offer templates',
+    'Marketing agencija': 'Marketing agency',
+    'Majstor / usluge': 'Craftsman / services',
+    'Auto servis': 'Auto service',
+    'IT / web dizajn': 'IT / web design',
+    'Podaci firme': 'Company details',
+    'Naziv firme / tvoje ime': 'Company name / your name',
+    'Adresa firme': 'Company address',
+    'Telefon': 'Phone',
+    'PIB firme / preduzetnika': 'Company / entrepreneur tax ID',
+    'Matični broj firme': 'Company registration number',
+    'Instrukcije za uplatu': 'Payment instructions',
+    'Način plaćanja': 'Payment method',
+    'Podaci dokumenta': 'Document details',
+    'Broj ponude': 'Offer number',
+    'Valuta': 'Currency',
+    'Naziv ponude': 'Offer title',
+    'Status ponude': 'Offer status',
+    'Naslovna strana': 'Cover page',
+    'Tekst na naslovnoj strani': 'Cover page text',
+    'Tema dokumenta': 'Document theme',
+    'Rok izrade': 'Delivery time',
+    'Ponuda važi do': 'Valid until',
+    'Podaci klijenta': 'Client details',
+    'Ime / naziv klijenta': 'Client name',
+    'Adresa klijenta': 'Client address',
+    'Telefon klijenta': 'Client phone',
+    'Email klijenta': 'Client email',
+    'Stavke ponude': 'Offer items',
+    '+ Dodaj stavku': '+ Add item',
+    'Obračun': 'Calculation',
+    'Popust (%)': 'Discount (%)',
+    'PDV (%)': 'VAT (%)',
+    'Sakrij popust i PDV ako su 0': 'Hide discount and VAT if they are 0',
+    'Napomena / uslovi': 'Note / terms',
+    'Napredne opcije': 'Advanced options',
+    'Moje ponude': 'My offers',
+    'Generiši broj': 'Generate number',
+    '+7 dana': '+7 days'
+  } : {
+    'Logo, stamp and signature': 'Logo, pečat i potpis',
+    'Company logo': 'Logo firme',
+    'Stamp': 'Pečat',
+    'Signature': 'Potpis',
+    'Choose logo': 'Izaberi logo',
+    'Choose stamp': 'Izaberi pečat',
+    'Choose signature': 'Izaberi potpis',
+    'Remove logo': 'Ukloni logo',
+    'Remove stamp': 'Ukloni pečat',
+    'Remove signature': 'Ukloni potpis',
+    'No logo': 'Nema loga',
+    'No stamp': 'Nema pečata',
+    'No signature': 'Nema potpisa',
+    'Offer templates': 'Šabloni ponude',
+    'Marketing agency': 'Marketing agencija',
+    'Craftsman / services': 'Majstor / usluge',
+    'Auto service': 'Auto servis',
+    'IT / web design': 'IT / web dizajn',
+    'Company details': 'Podaci firme',
+    'Company name / your name': 'Naziv firme / tvoje ime',
+    'Company address': 'Adresa firme',
+    'Phone': 'Telefon',
+    'Company / entrepreneur tax ID': 'PIB firme / preduzetnika',
+    'Company registration number': 'Matični broj firme',
+    'Payment instructions': 'Instrukcije za uplatu',
+    'Payment method': 'Način plaćanja',
+    'Document details': 'Podaci dokumenta',
+    'Offer number': 'Broj ponude',
+    'Currency': 'Valuta',
+    'Offer title': 'Naziv ponude',
+    'Offer status': 'Status ponude',
+    'Cover page': 'Naslovna strana',
+    'Cover page text': 'Tekst na naslovnoj strani',
+    'Document theme': 'Tema dokumenta',
+    'Delivery time': 'Rok izrade',
+    'Valid until': 'Ponuda važi do',
+    'Client details': 'Podaci klijenta',
+    'Client name': 'Ime / naziv klijenta',
+    'Client address': 'Adresa klijenta',
+    'Client phone': 'Telefon klijenta',
+    'Client email': 'Email klijenta',
+    'Offer items': 'Stavke ponude',
+    '+ Add item': '+ Dodaj stavku',
+    'Calculation': 'Obračun',
+    'Discount (%)': 'Popust (%)',
+    'VAT (%)': 'PDV (%)',
+    'Hide discount and VAT if they are 0': 'Sakrij popust i PDV ako su 0',
+    'Note / terms': 'Napomena / uslovi',
+    'Advanced options': 'Napredne opcije',
+    'My offers': 'Moje ponude',
+    'Generate number': 'Generiši broj',
+    '+7 days': '+7 dana'
+  };
+
+  document.querySelectorAll('h2, label, button, .upload-preview, .checkbox-row span, summary, .template-btn').forEach(function(node) {
+    var clean = node.textContent.trim();
+    if (textMap[clean]) node.textContent = textMap[clean];
+  });
+
+  var hints = document.querySelectorAll('.section-hint');
+  if (hints[0]) hints[0].textContent = isEn ? 'Choose a template to automatically fill in the offer title, items, deadline and note. You can edit everything manually.' : 'Izaberite šablon da automatski popunite naziv ponude, stavke, rok i napomenu. Sve možete promeniti ručno.';
+  if (hints[1]) hints[1].textContent = isEn ? 'Optional — used for business offers between companies.' : 'Opcionalno — koristi se za poslovne ponude između firmi.';
+  if (hints[2]) hints[2].textContent = isEn ? 'Optional — company or entrepreneur identification number.' : 'Opcionalno — identifikacioni broj firme/preduzetnika.';
+  if (hints[3]) hints[3].textContent = isEn ? 'Enter bank account and payment reference used by the client.' : 'Ovde unosite račun i poziv na broj koji klijent koristi za uplatu.';
+
+  txt('.theme-hint',
+    'Premium themes change the look of the PDF document. Custom branding is made for companies that want documents in their own visual identity.',
+    'Premium teme menjaju izgled PDF dokumenta. Custom branding je namenjen firmama koje žele dokument u svom vizuelnom identitetu.'
+  );
+
+  placeholder('company', 'Enter company name', 'Unesite naziv firme');
+  placeholder('companyAddress', 'Enter company address', 'Unesite adresu firme');
+  placeholder('companyPhone', 'Enter company phone', 'Unesite telefon firme');
+  placeholder('companyEmail', 'Enter company email', 'Unesite email firme');
+  placeholder('companyPib', 'Optional - e.g. 109876543', 'Opcionalno - npr. 109876543');
+  placeholder('companyMb', 'Optional - e.g. 21456789', 'Opcionalno - npr. 21456789');
+  placeholder('bankAccount', 'Account: 160-123456789-45 | Reference: OFF-001', 'Račun: 160-123456789-45 | Poziv: PON-001');
+  placeholder('offerNumber', 'Automatic offer number', 'Automatski broj ponude');
+  placeholder('title', 'Enter offer title', 'Unesite naziv ponude');
+  placeholder('deadline', 'Enter delivery time', 'Unesite rok izrade');
+  placeholder('validUntil', 'Enter offer valid date', 'Unesite datum važenja ponude');
+  placeholder('client', 'Enter client name', 'Unesite ime ili naziv klijenta');
+  placeholder('clientAddress', 'Enter client address', 'Unesite adresu klijenta');
+  placeholder('note', 'Enter note or offer terms', 'Unesite napomenu ili uslove ponude');
+  placeholder('coverKickerInput', 'e.g. Business offer', 'npr. Poslovna ponuda');
+  placeholder('savedOffersSearch', 'Search offers...', 'Pretraži ponude...');
+
+  optionText('paymentMethod', 0, 'By agreement', 'Po dogovoru');
+  optionText('paymentMethod', 1, 'Cash', 'Gotovina');
+  optionText('paymentMethod', 2, 'Bank transfer', 'Bankarski transfer');
+  optionText('paymentMethod', 3, '50% advance / rest after completion', 'Avans 50% / ostatak po završetku');
+
+  optionText('offerStatus', 0, 'Draft', 'Draft');
+  optionText('offerStatus', 1, 'Ready to send', 'Spremno za slanje');
+  optionText('offerStatus', 2, 'Pending', 'Na čekanju');
+  optionText('offerStatus', 3, 'Paid', 'Plaćeno');
+
+  optionText('coverPageEnabled', 0, 'No cover page', 'Bez naslovne strane');
+  optionText('coverPageEnabled', 1, 'Cover page · Business', 'Naslovna strana · Business');
+
+  optionText('documentTheme', 0, 'Classic', 'Classic');
+  optionText('documentTheme', 1, 'Modern · Premium', 'Modern · Premium');
+  optionText('documentTheme', 2, 'Executive · Premium', 'Executive · Premium');
+  optionText('documentTheme', 3, 'Custom branding (soon)', 'Custom branding (uskoro)');
+
+  optionText('savedOffersSort', 0, 'Newest first', 'Najnovije prvo');
+  optionText('savedOffersSort', 1, 'Oldest first', 'Najstarije prvo');
+  optionText('savedOffersSort', 2, 'Highest amount', 'Najveći iznos');
+  optionText('savedOffersSort', 3, 'Lowest amount', 'Najmanji iznos');
+
+  optionText('savedOffersStatusFilter', 0, 'All statuses', 'Svi statusi');
+  optionText('savedOffersStatusFilter', 1, 'Draft', 'Draft');
+  optionText('savedOffersStatusFilter', 2, 'Ready to send', 'Spremno za slanje');
+  optionText('savedOffersStatusFilter', 3, 'Pending', 'Na čekanju');
+  optionText('savedOffersStatusFilter', 4, 'Paid', 'Plaćeno');
+
+  var liveRows = document.querySelectorAll('.live-total-row > span:first-child');
+  if (liveRows.length >= 4) {
+    liveRows[0].textContent = isEn ? 'Subtotal' : 'Međuzbir';
+    liveRows[1].textContent = isEn ? 'Discount' : 'Popust';
+    liveRows[2].textContent = isEn ? 'VAT' : 'PDV';
+    liveRows[3].textContent = isEn ? 'Total' : 'Ukupno';
+  }
 
   setText('clientBoxTitle', isEn ? 'Client information' : 'Podaci o klijentu');
   setText('termsBoxTitle', isEn ? 'Offer terms' : 'Uslovi ponude');
@@ -3326,99 +3574,8 @@ setText('landingFeature3', isEn ? '✓ Saved offers, themes and fast export' : '
   setText('statusLabel', 'Status:');
   setText('statusText', isEn ? 'informational offer' : 'informativna ponuda');
 
-setText('heroLiveLabel', isEn ? 'Live workflow' : 'Tok izrade');
-setText('heroStep1Title', isEn ? '1. Enter details' : '1. Unesite podatke');
-setText('heroStep1Text', isEn ? 'Company, client, items, prices and deadlines.' : 'Firma, klijent, stavke, cena i rokovi.');
-setText('heroStep2Title', isEn ? '2. Add branding' : '2. Dodajte brending');
-setText('heroStep2Text', isEn ? 'Logo, stamp and signature for a more serious document.' : 'Logo, pečat i potpis za ozbiljniji dokument.');
-setText('heroStep3Title', isEn ? '3. Download PDF' : '3. Preuzmite PDF');
-setText('heroStep3Text', isEn ? 'Ready-to-send document for your client.' : 'Spreman dokument za slanje klijentu.');
-setText('heroStep4Title', isEn ? '4. Look professional' : '4. Izgledajte profesionalno');
-setText('heroStep4Text', isEn ? 'No Word templates or manual formatting.' : 'Bez Word template-a i ručnog sređivanja.');
-var trustBoxes = document.querySelectorAll('.trust-strip-inner div');
-if (trustBoxes.length >= 3) {
-  trustBoxes[0].querySelector('strong').textContent = isEn ? 'Fast PDF export' : 'Brz PDF export';
-  trustBoxes[0].querySelector('span').textContent = isEn ? 'Ready document for sending to a client' : 'Spreman dokument za slanje klijentu';
-
-  trustBoxes[1].querySelector('strong').textContent = isEn ? 'Logo, stamp and signature' : 'Logo, pečat i potpis';
-  trustBoxes[1].querySelector('span').textContent = isEn ? 'Document looks like a real business file' : 'Dokument izgleda kao pravi poslovni fajl';
-
-  trustBoxes[2].querySelector('strong').textContent = isEn ? 'Secure payment' : 'Sigurno plaćanje';
-  trustBoxes[2].querySelector('span').textContent = isEn ? 'Processed through Paddle platform' : 'Obrada preko Paddle platforme';
-}
-
-setText('activationTitle', isEn ? 'How does activation work?' : 'Kako funkcioniše aktivacija?');
-
-var activationBoxes = document.querySelectorAll('.simple-box');
-if (activationBoxes.length >= 4) {
-  activationBoxes[0].innerHTML = isEn ? '<strong>1. Account login</strong><br>Log in with email or Google account.' : '<strong>1. Prijava na nalog</strong><br>Prijavite se email adresom ili putem Google naloga.';
-  activationBoxes[1].innerHTML = isEn ? '<strong>2. Choose a plan</strong><br>Select the package that fits your usage.' : '<strong>2. Izbor paketa</strong><br>Izaberite paket koji odgovara vašem načinu korišćenja.';
-  activationBoxes[2].innerHTML = isEn ? '<strong>3. Secure payment processing</strong><br>Payment is processed through Paddle. Card details are not stored on PonudaPro.' : '<strong>3. Sigurna obrada plaćanja</strong><br>Plaćanje se obrađuje preko Paddle platforme. Podaci platne kartice se ne čuvaju na PonudaPro sajtu.';
-  activationBoxes[3].innerHTML = isEn ? '<strong>4. Automatic activation</strong><br>After successful payment, access is connected to your account email.' : '<strong>4. Automatska aktivacija</strong><br>Nakon uspešnog plaćanja, pristup se povezuje sa email adresom vašeg naloga.';
-}
-
-  document.querySelector('.landing-kicker').textContent = isEn ? 'Professional PDF workflow' : 'Profesionalni PDF workflow';
-document.querySelector('.landing-card h1').textContent = isEn ? 'Create professional PDF offers in under 2 minutes' : 'Kreirajte profesionalne PDF ponude za manje od 2 minuta';
-
-  var lp = document.querySelectorAll('.landing-card p');
-  lp[0].textContent = isEn ? 'Create a clean business offer with logo, stamp, signature, items, prices and total amount — ready to send to your client.' : 'Napravite urednu poslovnu ponudu sa logom, pečatom, potpisom, stavkama, cenama i ukupnim iznosom — spremnu za slanje klijentu odmah.';
-  
-
-  var landingBtns = document.querySelectorAll('.landing-actions button');
-  landingBtns[0].textContent = isEn ? 'Open generator' : 'Otvori generator';
-  landingBtns[1].textContent = isEn ? 'View plans' : 'Pogledaj pakete';
-
-  var cards = document.querySelectorAll('.price-card');
-
-  cards[0].querySelector('.price-name').textContent = isEn ? 'Single PDF' : 'Jedan PDF';
-cards[0].querySelector('.price-desc').textContent = isEn ? 'Perfect for one professional offer, proposal or branded PDF document.' : 'Idealno za jednu profesionalnu ponudu, predlog saradnje ili brendirani PDF dokument.';
-cards[0].querySelector('.price-small').textContent = isEn ? 'One-time payment' : 'Jednokratno plaćanje';
-
-  cards[1].querySelector('.tag').textContent = isEn ? 'Most popular' : 'Najčešći izbor';
-cards[1].querySelector('.price-name').textContent = isEn ? 'Business Monthly' : 'Business mesečni';
-cards[1].querySelector('.price-desc').textContent = isEn ? 'Unlimited professional PDF offers, branded documents and saved projects for growing businesses.' : 'Neograničene profesionalne PDF ponude, brendirani dokumenti i sačuvani projekti za firme koje rastu.';
-cards[1].querySelector('.price-small').textContent = isEn ? 'Monthly subscription' : 'Mesečna pretplata';
-
-  cards[2].querySelector('.price-name').textContent = isEn ? 'Annual Access' : 'Godišnji pristup';
-cards[2].querySelector('.price-desc').textContent = isEn ? 'Long-term access for companies that want a stable proposal workflow without monthly interruptions.' : 'Dugoročni pristup za firme koje žele stabilan workflow za ponude bez mesečnih prekida.';
-cards[2].querySelector('.price-small').textContent = isEn ? 'Annual payment' : 'Godišnje plaćanje';
-
-  var buttons = document.querySelectorAll('.price-card button');
-  buttons.forEach(function(btn) {
-    btn.textContent = isEn ? 'Choose plan' : 'Izaberi paket';
-      var trust = document.querySelectorAll('.trust-pill');
-if (trust.length >= 4) {
-  trust[0].textContent = isEn ? 'Branded PDF export' : 'Brendirani PDF export';
-  trust[1].textContent = isEn ? 'Logo, stamp and signature' : 'Logo, pečat i potpis';
-  trust[2].textContent = isEn ? 'Multiple currencies' : 'Više valuta';
-  trust[3].textContent = isEn ? 'No PonudaPro mark' : 'Bez PonudaPro oznake';
-}
-
-  var featureLists = document.querySelectorAll('.features');
-
-  if (featureLists.length >= 3) {
-    var singleFeatures = isEn
-  ? ['1 professional PDF offer', 'Branded document without PonudaPro mark', 'Logo, stamp and signature', 'Multiple currencies', 'Ready to send to client']
-  : ['1 profesionalna PDF ponuda', 'Brendirani dokument bez PonudaPro oznake', 'Logo, pečat i potpis', 'Više valuta', 'Spremno za slanje klijentu'];
-
-    var monthlyFeatures = isEn
-  ? ['Unlimited PDF offers during 30 days', 'Saved offers and project history', 'Premium document themes', 'Logo, stamp and signature', 'Discount, VAT and total calculation', 'Client-ready branded documents']
-  : ['Neograničene PDF ponude tokom 30 dana', 'Sačuvane ponude i istorija projekata', 'Premium teme dokumenata', 'Logo, pečat i potpis', 'Popust, PDV i obračun ukupne cene', 'Brendirani dokumenti spremni za klijente'];
-
-    var lifetimeFeatures = isEn
-  ? ['Annual platform access', 'All Business Monthly features included', 'Unlimited PDF documents', 'Professional branded documents without mark', 'Access to future platform improvements', 'Premium workflow for serious teams']
-  : ['Godišnji pristup platformi', 'Sve funkcije iz Business mesečnog paketa', 'Neograničen broj PDF dokumenata', 'Profesionalni brendirani dokumenti bez oznake', 'Pristup budućim unapređenjima platforme', 'Premium workflow za ozbiljne timove'];
-
-    function fillFeatures(list, items) {
-      list.innerHTML = items.map(function(item) {
-        return '<li>' + item + '</li>';
-      }).join('');
-    }
-
-    fillFeatures(featureLists[0], singleFeatures);
-    fillFeatures(featureLists[1], monthlyFeatures);
-    fillFeatures(featureLists[2], lifetimeFeatures);
-  }
+  var metaStrong = document.querySelector('.offer-meta strong');
+  if (metaStrong) metaStrong.textContent = isEn ? 'OFFER' : 'PONUDA';
 
   var tableHeads = document.querySelectorAll('thead th');
   if (tableHeads.length >= 5) {
@@ -3451,106 +3608,146 @@ if (trust.length >= 4) {
 
   var printBtn = document.querySelector('.print-button');
   if (printBtn) printBtn.textContent = isEn ? 'Download as PDF' : 'Preuzmi kao PDF';
-    var textMap = isEn ? {
-  'Logo, pečat i potpis': 'Logo, stamp and signature',
-  'Logo firme': 'Company logo',
-  'Pečat': 'Stamp',
-  'Potpis': 'Signature',
-  'Izaberi logo': 'Choose logo',
-  'Izaberi pečat': 'Choose stamp',
-  'Izaberi potpis': 'Choose signature',
-  'Nema loga': 'No logo',
-  'Nema pečata': 'No stamp',
-  'Nema potpisa': 'No signature',
-  'Podaci firme': 'Company details',
-  'Naziv firme / tvoje ime': 'Company name / your name',
-  'Adresa firme': 'Company address',
-  'Telefon': 'Phone',
-  'PIB': 'Tax ID',
-  'Matični broj': 'Registration number',
-  'Instrukcije za uplatu': 'Payment instructions',
-  'Način plaćanja': 'Payment method',
-  'Podaci dokumenta': 'Document details',
-  'Broj ponude': 'Offer number',
-  'Valuta': 'Currency',
-  'Naziv ponude': 'Offer title',
-  'Rok izrade': 'Delivery time',
-  'Ponuda važi do': 'Valid until',
-  'Podaci klijenta': 'Client details',
-  'Ime / naziv klijenta': 'Client name',
-  'Adresa klijenta': 'Client address',
-  'Telefon klijenta': 'Client phone',
-  'Email klijenta': 'Client email',
-  'Stavke ponude': 'Offer items',
-  '+ Dodaj stavku': '+ Add item',
-  'Obračun': 'Calculation',
-  'Popust (%)': 'Discount (%)',
-  'PDV (%)': 'VAT (%)',
-  'Sakrij popust i PDV ako su 0': 'Hide discount and VAT if they are 0',
-  'Napomena / uslovi': 'Note / terms',
-  'Osveži ponudu': 'Update offer',
-  'Vrati primer': 'Load example'
-} : {
-  'Logo, stamp and signature': 'Logo, pečat i potpis',
-  'Company logo': 'Logo firme',
-  'Stamp': 'Pečat',
-  'Signature': 'Potpis',
-  'Choose logo': 'Izaberi logo',
-  'Choose stamp': 'Izaberi pečat',
-  'Choose signature': 'Izaberi potpis',
-  'No logo': 'Nema loga',
-  'No stamp': 'Nema pečata',
-  'No signature': 'Nema potpisa',
-  'Company details': 'Podaci firme',
-  'Company name / your name': 'Naziv firme / tvoje ime',
-  'Company address': 'Adresa firme',
-  'Phone': 'Telefon',
-  'Tax ID': 'PIB',
-  'Registration number': 'Matični broj',
-  'Payment instructions': 'Instrukcije za uplatu',
-  'Payment method': 'Način plaćanja',
-  'Document details': 'Podaci dokumenta',
-  'Offer number': 'Broj ponude',
-  'Currency': 'Valuta',
-  'Offer title': 'Naziv ponude',
-  'Delivery time': 'Rok izrade',
-  'Valid until': 'Ponuda važi do',
-  'Client details': 'Podaci klijenta',
-  'Client name': 'Ime / naziv klijenta',
-  'Client address': 'Adresa klijenta',
-  'Client phone': 'Telefon klijenta',
-  'Client email': 'Email klijenta',
-  'Offer items': 'Stavke ponude',
-  '+ Add item': '+ Dodaj stavku',
-  'Calculation': 'Obračun',
-  'Discount (%)': 'Popust (%)',
-  'VAT (%)': 'PDV (%)',
-  'Hide discount and VAT if they are 0': 'Sakrij popust i PDV ako su 0',
-  'Note / terms': 'Napomena / uslovi',
-  'Update offer': 'Osveži ponudu',
-  'Load example': 'Vrati primer'
-};
 
-document.querySelectorAll('h2, label, button, .upload-preview, .checkbox-row span').forEach(function(node) {
-  var txt = node.textContent.trim();
-  if (textMap[txt]) node.textContent = textMap[txt];
-});
+  var savedHeader = document.querySelector('.saved-offers-header strong');
+  if (savedHeader) savedHeader.textContent = isEn ? 'My offers' : 'Moje ponude';
 
-el('company').placeholder = isEn ? 'Enter company name' : 'Unesite naziv firme';
-el('companyAddress').placeholder = isEn ? 'Enter company address' : 'Unesite adresu firme';
-el('companyPhone').placeholder = isEn ? 'Enter company phone' : 'Unesite telefon firme';
-el('companyEmail').placeholder = isEn ? 'Enter company email' : 'Unesite email firme';
-el('companyPib').placeholder = isEn ? 'Enter tax ID' : 'Unesite PIB';
-el('companyMb').placeholder = isEn ? 'Enter registration number' : 'Unesite matični broj';
-el('bankAccount').placeholder = isEn ? 'Enter payment instructions' : 'Unesite instrukcije za uplatu';
-el('offerNumber').placeholder = isEn ? 'Enter offer number' : 'Unesite broj ponude';
-el('title').placeholder = isEn ? 'Enter offer title' : 'Unesite naziv ponude';
-el('deadline').placeholder = isEn ? 'Enter delivery time' : 'Unesite rok izrade';
-el('validUntil').placeholder = isEn ? 'Enter offer valid date' : 'Unesite datum važenja ponude';
-el('client').placeholder = isEn ? 'Enter client name' : 'Unesite ime ili naziv klijenta';
-el('clientAddress').placeholder = isEn ? 'Enter client address' : 'Unesite adresu klijenta';
-el('note').placeholder = isEn ? 'Enter note or offer terms' : 'Unesite napomenu ili uslove ponude';
-  });
+  setText('pricingTitle', isEn ? 'Professional PDF offers without complications' : 'Profesionalne PDF ponude bez komplikacija');
+  setText('pricingDescription',
+    isEn ? 'Choose a plan based on how often you send offers to clients. One document for quick work, a monthly plan for regular use, or annual access for a serious branded workflow.' : 'Izaberite paket prema tome koliko često šaljete ponude klijentima. Jedna ponuda za brz posao, mesečni paket za stalni rad ili godišnji pristup za ozbiljan brendirani workflow.'
+  );
+
+  var trust = document.querySelectorAll('.trust-pill');
+  if (trust.length >= 3) {
+    trust[0].textContent = isEn ? '✓ PDF export' : '✓ PDF export';
+    trust[1].textContent = isEn ? '✓ Branded documents' : '✓ Brendirani dokumenti';
+    trust[2].textContent = isEn ? '✓ No manual formatting' : '✓ Bez ručnog formatiranja';
+  }
+
+  var cards = document.querySelectorAll('.price-card');
+  if (cards.length >= 3) {
+    cards[0].querySelector('.price-name').textContent = isEn ? 'Single PDF' : 'Jedna ponuda';
+cards[0].querySelector('.price-desc').textContent = isEn
+  ? 'For one quick professional PDF offer without saved history or premium options.'
+  : 'Za jednu brzu profesionalnu PDF ponudu bez istorije i premium opcija.';
+cards[0].querySelector('.price-small').textContent = isEn ? 'One-time payment' : 'Jednokratno plaćanje';
+
+cards[1].querySelector('.tag').textContent = isEn ? 'Most popular' : 'Najčešći izbor';
+cards[1].querySelector('.price-name').textContent = isEn ? 'Business Monthly' : 'Business mesečni';
+cards[1].querySelector('.price-desc').textContent = isEn
+  ? 'For freelancers, agencies and companies that regularly send offers and need saved projects.'
+  : 'Za freelancere, agencije i firme koje redovno šalju ponude i žele sačuvane projekte.';
+cards[1].querySelector('.price-small').textContent = isEn ? 'Monthly subscription' : 'Mesečna pretplata';
+
+cards[2].querySelector('.price-name').textContent = isEn ? 'Business Annual' : 'Business godišnji';
+cards[2].querySelector('.price-desc').textContent = isEn
+  ? 'For serious companies that want a stable branded proposal workflow for the whole year.'
+  : 'Za ozbiljne firme koje žele stabilan brendirani workflow za ponude tokom cele godine.';
+cards[2].querySelector('.price-small').textContent = isEn ? 'Annual payment' : 'Godišnje plaćanje';
+
+    var featureLists = document.querySelectorAll('.features');
+
+    if (featureLists.length >= 3) {
+      var singleFeatures = isEn
+  ? [
+      '1 PDF offer only',
+      'Classic document theme',
+      'Logo, stamp and signature',
+      'Basic offer fields and items',
+      'PDF export ready for client',
+      'No saved offer history',
+      'No premium themes',
+      'No cover page'
+    ]
+  : [
+      'Samo 1 PDF ponuda',
+      'Classic tema dokumenta',
+      'Logo, pečat i potpis',
+      'Osnovna polja i stavke ponude',
+      'PDF export spreman za klijenta',
+      'Bez čuvanja istorije ponuda',
+      'Bez premium tema',
+      'Bez naslovne strane'
+    ];
+
+var monthlyFeatures = isEn
+  ? [
+      'Unlimited PDF offers during 30 days',
+      'Saved offers and project history',
+      'Classic + Modern premium theme',
+      'Cover page included',
+      'Document status: Draft, Ready, Pending, Paid',
+      'Discount, VAT and total calculation',
+      'Export / Import JSON backup',
+      'Best for freelancers and small companies'
+    ]
+  : [
+      'Neograničene PDF ponude tokom 30 dana',
+      'Čuvanje ponuda i istorija projekata',
+      'Classic + Modern premium tema',
+      'Naslovna strana uključena',
+      'Status dokumenta: Draft, Spremno, Na čekanju, Plaćeno',
+      'Popust, PDV i obračun ukupne cene',
+      'Export / Import JSON backup',
+      'Najbolje za freelancere i manje firme'
+    ];
+
+var annualFeatures = isEn
+  ? [
+      '365 days of platform access',
+      'Everything from Business Monthly',
+      'Unlimited PDF documents',
+      'All premium themes: Classic, Modern and Executive',
+      'Cover page and professional document status',
+      'Logo, stamp, signature and branded PDF layout',
+      'Access to future platform improvements',
+      'Priority support and setup guidance',
+      'Best value for serious long-term use'
+    ]
+  : [
+      '365 dana pristupa platformi',
+      'Sve iz Business mesečnog paketa',
+      'Neograničen broj PDF dokumenata',
+      'Sve premium teme: Classic, Modern i Executive',
+      'Naslovna strana i profesionalni status dokumenta',
+      'Logo, pečat, potpis i brendirani PDF izgled',
+      'Pristup budućim unapređenjima platforme',
+      'Prioritetna podrška i pomoć oko podešavanja',
+      'Najbolja opcija za ozbiljno dugoročno korišćenje'
+    ];
+
+function fillFeatures(list, items) {
+  list.innerHTML = items.map(function(item) {
+    return '<li>' + item + '</li>';
+  }).join('');
+}
+
+fillFeatures(featureLists[0], singleFeatures);
+fillFeatures(featureLists[1], monthlyFeatures);
+fillFeatures(featureLists[2], annualFeatures);
+    }
+
+    var priceButtons = document.querySelectorAll('.price-card button');
+    priceButtons.forEach(function(btn) {
+      btn.textContent = isEn ? 'Choose plan' : 'Izaberi paket';
+    });
+  }
+
+  setText('activationTitle', isEn ? 'How does activation work?' : 'Kako funkcioniše aktivacija?');
+
+  var activationBoxes = document.querySelectorAll('.simple-box');
+  if (activationBoxes.length >= 4) {
+    activationBoxes[0].innerHTML = isEn ? '<strong>1. Account login</strong><br>Log in with email or Google account.' : '<strong>1. Prijava na nalog</strong><br>Prijavite se email adresom ili putem Google naloga.';
+    activationBoxes[1].innerHTML = isEn ? '<strong>2. Choose a plan</strong><br>Select the package that fits your usage.' : '<strong>2. Izbor paketa</strong><br>Izaberite paket koji odgovara vašem načinu korišćenja.';
+    activationBoxes[2].innerHTML = isEn ? '<strong>3. Secure payment processing</strong><br>Payment is processed through Paddle. Card details are not stored on PonudaPro.' : '<strong>3. Sigurna obrada plaćanja</strong><br>Plaćanje se obrađuje preko Paddle platforme. Podaci platne kartice se ne čuvaju na PonudaPro sajtu.';
+    activationBoxes[3].innerHTML = isEn ? '<strong>4. Automatic activation</strong><br>After successful payment, access is connected to your account email.' : '<strong>4. Automatska aktivacija</strong><br>Nakon uspešnog plaćanja, pristup se povezuje sa email adresom vašeg naloga.';
+  }
+
+  if (activeSubscription && isSubscriptionActive) {
+    unlockGenerator(activeSubscription);
+  }
+
+  updateOffer();
 }
 
     function initPaddleCheckout() {
@@ -3851,11 +4048,27 @@ function unlockGenerator(subscription) {
   }
 
   el('userStatusBox').innerHTML = statusHtml;
-      el('lockedMessage').style.display = 'none';
-      el('lockedContent').classList.remove('locked-content');
-      el('freeWatermark').style.display = 'none';
-      hideLoginModal();
-    }
+
+if (isSinglePlan()) {
+  if (el('documentTheme')) el('documentTheme').value = 'classic';
+  if (el('coverPageEnabled')) el('coverPageEnabled').value = 'no';
+}
+
+if (isMonthlyPlan()) {
+  if (el('documentTheme') && el('documentTheme').value === 'executive') {
+    el('documentTheme').value = 'modern';
+  }
+}
+
+el('lockedMessage').style.display = 'none';
+el('lockedContent').classList.remove('locked-content');
+el('freeWatermark').style.display = 'none';
+
+updateThemePreview(el('documentTheme').value);
+updateOffer();
+
+hideLoginModal();
+}
 
     function unlockFreeTrial() {
       el('userStatusBox').style.display = 'block';
@@ -4119,6 +4332,34 @@ function showPolicy(type) {
       return Number(n).toLocaleString('sr-RS', { maximumFractionDigits: 2 });
     }
 
+function getActivePlan() {
+  if (!activeSubscription || !isSubscriptionActive) return 'none';
+  return activeSubscription.plan || 'none';
+}
+
+function isSinglePlan() {
+  return getActivePlan() === 'one_offer';
+}
+
+function isMonthlyPlan() {
+  return getActivePlan() === 'monthly';
+}
+
+function isAnnualPlan() {
+  var plan = getActivePlan();
+  return plan === 'lifetime' || plan === 'yearly';
+}
+
+function showPlanLockedMessage(featureName) {
+  var isEn = currentLanguage === 'en';
+
+  var message = isEn
+    ? featureName + ' is not included in the Single PDF plan. Upgrade to Business Monthly or Annual Access.'
+    : featureName + ' nije uključeno u paket Jedna ponuda. Pređite na Business mesečni ili Business godišnji paket.';
+
+  showToast(message);
+}
+    
 function showToast(message) {
   var oldToast = document.getElementById('customToast');
 
@@ -4148,9 +4389,14 @@ function showToast(message) {
     
 async function saveOffer() {
   if (!currentUser) {
-    showLoginModal('Prijavite se da biste sačuvali ponudu.');
+    showLoginModal(currentLanguage === 'en' ? 'Log in to save an offer.' : 'Prijavite se da biste sačuvali ponudu.');
     return;
   }
+
+  if (isSinglePlan()) {
+  showPlanLockedMessage(currentLanguage === 'en' ? 'Saved offer history' : 'Čuvanje ponuda');
+  return;
+}
 
   var offerData = {
     company: el('company').value,
@@ -4197,16 +4443,21 @@ async function saveOffer() {
     ]);
 
   if (error) {
-    alert('Greška pri čuvanju.');
+    alert(currentLanguage === 'en' ? 'Error while saving.' : 'Greška pri čuvanju.');
     return;
   }
 
     setSavedState();
-  showToast('Ponuda je uspešno sačuvana.');
+  showToast(currentLanguage === 'en' ? 'Offer saved successfully.' : 'Ponuda je uspešno sačuvana.');
   loadSavedOffers();
 }
 
 async function toggleSavedOffers() {
+if (isSinglePlan()) {
+  showPlanLockedMessage(currentLanguage === 'en' ? 'My offers' : 'Moje ponude');
+  return;
+}
+  
   var box = el('savedOffersBox');
 
   if (box.style.display === 'none') {
@@ -4610,6 +4861,11 @@ function applyOfferData(data) {
 }
 
 function exportOfferJson() {
+if (isSinglePlan()) {
+  showPlanLockedMessage('Export JSON');
+  return;
+}
+  
   var data = getCurrentOfferData();
   var fileName = (data.title || 'ponuda').toLowerCase().replace(/[^a-z0-9čćžšđ]+/gi, '-');
 
@@ -4628,6 +4884,12 @@ function exportOfferJson() {
 }
 
 function importOfferJson(event) {
+if (isSinglePlan()) {
+  showPlanLockedMessage('Import JSON');
+  event.target.value = '';
+  return;
+}
+  
   var file = event.target.files[0];
 
   if (!file) return;
@@ -4744,7 +5006,7 @@ function setUnsavedChanges() {
   indicator.classList.remove('saved');
   indicator.classList.add('unsaved');
 
-  indicator.textContent = 'Nesačuvane izmene';
+  indicator.textContent = currentLanguage === 'en' ? 'Unsaved changes' : 'Nesačuvane izmene';
 }
 
 function setSavedState() {
@@ -4755,7 +5017,7 @@ function setSavedState() {
   indicator.classList.remove('unsaved');
   indicator.classList.add('saved');
 
-  indicator.textContent = 'Sačuvano upravo sada';
+  indicator.textContent = currentLanguage === 'en' ? 'Saved just now' : 'Sačuvano upravo sada';
 }
 
 function updateThemePreview(theme) {
@@ -4781,10 +5043,28 @@ function updateThemePreview(theme) {
 function handleThemeChange() {
   var theme = el('documentTheme').value;
 
-  if (theme === 'custom') {
+  if (isSinglePlan() && theme !== 'classic') {
     el('documentTheme').value = 'classic';
-    showLoginModal('Custom branding je dostupan za Business paket.');
-    theme = 'classic';
+    updateThemePreview('classic');
+    showPlanLockedMessage(currentLanguage === 'en' ? 'Premium themes' : 'Premium teme');
+    updateOffer();
+    return;
+  }
+
+  if (isMonthlyPlan() && theme === 'executive') {
+    el('documentTheme').value = 'modern';
+    updateThemePreview('modern');
+    showPlanLockedMessage(currentLanguage === 'en' ? 'Executive theme' : 'Executive tema');
+    updateOffer();
+    return;
+  }
+
+  if (theme === 'custom') {
+    el('documentTheme').value = isAnnualPlan() ? 'executive' : 'classic';
+    updateThemePreview(el('documentTheme').value);
+    showPlanLockedMessage('Custom branding');
+    updateOffer();
+    return;
   }
 
   updateThemePreview(theme);
@@ -4794,16 +5074,23 @@ function handleThemeChange() {
 function handleBrandColorChange() {
   if (!hasAccess) {
     el('brandColor').value = '#2563eb';
-    showLoginModal('Boja brenda je dostupna uz aktivan Business paket.');
+    showLoginModal(currentLanguage === 'en' ? 'Brand color is available with an active Business plan.' : 'Boja brenda je dostupna uz aktivan Business paket.');
   }
 
   updateOffer();
 }
 
 function handleCoverPageChange() {
+  if (el('coverPageEnabled').value === 'yes' && isSinglePlan()) {
+    el('coverPageEnabled').value = 'no';
+    showPlanLockedMessage(currentLanguage === 'en' ? 'Cover page' : 'Naslovna strana');
+    updateOffer();
+    return;
+  }
+
   if (el('coverPageEnabled').value === 'yes' && !hasAccess) {
     el('coverPageEnabled').value = 'no';
-    showLoginModal('Naslovna strana je dostupna uz Business paket.');
+    showLoginModal(currentLanguage === 'en' ? 'Cover page is available with Business plans.' : 'Naslovna strana je dostupna uz Business paket.');
     updateOffer();
     return;
   }
@@ -4811,9 +5098,9 @@ function handleCoverPageChange() {
   updateOffer();
 
   if (el('coverPageEnabled').value === 'yes') {
-    showToast('Naslovna strana je uključena.');
+    showToast(currentLanguage === 'en' ? 'Cover page is enabled.' : 'Naslovna strana je uključena.');
   } else {
-    showToast('Naslovna strana je isključena.');
+    showToast(currentLanguage === 'en' ? 'Cover page is disabled.' : 'Naslovna strana je isključena.');
   }
 }
   
@@ -4833,7 +5120,14 @@ function handleCoverPageChange() {
       var status = el('offerStatus').value;
       var statusEl = el('outStatus');
 
-statusEl.textContent = status;
+var statusTextMap = {
+  'Draft': currentLanguage === 'en' ? 'Draft' : 'Draft',
+  'Spremno za slanje': currentLanguage === 'en' ? 'Ready to send' : 'Spremno za slanje',
+  'Na čekanju': currentLanguage === 'en' ? 'Pending' : 'Na čekanju',
+  'Plaćeno': currentLanguage === 'en' ? 'Paid' : 'Plaćeno'
+};
+
+statusEl.textContent = statusTextMap[status] || status;
 
 statusEl.className = 'preview-status';
 
@@ -4863,10 +5157,10 @@ preview.style.setProperty('--brand-color', brandColor);
       var coverEnabled = el('coverPageEnabled').value === 'yes';
 
 el('coverPage').style.display = coverEnabled ? 'flex' : 'none';
-el('coverKicker').textContent = el('coverKickerInput').value || 'POSLOVNA PONUDA';
-el('coverTitle').textContent = el('title').value || 'Naziv ponude';
-el('coverCompany').textContent = el('company').value || 'Naziv firme';
-el('coverDate').textContent = 'Datum: ' + new Date().toLocaleDateString();
+el('coverKicker').textContent = el('coverKickerInput').value || (currentLanguage === 'en' ? 'BUSINESS OFFER' : 'POSLOVNA PONUDA');
+el('coverTitle').textContent = el('title').value || (currentLanguage === 'en' ? 'Offer title' : 'Naziv ponude');
+el('coverCompany').textContent = el('company').value || (currentLanguage === 'en' ? 'Company name' : 'Naziv firme');
+el('coverDate').textContent = (currentLanguage === 'en' ? 'Date: ' : 'Datum: ') + new Date().toLocaleDateString();
 
 el('coverLogo').innerHTML = el('outLogo').innerHTML;
 
