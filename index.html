@@ -3051,11 +3051,6 @@ body.printing-offer .offer {
   <option value="Plaćeno">Plaćeno</option>
 </select>
 </div>
-  <option value="newest">Najnovije prvo</option>
-  <option value="oldest">Najstarije prvo</option>
-  <option value="highest">Najveći iznos</option>
-  <option value="lowest">Najmanji iznos</option>
-</select>
   
   <input
     id="savedOffersSearch"
@@ -3216,7 +3211,7 @@ body.printing-offer .offer {
   <li>Premium poslovni workflow uz godišnje plaćanje</li>
   <li>Najbolja opcija za dugoročno korišćenje</li>
 </ul>
-    <button onclick="buyPlan('lifetime')">Aktiviraj paket</button>
+    <button onclick="buyPlan('yearly')">Aktiviraj paket</button>
   </div>
 </div>
 
@@ -3242,7 +3237,7 @@ body.printing-offer .offer {
   </div>
 
  <div class="site-footer">
-  <div>© 2026 PonudaPro — Contact: <a href="mailto:support@ponuda-pro.com">support@ponuda-pro.com</a></div>
+  <div>© 2026 PonudaPro — Contact: <a href="mailto:nikola@ponuda-pro.com">nikola@ponuda-pro.com</a></div>
   <div>
     <a href="/pricing" onclick="event.preventDefault(); showPage('pricing')">Pricing</a>
     <a href="/terms" onclick="event.preventDefault(); showPolicy('terms')">Terms / Uslovi</a>
@@ -4028,9 +4023,11 @@ routePage();
       }
 
       if (!data) {
-        lockGenerator('Prijavljeni ste kao ' + currentUser.email + ', ali nemate aktivan paket.');
-        return;
-      }
+  activeSubscription = null;
+  isSubscriptionActive = false;
+  unlockFreeTrial();
+  return;
+}
 
       var now = new Date();
       var expires = new Date(data.expires_at);
@@ -4105,13 +4102,18 @@ hideLoginModal();
 }
 
     function unlockFreeTrial() {
-      el('userStatusBox').style.display = 'block';
-      el('userStatusBox').innerHTML = '<strong>Probni pristup:</strong> Možete izraditi 1 probni PDF dokument na ovom uređaju.';
-      el('lockedMessage').style.display = 'none';
-      el('lockedContent').classList.remove('locked-content');
-      el('freeWatermark').style.display = 'inline';
-      hideLoginModal();
-    }
+  var isEn = currentLanguage === 'en';
+
+  el('userStatusBox').style.display = 'block';
+  el('userStatusBox').innerHTML = isEn
+    ? '<strong>Free preview:</strong> You can test the generator. PDF export includes a PonudaPro preview mark until you choose a paid plan.'
+    : '<strong>Free preview:</strong> Možete testirati generator. PDF export ima PonudaPro preview oznaku dok ne izaberete plaćeni paket.';
+
+  el('lockedMessage').style.display = 'none';
+  el('lockedContent').classList.remove('locked-content');
+  el('freeWatermark').style.display = 'inline';
+  hideLoginModal();
+}
 
     function lockGenerator(message) {
       el('userStatusBox').style.display = 'block';
@@ -4176,7 +4178,7 @@ function showPolicy(type) {
     '<p>PonudaPro ne pruža pravne, poreske, računovodstvene ili finansijske savete.</p>' +
 
     '<h2>Contact / Kontakt</h2>' +
-    '<p>For support / Za podršku: support@ponuda-pro.com</p>';
+    '<p>For support / Za podršku: nikola@ponuda-pro.com</p>';
   history.pushState(null, '', '/terms');
 }
 
@@ -4195,7 +4197,7 @@ function showPolicy(type) {
     '<p>Plaćanja obrađuju nezavisni payment provajderi. PonudaPro ne čuva pune podatke platnih kartica.</p>' +
 
     '<h2>Contact / Kontakt</h2>' +
-    '<p>For privacy questions / Za pitanja o privatnosti: support@ponuda-pro.com</p>';
+    '<p>For privacy questions / Za pitanja o privatnosti: nikola@ponuda-pro.com</p>';
   history.pushState(null, '', '/privacy');
 }
 
@@ -4214,7 +4216,7 @@ function showPolicy(type) {
     '<p>Povraćaji se obrađuju u skladu sa Paddle pravilima i važećim zakonima o zaštiti potrošača.</p>' +
 
     '<h2>Contact / Kontakt</h2>' +
-    '<p>support@ponuda-pro.com</p>';
+    '<p>nikola@ponuda-pro.com</p>';
   history.pushState(null, '', '/refund');
 }
 
@@ -4591,14 +4593,13 @@ box.innerHTML += `
         </div>
 
         <div class="saved-offer-client">
-          ${offer.offer_data.clientName || 'Bez klijenta'}
-        </div>
+  ${offer.offer_data.client || offer.offer_data.clientName || 'Bez klijenta'}
+</div>
       </div>
 
       <div class="saved-offer-total">
-        ${offer.offer_data.total || '0'} ${offer.offer_data.currencySymbol || ''}
-      </div>
-
+  ${calculateOfferTotal(offer.offer_data)} ${offer.offer_data.currency || 'RSD'}
+</div>
     </div>
 
     <div class="saved-offer-meta">
@@ -4752,7 +4753,7 @@ updateOffer();
   var subtotal = 0;
 
   data.items.forEach(function(item) {
-    subtotal += (Number(item.qty) || 0) * (Number(item.price) || 0);
+    subtotal += (Number(item.quantity) || 0) * (Number(item.price) || 0);
   });
 
   var discount = Number(data.discount || 0);
@@ -5106,15 +5107,20 @@ function handleThemeChange() {
 }
 
 function handleBrandColorChange() {
+  var hasAccess = isMonthlyPlan() || isAnnualPlan();
+
   if (!hasAccess) {
     el('brandColor').value = '#2563eb';
     showLoginModal(currentLanguage === 'en' ? 'Brand color is available with an active Business plan.' : 'Boja brenda je dostupna uz aktivan Business paket.');
+    updateOffer();
+    return;
   }
 
   updateOffer();
 }
-
 function handleCoverPageChange() {
+  var hasAccess = isMonthlyPlan() || isAnnualPlan();
+
   if (el('coverPageEnabled').value === 'yes' && isSinglePlan()) {
     el('coverPageEnabled').value = 'no';
     showPlanLockedMessage(currentLanguage === 'en' ? 'Cover page' : 'Naslovna strana');
@@ -5133,8 +5139,6 @@ function handleCoverPageChange() {
 
   if (el('coverPageEnabled').value === 'yes') {
     showToast(currentLanguage === 'en' ? 'Cover page is enabled.' : 'Naslovna strana je uključena.');
-  } else {
-    showToast(currentLanguage === 'en' ? 'Cover page is disabled.' : 'Naslovna strana je isključena.');
   }
 }
   
@@ -5268,50 +5272,54 @@ el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 
 }
       
     async function printOffer() {
-      updateOffer();
+  updateOffer();
 
-      if (!currentUser && isFreeTrialAvailable && !hasUsedFreeTrial()) {
-        markFreeTrialUsed();
-        showToast('Pokreće se PDF export.');
-        setTimeout(function() {
-  document.body.classList.add('printing-offer');
-  window.print();
+  if (currentUser) {
+    await checkSubscription();
+  }
+
+  if (!currentUser) {
+    showLoginMode();
+    showLoginModal(currentLanguage === 'en'
+      ? 'Create an account or log in to test the free preview.'
+      : 'Napravite nalog ili se prijavite da biste testirali free preview.');
+    return;
+  }
+
+  if (!isSubscriptionActive) {
+    el('freeWatermark').style.display = 'inline';
+    showToast(currentLanguage === 'en'
+      ? 'Preview PDF is starting. Choose a paid plan to remove the PonudaPro mark.'
+      : 'Pokreće se preview PDF. Izaberite plaćeni paket da uklonite PonudaPro oznaku.');
+
+    setTimeout(function() {
+      document.body.classList.add('printing-offer');
+      window.print();
+      setTimeout(function() {
+        document.body.classList.remove('printing-offer');
+      }, 700);
+    }, 200);
+
+    return;
+  }
+
+  var canPrint = await increaseUsedPrints();
+
+  if (!canPrint) {
+    return;
+  }
+
+  el('freeWatermark').style.display = 'none';
+
+  await saveOfferToDatabase();
+
   setTimeout(function() {
-    document.body.classList.remove('printing-offer');
-  }, 700);
-}, 200);
-        return;
-      }
-
-      if (currentUser) {
-        await checkSubscription();
-      }
-
-      if (!isSubscriptionActive) {
-        alert('Za nastavak korišćenja potrebno je da se prijavite i izaberete paket u Cenovniku.');
-        if (!currentUser) {
-          showLoginMode();
-          showLoginModal('Napravite nalog ili se prijavite da biste nastavili.');
-        } else {
-          showPage('pricing');
-        }
-        return;
-      }
-
-     var canPrint = await increaseUsedPrints();
-
-if (!canPrint) {
-  return;
-}
-
-await saveOfferToDatabase();
-setTimeout(function() {
-  document.body.classList.add('printing-offer');
-  window.print();
-  setTimeout(function() {
-    document.body.classList.remove('printing-offer');
-  }, 700);
-}, 200);
+    document.body.classList.add('printing-offer');
+    window.print();
+    setTimeout(function() {
+      document.body.classList.remove('printing-offer');
+    }, 700);
+  }, 200);
 }
     async function saveOfferToDatabase() {
       if (!currentUser) return;
@@ -5349,11 +5357,13 @@ setTimeout(function() {
 function toggleClientView() {
   document.body.classList.toggle('client-view');
 
+  var btn = el('clientViewBtn');
+
   if (document.body.classList.contains('client-view')) {
-    el('clientViewBtn').textContent = 'Exit View';
+    if (btn) btn.textContent = 'Exit View';
     showToast('Client View je uključen.');
   } else {
-    el('clientViewBtn').textContent = 'Client View';
+    if (btn) btn.textContent = 'Client View';
     showToast('Client View je isključen.');
   }
 }
@@ -5404,7 +5414,7 @@ function toggleClientView() {
 
       if (plan === 'one_offer') { priceId = PADDLE_ONE_OFFER_PRICE_ID; planName = 'one_offer'; }
       if (plan === 'monthly') { priceId = PADDLE_MONTHLY_PRICE_ID; planName = 'monthly'; }
-      if (plan === 'lifetime') { priceId = PADDLE_LIFETIME_PRICE_ID; planName = 'lifetime'; }
+      if (plan === 'yearly') { priceId = PADDLE_LIFETIME_PRICE_ID; planName = 'yearly'; }
 
       Paddle.Checkout.open({
         items: [{ priceId: priceId, quantity: 1 }],
