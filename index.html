@@ -540,6 +540,39 @@ button:hover,
 .offer:hover {
   box-shadow: 0 36px 100px rgba(15, 23, 42, 0.16);
 }
+
+.offer.preview-watermark::before {
+  content: "PONUDAPRO PREVIEW";
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  font-size: 64px;
+  font-weight: 900;
+  color: rgba(37, 99, 235, 0.10);
+  letter-spacing: 6px;
+  pointer-events: none;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+@media print {
+  .offer.preview-watermark::before {
+    content: "PONUDAPRO PREVIEW";
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-28deg);
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(37, 99, 235, 0.12);
+    letter-spacing: 6px;
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+  }
+}
+
     
 .offer.draft-watermark::after {
   content: "DRAFT";
@@ -4022,10 +4055,16 @@ routePage();
         return;
       }
 
-      if (!data) {
+     if (!data) {
   activeSubscription = null;
   isSubscriptionActive = false;
-  unlockFreeTrial();
+
+  if (!hasUsedFreeTrial()) {
+    unlockFreeTrial();
+  } else {
+    lockGenerator('Probni pristup je iskorišćen. Izaberite paket u Cenovniku da biste nastavili.');
+  }
+
   return;
 }
 
@@ -4094,6 +4133,7 @@ if (isMonthlyPlan()) {
 el('lockedMessage').style.display = 'none';
 el('lockedContent').classList.remove('locked-content');
 el('freeWatermark').style.display = 'none';
+el('offerPreview').classList.remove('preview-watermark');
 
 updateThemePreview(el('documentTheme').value);
 updateOffer();
@@ -4104,14 +4144,30 @@ hideLoginModal();
     function unlockFreeTrial() {
   var isEn = currentLanguage === 'en';
 
+  activeSubscription = null;
+  isSubscriptionActive = false;
+
   el('userStatusBox').style.display = 'block';
   el('userStatusBox').innerHTML = isEn
-    ? '<strong>Free preview:</strong> You can test the generator. PDF export includes a PonudaPro preview mark until you choose a paid plan.'
-    : '<strong>Free preview:</strong> Možete testirati generator. PDF export ima PonudaPro preview oznaku dok ne izaberete plaćeni paket.';
+    ? '<strong>Free preview:</strong> You can test the generator, but the PDF will include a visible PonudaPro Preview watermark. Paid plans unlock clean PDF export.'
+    : '<strong>Free preview:</strong> Možete testirati generator, ali PDF ima vidljiv PonudaPro Preview watermark. Plaćeni paketi otključavaju čist PDF export.';
 
-  el('lockedMessage').style.display = 'none';
+  el('lockedMessage').style.display = 'block';
+  el('lockedMessage').innerHTML = isEn
+    ? '<strong>Free mode:</strong> Premium themes, cover page, saved offers and clean PDF export are locked until you choose a paid plan.'
+    : '<strong>Free režim:</strong> Premium teme, naslovna strana, čuvanje ponuda i čist PDF export su zaključani dok ne izaberete plaćeni paket.';
+
   el('lockedContent').classList.remove('locked-content');
+
+  if (el('documentTheme')) el('documentTheme').value = 'classic';
+  if (el('coverPageEnabled')) el('coverPageEnabled').value = 'no';
+  if (el('brandColor')) el('brandColor').value = '#2563eb';
+
   el('freeWatermark').style.display = 'inline';
+  el('offerPreview').classList.add('preview-watermark');
+
+  updateThemePreview('classic');
+  updateOffer();
   hideLoginModal();
 }
 
@@ -5078,6 +5134,14 @@ function updateThemePreview(theme) {
 function handleThemeChange() {
   var theme = el('documentTheme').value;
 
+  if (!isSubscriptionActive) {
+    el('documentTheme').value = 'classic';
+    updateThemePreview('classic');
+    showPlanLockedMessage(currentLanguage === 'en' ? 'Premium themes' : 'Premium teme');
+    updateOffer();
+    return;
+  }
+
   if (isSinglePlan() && theme !== 'classic') {
     el('documentTheme').value = 'classic';
     updateThemePreview('classic');
@@ -5109,7 +5173,7 @@ function handleThemeChange() {
 function handleBrandColorChange() {
   var hasAccess = isMonthlyPlan() || isAnnualPlan();
 
-  if (!hasAccess) {
+  if (!isSubscriptionActive || !hasAccess) {
     el('brandColor').value = '#2563eb';
     showLoginModal(currentLanguage === 'en' ? 'Brand color is available with an active Business plan.' : 'Boja brenda je dostupna uz aktivan Business paket.');
     updateOffer();
@@ -5120,6 +5184,13 @@ function handleBrandColorChange() {
 }
 function handleCoverPageChange() {
   var hasAccess = isMonthlyPlan() || isAnnualPlan();
+
+  if (!isSubscriptionActive) {
+    el('coverPageEnabled').value = 'no';
+    showPlanLockedMessage(currentLanguage === 'en' ? 'Cover page' : 'Naslovna strana');
+    updateOffer();
+    return;
+  }
 
   if (el('coverPageEnabled').value === 'yes' && isSinglePlan()) {
     el('coverPageEnabled').value = 'no';
@@ -5278,38 +5349,51 @@ el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 
     await checkSubscription();
   }
 
-  if (!currentUser) {
-    showLoginMode();
-    showLoginModal(currentLanguage === 'en'
-      ? 'Create an account or log in to test the free preview.'
-      : 'Napravite nalog ili se prijavite da biste testirali free preview.');
-    return;
-  }
-
   if (!isSubscriptionActive) {
+    if (hasUsedFreeTrial()) {
+      lockGenerator(currentLanguage === 'en'
+        ? 'Free preview has already been used. Please choose a plan to continue.'
+        : 'Probni pristup je iskorišćen. Izaberite paket u Cenovniku da biste nastavili.');
+      showPage('pricing');
+      return;
+    }
+
     el('freeWatermark').style.display = 'inline';
+    el('offerPreview').classList.add('preview-watermark');
+
+    markFreeTrialUsed();
+
     showToast(currentLanguage === 'en'
-      ? 'Preview PDF is starting. Choose a paid plan to remove the PonudaPro mark.'
-      : 'Pokreće se preview PDF. Izaberite plaćeni paket da uklonite PonudaPro oznaku.');
+      ? 'Preview PDF is starting with watermark. Choose a paid plan to continue.'
+      : 'Pokreće se preview PDF sa watermarkom. Izaberite plaćeni paket da nastavite.');
 
     setTimeout(function() {
       document.body.classList.add('printing-offer');
+
       window.print();
+
       setTimeout(function() {
         document.body.classList.remove('printing-offer');
-      }, 700);
+
+        lockGenerator(currentLanguage === 'en'
+          ? 'Free preview has been used. Please choose a plan to continue.'
+          : 'Probni pristup je iskorišćen. Izaberite paket u Cenovniku da biste nastavili.');
+
+        showPage('pricing');
+      }, 900);
     }, 200);
 
     return;
   }
+
+  el('offerPreview').classList.remove('preview-watermark');
+  el('freeWatermark').style.display = 'none';
 
   var canPrint = await increaseUsedPrints();
 
   if (!canPrint) {
     return;
   }
-
-  el('freeWatermark').style.display = 'none';
 
   await saveOfferToDatabase();
 
