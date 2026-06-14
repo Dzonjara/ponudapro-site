@@ -5460,6 +5460,136 @@ body.sidebar-hidden .site-footer {
   }
 }
 
+
+
+/* V9 FIXES: sidebar, header overlap, pricing visibility and real signature/stamp */
+body:not(.sidebar-hidden) .sidebar-show-btn {
+  display: none !important;
+}
+
+body.sidebar-hidden .sidebar-show-btn {
+  display: flex !important;
+  left: 18px !important;
+  top: 18px !important;
+}
+
+body.sidebar-hidden .header {
+  padding-left: 88px !important;
+}
+
+.side-kicker img {
+  width: 27px !important;
+  height: 27px !important;
+  object-fit: contain !important;
+}
+
+.desktop-sidebar h3#sideTitle {
+  display: none !important;
+}
+
+.side-kicker {
+  margin-bottom: 20px !important;
+}
+
+.preview-kicker {
+  display: block !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: #0f172a !important;
+  font-size: clamp(24px, 2.3vw, 34px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.05em !important;
+  font-weight: 950 !important;
+  box-shadow: none !important;
+  margin-bottom: 10px !important;
+}
+
+.preview-explainer p {
+  max-width: 680px !important;
+  font-size: 15px !important;
+}
+
+.pdf-sign-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+.pdf-sign-placeholder.stamp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stamp-mark {
+  width: 86px;
+  height: 86px;
+  border: 3px solid rgba(37, 99, 235, 0.42);
+  border-radius: 50%;
+  color: rgba(37, 99, 235, 0.58);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-10deg);
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  background: rgba(37, 99, 235, 0.025);
+}
+
+.stamp-mark::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1.5px solid rgba(37, 99, 235, 0.30);
+  border-radius: 50%;
+}
+
+.stamp-mark strong {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.stamp-mark span {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.stamp-mark em {
+  font-style: normal;
+  font-size: 9px;
+}
+
+.pdf-sign-placeholder.signature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdf-sign-placeholder.signature::after {
+  display: none !important;
+}
+
+.signature-name {
+  font-family: "Brush Script MT", "Segoe Script", "Lucida Handwriting", cursive;
+  font-size: 30px;
+  color: rgba(15, 23, 42, 0.62);
+  transform: rotate(-4deg);
+  border-bottom: 1.5px solid rgba(15, 23, 42, 0.35);
+  padding: 0 18px 4px;
+  line-height: 1.1;
+}
+
+#pricingPage {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  body.sidebar-hidden .header {
+    padding-left: 20px !important;
+  }
+}
+
 </style>
 </head>
 <body onload="initApp()">
@@ -5530,8 +5660,8 @@ body.sidebar-hidden .site-footer {
 
   <aside class="desktop-sidebar" id="desktopSidebar">
     <button class="sidebar-hide-btn" onclick="toggleSidebar()" title="Sakrij meni" aria-label="Sakrij meni">×</button>
-    <div class="side-kicker" id="sideKicker">PP</div>
-    <h3 id="sideTitle">Meni</h3>
+    <div class="side-kicker" id="sideKicker"><img src="favicon.png" alt="PonudaPro"></div>
+    <h3 id="sideTitle">Navigacija</h3>
 
     <nav class="side-nav">
       <a class="side-nav-link" href="#landingSection" id="sideNav1" title="Početna"><span>01</span><b>Start</b></a>
@@ -5583,7 +5713,7 @@ body.sidebar-hidden .site-footer {
 
     <div class="landing-right">
       <div class="preview-explainer">
-        <div class="preview-kicker" id="previewKicker">Evo kako izgleda gotova PDF ponuda</div>
+        <div class="preview-kicker" id="previewKicker">Primer finalne PDF ponude</div>
         <p id="previewDescription">Uredan i profesionalan PDF sa svim važnim podacima, spreman da ga odmah pošaljete klijentu.</p>
       </div>
 
@@ -5658,11 +5788,19 @@ body.sidebar-hidden .site-footer {
 
         <div class="pdf-preview-signatures">
           <div class="pdf-sign-box">
-            <div class="pdf-sign-placeholder"></div>
+            <div class="pdf-sign-placeholder stamp">
+              <div class="stamp-mark">
+                <strong>PONUDAPRO</strong>
+                <span>OVERENO</span>
+                <em>2026</em>
+              </div>
+            </div>
             <span id="pdfStampLabel">Pečat firme</span>
           </div>
           <div class="pdf-sign-box">
-            <div class="pdf-sign-placeholder signature"></div>
+            <div class="pdf-sign-placeholder signature">
+              <div class="signature-name">Nikola Ivanović</div>
+            </div>
             <span id="pdfSignatureLabel">Potpis odgovornog lica</span>
           </div>
         </div>
@@ -6520,9 +6658,8 @@ function applyLanguage() {
   if (landingBtns[1]) landingBtns[1].textContent = isEn ? 'View PDF example' : 'Pogledaj primer PDF-a';
 
   setText('heroProof', isEn ? 'No credit card · Activation in 60 seconds · First offer is free' : 'Bez kreditne kartice · Aktivacija za 60 sekundi · Prva ponuda besplatna');
-  setText('previewKicker', isEn ? 'This is what the finished PDF offer looks like' : 'Evo kako izgleda gotova PDF ponuda');
-  setText('previewDescription', isEn ? 'A clean and professional PDF with all important details, ready to send to the client immediately.' : 'Uredan i profesionalan PDF sa svim važnim podacima, spreman da ga odmah pošaljete klijentu.');
-  setText('sideKicker', isEn ? 'PonudaPro' : 'PonudaPro');
+  setText('previewKicker', isEn ? 'Final PDF offer preview' : 'Primer finalne PDF ponude');
+  setText('previewDescription', isEn ? 'A clean business document with company details, client data, items, VAT, stamp and signature.' : 'Uredan poslovni dokument sa podacima firme, klijentom, stavkama, PDV-om, pečatom i potpisom.');
   setText('sideTitle', isEn ? 'Navigation' : 'Navigacija');
   setText('sideText', isEn ? 'Quick access to the key parts of the website and the offer generator.' : 'Brz pristup ključnim delovima sajta i generatoru ponuda.');
   setText('sideNav4', isEn ? '04 How it works' : '04 Kako radi');
@@ -6546,8 +6683,6 @@ function applyLanguage() {
   setText('quickJump3', isEn ? 'Plans' : 'Paketi');
   setText('quickJump4', isEn ? 'More info' : 'Više informacija');
   setText('quickJump5', 'FAQ');
-
-  setText('sideKicker', isEn ? 'PonudaPro kontrola' : 'PonudaPro kontrola');
   setText('sideTitle', isEn ? 'Everything in one place' : 'Brz pregled');
   setText('sideText', isEn ? 'Quick menu through the sales page, generator, PDF examples and plans.' : 'Navigacija kroz generator, primere PDF-a, pakete i najčešća pitanja.');
   setText('sideNav1', isEn ? '01 Start' : '01 Start');
@@ -6671,7 +6806,6 @@ function applyLanguage() {
   if (el('sideNav2')) el('sideNav2').innerHTML = '<span>02</span><b>Generator</b>';
   if (el('sideNav3')) el('sideNav3').innerHTML = '<span>03</span><b>PDF</b>';
   if (el('sideNav4')) el('sideNav4').innerHTML = '<span>04</span><b>FAQ</b>';
-  setText('sideKicker', 'PP');
   setText('sideTitle', isEn ? 'Menu' : 'Meni');
   setText('sideCta', '+');
 
@@ -7592,7 +7726,7 @@ function showPolicy(type) {
   } else {
     if (trustStrip) trustStrip.style.display = 'none';
     setHomeSectionsVisible(true);
-    el('pricingPage').style.display = 'block';
+    el('pricingPage').style.display = 'none';
     el('policyPage').style.display = 'none';
     el('pricingNav').classList.remove('active');
     el('generatorNav').classList.add('active');
