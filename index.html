@@ -5867,7 +5867,7 @@ body.sidebar-hidden .header {
   <button class="quick-action-btn" onclick="toggleSavedOffers()">Moje ponude</button>
   <button class="quick-action-btn" onclick="resetExample()">Resetuj formu</button>
 </div>
-     <div class="locked-message" id="lockedMessage"><strong>Pristup nije aktivan.</strong><br>Prijavite se i proverite status paketa. Za aktivaciju pristupa izaberite odgovarajući paket u delu <strong>Cenovnik</strong>.</div>
+     <div class="locked-message" id="lockedMessage"><strong>14 dana besplatno.</strong><br>Napravite nalog i aktivirajte besplatan pristup — bez kreditne kartice.</div>
 
       <div id="lockedContent" class="locked-content">
         <h2>Logo, pečat i potpis</h2>
@@ -6654,10 +6654,10 @@ function applyLanguage() {
   }
 
   var landingBtns = document.querySelectorAll('.landing-actions button');
-  if (landingBtns[0]) landingBtns[0].textContent = isEn ? 'Start 14 days free' : 'Započni 14 dana besplatno';
+  if (landingBtns[0]) landingBtns[0].textContent = isEn ? 'Create account and start free' : 'Napravi nalog i aktiviraj besplatno';
   if (landingBtns[1]) landingBtns[1].textContent = isEn ? 'View PDF example' : 'Pogledaj primer PDF-a';
 
-  setText('heroProof', isEn ? '14 days free · No credit card · Launch period for first users' : '14 dana besplatno · Bez kreditne kartice · Launch period za prve korisnike');
+  setText('heroProof', isEn ? 'Create an account and activate 14 days free · No credit card required' : 'Napravite nalog i aktivirajte 14 dana besplatno · Bez kreditne kartice');
   setText('previewKicker', isEn ? 'Final PDF offer preview' : 'Primer finalne PDF ponude');
   setText('previewDescription', isEn ? 'A clean business document with company details, client data, items, VAT, stamp and signature.' : 'Uredan poslovni dokument sa podacima firme, klijentom, stavkama, PDV-om, pečatom i potpisom.');
   setText('sideTitle', isEn ? 'Navigation' : 'Navigacija');
@@ -6775,7 +6775,7 @@ function applyLanguage() {
   setText('faq5Title', isEn ? 'Can I cancel the subscription?' : 'Mogu li da otkažem pretplatu?');
   setText('faq5Text', isEn ? 'Yes. You can cancel according to the payment rules through Paddle.' : 'Da. Pretplatu možete otkazati u skladu sa pravilima plaćanja preko Paddle-a.');
   setText('faq6Title', isEn ? 'Is there a free version?' : 'Postoji li besplatna verzija?');
-  setText('faq6Text', isEn ? 'You can create the first offer for free and test how the tool works.' : 'Možete napraviti prvu ponudu besplatno i testirati kako alat radi.');
+  setText('faq6Text', isEn ? 'Yes. Create an account and activate 14 days of free access, with no credit card required.' : 'Da. Napravite nalog i aktivirajte 14 dana besplatnog pristupa, bez kreditne kartice.');
 
   setText('sampleTitle', isEn ? 'Examples of finished PDF offers' : 'Primeri gotovih PDF ponuda');
   setText('sampleText', isEn ? 'Before the user enters the generator, they should immediately see how the final document can look in different styles.' : 'Pre nego što korisnik krene u generator, treba odmah da vidi kako gotov dokument može da izgleda u različitim stilovima.');
@@ -7575,13 +7575,13 @@ hideLoginModal();
 
   el('userStatusBox').style.display = 'block';
   el('userStatusBox').innerHTML = isEn
-    ? '<strong>Free preview:</strong> You can test the generator, but the PDF will include a visible PonudaPro Preview watermark. Paid plans unlock clean PDF export.'
-    : '<strong>Free preview:</strong> Možete testirati generator, ali PDF ima vidljiv PonudaPro Preview watermark. Plaćeni paketi otključavaju čist PDF export.';
+    ? '<strong>Try the generator:</strong> You can test the form right away. To download a clean PDF, create an account and activate 14 days free — no credit card required.'
+    : '<strong>Isprobajte generator:</strong> Formu možete testirati odmah. Za preuzimanje čistog PDF-a napravite nalog i aktivirajte 14 dana besplatno — bez kreditne kartice.';
 
   el('lockedMessage').style.display = 'block';
   el('lockedMessage').innerHTML = isEn
-    ? '<strong>Free mode:</strong> Premium themes, cover page, saved offers and clean PDF export are locked until you choose a paid plan.'
-    : '<strong>Free režim:</strong> Premium teme, naslovna strana, čuvanje ponuda i čist PDF export su zaključani dok ne izaberete plaćeni paket.';
+    ? '<strong>14 days free:</strong> Create an account in less than a minute and unlock PDF export, saved offers, premium themes and all business options.'
+    : '<strong>14 dana besplatno:</strong> Napravite nalog za manje od minut i otključajte PDF export, čuvanje ponuda, premium teme i sve poslovne opcije.';
 
   el('lockedContent').classList.remove('locked-content');
 
