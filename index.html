@@ -5698,7 +5698,7 @@ body.sidebar-hidden .header {
 
       <div class="landing-actions">
         <button onclick="document.getElementById('generatorPage').scrollIntoView({ behavior: 'smooth' });">
-          Napravi prvu ponudu besplatno
+          Započni 14 dana besplatno
         </button>
 
         <button class="secondary" onclick="window.open('/demo-ponuda.pdf', '_blank')">
@@ -5707,7 +5707,7 @@ body.sidebar-hidden .header {
       </div>
 
       <div class="hero-proof" id="heroProof">
-        Bez kreditne kartice · Aktivacija za 60 sekundi · Prva ponuda besplatna
+       14 dana besplatno · Bez kreditne kartice · Launch period za prve korisnike
       </div>
     </div>
 
@@ -6381,7 +6381,7 @@ body.sidebar-hidden .header {
             <div class="mini-card"><strong id="faq3Title">Mogu li da menjam cene?</strong><span id="faq3Text">Da. Svaka stavka može imati količinu, jedinicu mere i cenu.</span></div>
             <div class="mini-card"><strong id="faq4Title">Da li se podaci čuvaju?</strong><span id="faq4Text">Na plaćenim paketima možete čuvati i ponovo učitati ponude.</span></div>
             <div class="mini-card"><strong id="faq5Title">Mogu li da otkažem pretplatu?</strong><span id="faq5Text">Da. Pretplatu možete otkazati u skladu sa pravilima plaćanja preko Paddle-a.</span></div>
-            <div class="mini-card"><strong id="faq6Title">Postoji li besplatna verzija?</strong><span id="faq6Text">Možete napraviti prvu ponudu besplatno i testirati kako alat radi.</span></div>
+            <div class="mini-card"><strong id="faq6Title">Postoji li besplatna verzija?</strong><span id="faq6Text">Možete koristiti PonudaPro 14 dana besplatno, bez kreditne kartice.</span></div>
           </div>
         </div>
       </details>
@@ -6654,10 +6654,10 @@ function applyLanguage() {
   }
 
   var landingBtns = document.querySelectorAll('.landing-actions button');
-  if (landingBtns[0]) landingBtns[0].textContent = isEn ? 'Create first offer for free' : 'Napravi prvu ponudu besplatno';
+  if (landingBtns[0]) landingBtns[0].textContent = isEn ? 'Start 14 days free' : 'Započni 14 dana besplatno';
   if (landingBtns[1]) landingBtns[1].textContent = isEn ? 'View PDF example' : 'Pogledaj primer PDF-a';
 
-  setText('heroProof', isEn ? 'No credit card · Activation in 60 seconds · First offer is free' : 'Bez kreditne kartice · Aktivacija za 60 sekundi · Prva ponuda besplatna');
+  setText('heroProof', isEn ? '14 days free · No credit card · Launch period for first users' : '14 dana besplatno · Bez kreditne kartice · Launch period za prve korisnike');
   setText('previewKicker', isEn ? 'Final PDF offer preview' : 'Primer finalne PDF ponude');
   setText('previewDescription', isEn ? 'A clean business document with company details, client data, items, VAT, stamp and signature.' : 'Uredan poslovni dokument sa podacima firme, klijentom, stavkama, PDV-om, pečatom i potpisom.');
   setText('sideTitle', isEn ? 'Navigation' : 'Navigacija');
@@ -7453,16 +7453,8 @@ initMicroInteractions();
         return;
       }
 
-     if (!data) {
-  activeSubscription = null;
-  isSubscriptionActive = false;
-
-  if (!hasUsedFreeTrial()) {
-    unlockFreeTrial();
-  } else {
-    lockGenerator('Probni pristup je iskorišćen. Izaberite paket u Cenovniku da biste nastavili.');
-  }
-
+    if (!data) {
+  await startTrialSubscription();
   return;
 }
 
@@ -7486,17 +7478,53 @@ initMicroInteractions();
       unlockGenerator(data);
     }
 
+    async function startTrialSubscription() {
+  if (!currentUser) {
+    lockGenerator('Prijavite se da biste aktivirali 14 dana besplatnog pristupa.');
+    return;
+  }
+
+  const { data, error } = await supabaseClient.rpc('start_trial');
+
+  if (error) {
+    console.error(error);
+    lockGenerator('Došlo je do greške pri aktivaciji probnog perioda. Pokušajte ponovo.');
+    return;
+  }
+
+  if (!data) {
+    lockGenerator('Probni period nije moguće aktivirati. Izaberite paket u Cenovniku.');
+    return;
+  }
+
+  var now = new Date();
+  var expires = new Date(data.expires_at);
+
+  if (expires <= now) {
+    activeSubscription = null;
+    isSubscriptionActive = false;
+    lockGenerator('Probni period je istekao. Izaberite paket u Cenovniku da biste nastavili.');
+    return;
+  }
+
+  activeSubscription = data;
+  isSubscriptionActive = true;
+  unlockGenerator(data);
+}
+
 function unlockGenerator(subscription) {
   var isEn = currentLanguage === 'en';
   var expires = new Date(subscription.expires_at);
   var daysLeft = Math.ceil((expires - new Date()) / 86400000);
   var planText = isEn ? 'Active plan' : 'Aktivni paket';
 
-  if (subscription.plan === 'one_offer') {
-    planText = isEn ? 'Single PDF offer' : 'Jedna PDF ponuda';
-  } else if (subscription.plan === 'monthly') {
-    planText = isEn ? 'Monthly plan' : 'Mesečni paket';
-  } else if (subscription.plan === 'lifetime' || subscription.plan === 'yearly') {
+  if (subscription.plan === 'trial') {
+  planText = isEn ? '14-day free trial' : '14 dana besplatno';
+} else if (subscription.plan === 'one_offer') {
+  planText = isEn ? 'Single PDF offer' : 'Jedna PDF ponuda';
+} else if (subscription.plan === 'monthly') {
+  planText = isEn ? 'Monthly plan' : 'Mesečni paket';
+} else if (subscription.plan === 'lifetime' || subscription.plan === 'yearly') {
   planText = isEn ? 'Annual plan' : 'Godišnji paket';
 }
 
@@ -7848,6 +7876,10 @@ function isSinglePlan() {
   return getActivePlan() === 'one_offer';
 }
 
+    function isTrialPlan() {
+  return getActivePlan() === 'trial';
+}
+
 function isMonthlyPlan() {
   return getActivePlan() === 'monthly';
 }
@@ -7855,6 +7887,10 @@ function isMonthlyPlan() {
 function isAnnualPlan() {
   var plan = getActivePlan();
   return plan === 'lifetime' || plan === 'yearly';
+}
+
+    function hasBusinessAccess() {
+  return isTrialPlan() || isMonthlyPlan() || isAnnualPlan();
 }
 
 function showPlanLockedMessage(featureName) {
@@ -8586,7 +8622,7 @@ function handleThemeChange() {
 }
 
 function handleBrandColorChange() {
-  var hasAccess = isMonthlyPlan() || isAnnualPlan();
+  var hasAccess = hasBusinessAccess();
 
   if (!isSubscriptionActive || !hasAccess) {
     el('brandColor').value = '#2563eb';
@@ -8598,7 +8634,7 @@ function handleBrandColorChange() {
   updateOffer();
 }
 function handleCoverPageChange() {
-  var hasAccess = isMonthlyPlan() || isAnnualPlan();
+  var hasAccess = hasBusinessAccess();
 
   if (!isSubscriptionActive) {
     el('coverPageEnabled').value = 'no';
@@ -8765,41 +8801,12 @@ el('taxRow').style.display = el('hideZeroRows').checked && tax === 0 ? 'none' : 
   }
 
   if (!isSubscriptionActive) {
-    if (hasUsedFreeTrial()) {
-      lockGenerator(currentLanguage === 'en'
-        ? 'Free preview has already been used. Please choose a plan to continue.'
-        : 'Probni pristup je iskorišćen. Izaberite paket u Cenovniku da biste nastavili.');
-      showPage('pricing');
-      return;
-    }
-
-    el('freeWatermark').style.display = 'inline';
-    el('offerPreview').classList.add('preview-watermark');
-
-    markFreeTrialUsed();
-
-    showToast(currentLanguage === 'en'
-      ? 'Preview PDF is starting with watermark. Choose a paid plan to continue.'
-      : 'Pokreće se preview PDF sa watermarkom. Izaberite plaćeni paket da nastavite.');
-
-    setTimeout(function() {
-      document.body.classList.add('printing-offer');
-
-      window.print();
-
-      setTimeout(function() {
-        document.body.classList.remove('printing-offer');
-
-        lockGenerator(currentLanguage === 'en'
-          ? 'Free preview has been used. Please choose a plan to continue.'
-          : 'Probni pristup je iskorišćen. Izaberite paket u Cenovniku da biste nastavili.');
-
-        showPage('pricing');
-      }, 900);
-    }, 200);
-
-    return;
-  }
+  showLoginModal(currentLanguage === 'en'
+    ? 'Create an account to start 14 days free, no credit card required.'
+    : 'Napravite nalog i aktivirajte 14 dana besplatno, bez kreditne kartice.'
+  );
+  return;
+}
 
   el('offerPreview').classList.remove('preview-watermark');
   el('freeWatermark').style.display = 'none';
